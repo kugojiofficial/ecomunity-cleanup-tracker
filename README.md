@@ -1,4 +1,4 @@
-# EcoMunity IoT System Dashboard
+# EcoMunity IoT System Hub
 
 A live web dashboard for the **EcoMunity IoT Cleanup System**, an environmental technology project designed to make campus cleanups smarter, more organized, and more data-driven.
 
