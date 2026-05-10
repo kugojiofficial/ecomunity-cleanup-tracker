@@ -1,6 +1,6 @@
 # EcoMunity IoT System Hub
 
-A live web dashboard for the **EcoMunity IoT Cleanup System**, an environmental technology project designed to make campus cleanups smarter, more organized, and more data-driven.
+A live web dashboard for the EcoMunity Club's IoT, an environmental technology project designed to make EcoMunity campus cleanup events smarter, more organized, and more data-driven.
 
 The dashboard visualizes cleanup activity on an interactive map by displaying GPS points logged from a button-based wearable trash logger. The broader system is designed to include an ESP32-powered Eco-Watch, a GPS-tracked cleanup wagon, and a web dashboard for viewing cleanup sessions, trash hotspots, and long-term impact data.
 
