@@ -8,7 +8,7 @@ export const PLASMIC = initPlasmicLoader({
       token: process.env.NEXT_PUBLIC_PLASMIC_PUBLIC_TOKEN!,
     },
   ],
-  preview: false,
+  preview: process.env.NODE_ENV == "development",
 });
 
 PLASMIC.registerComponent(LiveMap, {
