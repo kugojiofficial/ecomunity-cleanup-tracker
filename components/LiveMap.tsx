@@ -99,7 +99,7 @@ export default function LiveMap() {
     <div style={{ width: "100%", height: "500px" }}>
       {loading && (
         <div style={{ marginBottom: "8px", fontSize: "14px" }}>
-          Loading trash logs...
+          Loading map...
         </div>
       )}
 
