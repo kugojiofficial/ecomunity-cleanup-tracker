@@ -1,4 +1,5 @@
 import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
+import LiveMap from "./components/LiveMap";
 
 export const PLASMIC = initPlasmicLoader({
   projects: [
@@ -8,4 +9,9 @@ export const PLASMIC = initPlasmicLoader({
     },
   ],
   preview: false,
+});
+
+PLASMIC.registerComponent(LiveMap, {
+  name: "LiveMap",
+  props: {},
 });
