@@ -55,7 +55,7 @@ The data collected by this system can be used to:
 
 - identify consistent trash hotspots across campus
 - show where more trash or recycling bins are needed
-- support funding requests with real cleanup data
+- support (state) funding requests with real cleanup data
 - track cleanup impact over time by session, week, or month
 - measure trends, including recurring problem areas or seasonal changes
 - improve cleanup route planning
