@@ -43,7 +43,7 @@ export default async function handler(
       longitude,
       accuracy_meters = null,
       timestamp = new Date().toISOString(),
-    } = req.body;
+    } = req.body; 
 
     if (typeof latitude !== "number" || typeof longitude !== "number") {
       return res.status(400).json({
