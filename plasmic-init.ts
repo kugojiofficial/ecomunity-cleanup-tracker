@@ -13,5 +13,7 @@ export const PLASMIC = initPlasmicLoader({
 
 PLASMIC.registerComponent(LiveMap, {
   name: "LiveMap",
+  importPath: './components/LiveMap.tsx',
+  styleSections: ['sizing', 'spacing', 'background', 'border', 'shadows'],
   props: {},
 });
