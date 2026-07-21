@@ -43,9 +43,6 @@ next-env.d.ts
 #plasmic
 plasmic.lock
 
-# secrets / local env
-shared.env
-
 # local agent tooling
 .claude/
 .agents/
