@@ -5,6 +5,7 @@ import {
   DefaultEventListItemProps,
 } from "./plasmic/eco_munity_cleanup_tracker/PlasmicEventListItem";
 import sty from "./plasmic/eco_munity_cleanup_tracker/PlasmicEventListItem.module.css";
+import { getEventWasteLogs, type WasteLog } from "../lib/api";
 
 export interface EventListItemProps extends DefaultEventListItemProps {
   /** Scopes the embedded map to this event's waste logs (per-event heatmap). */
@@ -22,6 +23,39 @@ function statValue(value: number | undefined, textClass: string) {
   );
 }
 
+const CSV_COLUMNS: (keyof WasteLog)[] = [
+  "id",
+  "event_id",
+  "user_id",
+  "waste_type",
+  "latitude",
+  "longitude",
+  "accuracy_meters",
+  "points",
+  "created_at",
+];
+
+function toCsv(logs: WasteLog[]): string {
+  const escape = (v: unknown) => {
+    const s = v == null ? "" : String(v);
+    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  };
+  const header = CSV_COLUMNS.join(",");
+  const rows = logs.map((log) => CSV_COLUMNS.map((c) => escape(log[c])).join(","));
+  return [header, ...rows].join("\n");
+}
+
+function triggerDownload(content: string, type: string, filename: string) {
+  const url = URL.createObjectURL(new Blob([content], { type }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
 function EventListItem_(
   {
     eventId,
@@ -32,6 +66,29 @@ function EventListItem_(
   }: EventListItemProps,
   ref: HTMLElementRefOf<"div">
 ) {
+  async function downloadLogs(format: "csv" | "json") {
+    if (!eventId) return;
+    const res = await getEventWasteLogs(eventId, 100000);
+    if (!res.success) {
+      console.error("Failed to load logs for download:", res.error);
+      return;
+    }
+    const short = eventId.slice(0, 8);
+    if (format === "json") {
+      triggerDownload(
+        JSON.stringify(res.data, null, 2),
+        "application/json",
+        `waste-logs-${short}.json`
+      );
+    } else {
+      triggerDownload(toCsv(res.data), "text/csv;charset=utf-8", `waste-logs-${short}.csv`);
+    }
+  }
+
+  // `showingDetails` (the events page's mass expand/collapse signal) forwards
+  // through `props` to seed each row's native variant; the per-item details
+  // button toggles it after that. The events page re-keys rows on a mass toggle
+  // so every item re-seeds — a "unite all" that still allows individual toggles.
   return (
     <PlasmicEventListItem
       eventListItem={{ ref }}
@@ -45,6 +102,8 @@ function EventListItem_(
       eventListItemTimeStatValueLabel={{
         children: statValue(duration, sty.text__yHkfn),
       }}
+      eventListItemDownloadCsvButton={{ onClick: () => void downloadLogs("csv") }}
+      eventListItemDownloadJsonButton={{ onClick: () => void downloadLogs("json") }}
       interactiveMap={{ eventId }}
     />
   );

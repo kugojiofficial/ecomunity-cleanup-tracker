@@ -19,8 +19,21 @@
   }
 }
 
+/* Fallback background before hydration; _app.tsx then matches the html/body
+   background to the current Plasmic page's background so mobile overscroll
+   (rubber-band) never flashes black. */
+html,
 body {
-  background: var(--background);
+  background-color: #001606;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Hide scrollbars app-wide (scrolling still works) for a native, less web-y feel. */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge/IE */
+}
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, WebKit (incl. iOS) */
 }

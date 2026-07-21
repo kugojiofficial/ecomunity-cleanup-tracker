@@ -31,11 +31,15 @@
 @media (max-width: 800px) {
   .leaderboardListItemHeader {
     margin-bottom: 0px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: stretch;
     row-gap: 8px;
     justify-content: space-between;
-    align-content: flex-start;
+    align-content: stretch;
+    display: flex;
+    flex-direction: row;
+    padding-left: 24px;
+    column-gap: 0px;
   }
 }
 .leaderboardListItemPositionLabel {
@@ -64,6 +68,12 @@
   padding: 10px;
   border: 3px solid var(--token-vOzt3wWwXHfx);
 }
+@media (max-width: 800px) {
+  .leaderboardListItemPositionLabel {
+    left: auto;
+    top: auto;
+  }
+}
 .svg__hvYz {
   animation: none;
   object-fit: cover;
@@ -75,6 +85,29 @@
   margin-top: 3px;
   flex-shrink: 0;
   display: none;
+}
+.leaderboardListItemProfileLayout {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  min-width: 0;
+  padding: 0px;
+}
+@media (max-width: 800px) {
+  .leaderboardListItemProfileLayout {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    align-items: flex-end;
+    justify-content: flex-start;
+    row-gap: 5px;
+    column-gap: 0px;
+  }
 }
 .leaderboardListItemProfileInfoContainer {
   display: flex;
@@ -93,6 +126,9 @@
   .leaderboardListItemProfileInfoContainer {
     width: auto;
     height: auto;
+    align-items: flex-end;
+    justify-content: flex-start;
+    align-self: flex-end;
   }
 }
 .leaderboardListItemProfileUserNameLabel {
@@ -115,6 +151,7 @@
   .leaderboardListItemProfileUserNameLabel {
     padding-bottom: 0px;
     text-align: right;
+    align-self: flex-end;
   }
 }
 .leaderboardListItemProfileJoinDateLabel {
@@ -132,6 +169,7 @@
 @media (max-width: 800px) {
   .leaderboardListItemProfileJoinDateLabel {
     text-align: right;
+    align-self: flex-end;
   }
 }
 .leaderboardListItemPointsStatContainer {
@@ -150,9 +188,11 @@
 }
 @media (max-width: 800px) {
   .leaderboardListItemPointsStatContainer {
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     margin-right: 0px;
+    align-self: flex-end;
+    padding-right: 8px;
   }
 }
 .svg___2IlAr {

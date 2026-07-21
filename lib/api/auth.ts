@@ -46,12 +46,18 @@ export function validateEmail(email: string): string | null {
   return null;
 }
 
+// Mirrors the Supabase Auth email settings (min length 8; lowercase + uppercase
+// + digit + symbol). Keep in sync with the dashboard — the server rejects
+// mismatches and the general error box surfaces its message. The leaked-password
+// (HaveIBeenPwned) check is server-side only and can't be replicated here.
 export function validatePassword(password: string): string | null {
   if (password.length === 0) return "Please enter a password.";
   if (password.length < 8) return "Password must be at least 8 characters.";
-  if (password.length > 100) return "Password must be 100 characters or fewer.";
-  if (!/[a-zA-Z]/.test(password)) return "Password must include a letter.";
+  if (password.length > 72) return "Password must be 72 characters or fewer.";
+  if (!/[a-z]/.test(password)) return "Password must include a lowercase letter.";
+  if (!/[A-Z]/.test(password)) return "Password must include an uppercase letter.";
   if (!/[0-9]/.test(password)) return "Password must include a number.";
+  if (!/[^A-Za-z0-9\s]/.test(password)) return "Password must include a symbol.";
   return null;
 }
 

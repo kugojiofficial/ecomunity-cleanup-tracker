@@ -66,6 +66,9 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 import sty from "./PlasmicSignUp.module.css"; // plasmic-import: uSjUwNJyCcmf/css
 
 import CircleIcon from "./icons/PlasmicIcon__Circle"; // plasmic-import: 0qv-KGqIe6NJ/icon
+import MailIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Mail"; // plasmic-import: g0KBv68uO4-w/icon
+import LockIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Lock"; // plasmic-import: hwRGGXIppyrw/icon
+import LockCheckIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__LockCheck"; // plasmic-import: SGlCUZH698Md/icon
 import EnterIcon from "./icons/PlasmicIcon__Enter"; // plasmic-import: P5DSv3AH-d_Z/icon
 
 const emptyProxy: any = new Proxy(() => "", {
@@ -148,7 +151,6 @@ export type PlasmicSignUp__OverridesType = {
   alreadyLoggedIn?: Flex__<"div">;
   notice?: Flex__<"h1">;
   toDashboardButton?: Flex__<"button">;
-  svg?: Flex__<"svg">;
 };
 
 export interface DefaultSignUpProps {}
@@ -227,8 +229,6 @@ function PlasmicSignUp__RenderFunc(props: {
     ],
     [$props, $ctx, $refs]
   );
-
-  const globalVariants = _useGlobalVariants();
 
   const $state = useDollarState(stateSpecs, {
     $props,
@@ -435,6 +435,7 @@ function PlasmicSignUp__RenderFunc(props: {
                 className={classNames("__wab_instance", sty.emailContainer)}
                 description={"ex. name@example.com"}
                 disabled={false}
+                iconStart={true}
                 inputMode={"email"}
                 label={
                   <div
@@ -460,6 +461,12 @@ function PlasmicSignUp__RenderFunc(props: {
                 placeholder={"name@example.com"}
                 showDescription={false}
                 showLabel={true}
+                start={
+                  <MailIcon
+                    className={classNames("all", sty.svg__lZzlp)}
+                    role={"img"}
+                  />
+                }
                 type={"email"}
                 value={generateStateValueProp($state, [
                   "emailContainer",
@@ -491,7 +498,8 @@ function PlasmicSignUp__RenderFunc(props: {
                 className={classNames("__wab_instance", sty.passwordContainer)}
                 description={""}
                 disabled={false}
-                inputMode={"none"}
+                iconStart={true}
+                inputMode={"text"}
                 label={
                   <div
                     className={classNames("all", "__wab_text", sty.text__lxz3R)}
@@ -516,6 +524,12 @@ function PlasmicSignUp__RenderFunc(props: {
                 placeholder={"..."}
                 showDescription={false}
                 showLabel={true}
+                start={
+                  <LockIcon
+                    className={classNames("all", sty.svg__jhJ5L)}
+                    role={"img"}
+                  />
+                }
                 type={"password"}
                 value={generateStateValueProp($state, [
                   "passwordContainer",
@@ -533,7 +547,8 @@ function PlasmicSignUp__RenderFunc(props: {
                 )}
                 description={""}
                 disabled={false}
-                inputMode={"none"}
+                iconStart={true}
+                inputMode={"text"}
                 label={
                   <div
                     className={classNames("all", "__wab_text", sty.text__r7HcU)}
@@ -558,6 +573,12 @@ function PlasmicSignUp__RenderFunc(props: {
                 placeholder={"..."}
                 showDescription={false}
                 showLabel={true}
+                start={
+                  <LockCheckIcon
+                    className={classNames("all", sty.svg__pnWxi)}
+                    role={"img"}
+                  />
+                }
                 type={"password"}
                 value={generateStateValueProp($state, [
                   "confirmPasswordContainer",
@@ -680,7 +701,7 @@ function PlasmicSignUp__RenderFunc(props: {
                   <div
                     className={classNames("all", "__wab_text", sty.text__wj1Pf)}
                   >
-                    {"Log In"}
+                    {"Log in instead"}
                   </div>
                 </button>
               </div>
@@ -745,9 +766,7 @@ function PlasmicSignUp__RenderFunc(props: {
                 }}
               >
                 <EnterIcon
-                  data-plasmic-name={"svg"}
-                  data-plasmic-override={overrides.svg}
-                  className={classNames("all", sty.svg)}
+                  className={classNames("all", sty.svg___6M1NF)}
                   role={"img"}
                 />
 
@@ -792,8 +811,7 @@ const PlasmicDescendants = {
     "logInRedirectButton",
     "alreadyLoggedIn",
     "notice",
-    "toDashboardButton",
-    "svg"
+    "toDashboardButton"
   ],
   flex: [
     "flex",
@@ -820,8 +838,7 @@ const PlasmicDescendants = {
     "logInRedirectButton",
     "alreadyLoggedIn",
     "notice",
-    "toDashboardButton",
-    "svg"
+    "toDashboardButton"
   ],
   container: [
     "container",
@@ -866,10 +883,9 @@ const PlasmicDescendants = {
   logInRedirect: ["logInRedirect", "h1", "logInRedirectButton"],
   h1: ["h1"],
   logInRedirectButton: ["logInRedirectButton"],
-  alreadyLoggedIn: ["alreadyLoggedIn", "notice", "toDashboardButton", "svg"],
+  alreadyLoggedIn: ["alreadyLoggedIn", "notice", "toDashboardButton"],
   notice: ["notice"],
-  toDashboardButton: ["toDashboardButton", "svg"],
-  svg: ["svg"]
+  toDashboardButton: ["toDashboardButton"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
@@ -901,7 +917,6 @@ type NodeDefaultElementType = {
   alreadyLoggedIn: "div";
   notice: "h1";
   toDashboardButton: "button";
-  svg: "svg";
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -991,7 +1006,6 @@ export const PlasmicSignUp = Object.assign(
     alreadyLoggedIn: makeNodeComponent("alreadyLoggedIn"),
     notice: makeNodeComponent("notice"),
     toDashboardButton: makeNodeComponent("toDashboardButton"),
-    svg: makeNodeComponent("svg"),
 
     // Metadata about props expected for PlasmicSignUp
     internalVariantProps: PlasmicSignUp__VariantProps,

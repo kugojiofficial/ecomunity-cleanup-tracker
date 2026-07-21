@@ -441,28 +441,28 @@
   grid-column-end: -3 !important;
   padding: 8px 16px;
 }
-.massToggleButton {
-  cursor: default;
+.collapseAllButton {
+  cursor: pointer;
   background: var(--token-ytzaa9i3sK9d);
   font-weight: 700;
   color: #ffffff;
   animation: none;
   transform: translate3d(0px, 0px, 0px);
   z-index: 1;
-  left: auto;
-  top: auto;
-  position: relative;
+  left: 0px;
+  top: 0px;
+  position: sticky;
+  display: flex;
   flex-direction: row;
   column-gap: 10px;
   height: auto;
   width: auto;
-  display: none;
   border-radius: 10px;
   padding: 5px 24px 5px 16px;
   border: 3px solid var(--token-ytzaa9i3sK9d);
 }
 @media (max-width: 800px) {
-  .massToggleButton {
+  .collapseAllButton {
     animation: none;
     left: auto;
     top: auto;
@@ -493,7 +493,7 @@
   line-height: 1;
   letter-spacing: normal;
   white-space: pre;
-  user-select: text;
+  user-select: none;
   text-decoration-line: none;
   align-self: center;
   font-weight: 600;
@@ -504,4 +504,17 @@
     animation: none;
     text-align: center;
   }
+}
+.subContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  row-gap: 16px;
+  min-width: 0;
+  padding: 0px;
 }

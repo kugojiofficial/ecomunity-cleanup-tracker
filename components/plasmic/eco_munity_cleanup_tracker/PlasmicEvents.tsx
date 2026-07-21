@@ -69,7 +69,7 @@ import RefreshIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Refresh"
 import PlusIcon from "./icons/PlasmicIcon__Plus"; // plasmic-import: vPBVvVS45CP9/icon
 import ArrowBigLeftFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__ArrowBigLeftFilled"; // plasmic-import: l8ygS1BRem5y/icon
 import ArrowBigRightFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__ArrowBigRightFilled"; // plasmic-import: 6uggRkEYeTKa/icon
-import SettingsIcon from "./icons/PlasmicIcon__Settings"; // plasmic-import: al57NTSJDXc9/icon
+import XCloseIcon from "./icons/PlasmicIcon__XClose"; // plasmic-import: R5NpJDhUjGD_/icon
 
 const emptyProxy: any = new Proxy(() => "", {
   get(_, prop) {
@@ -122,10 +122,12 @@ export const PlasmicEvents__VariantProps = new Array<VariantPropType>();
 
 export type PlasmicEvents__ArgsType = {
   refreshButtonOnClick?: (event: any) => void;
+  massToggleButtonOnClick?: (event: any) => void;
 };
 type ArgPropType = keyof PlasmicEvents__ArgsType;
 export const PlasmicEvents__ArgProps = new Array<ArgPropType>(
-  "refreshButtonOnClick"
+  "refreshButtonOnClick",
+  "massToggleButtonOnClick"
 );
 
 export type PlasmicEvents__OverridesType = {
@@ -142,7 +144,8 @@ export type PlasmicEvents__OverridesType = {
   nextPageButton?: Flex__<"button">;
   navigationBar?: Flex__<typeof NavigationBar>;
   eventListContainer?: Flex__<"div">;
-  massToggleButton?: Flex__<"button">;
+  collapseAllButton?: Flex__<"button">;
+  subContainer?: Flex__<"div">;
 };
 
 export interface DefaultEventsProps {}
@@ -186,27 +189,7 @@ function PlasmicEvents__RenderFunc(props: {
   const refsRef = React.useRef({});
   const $refs = refsRef.current;
 
-  const stateSpecs: Parameters<typeof useDollarState>[0] = React.useMemo(
-    () => [
-      {
-        path: "eventListCollapsed",
-        type: "private",
-        variableType: "boolean",
-        initFunc: ({ $props, $state, $queries, $q, $ctx }) => true
-      }
-    ],
-    [$props, $ctx, $refs]
-  );
-
   const globalVariants = _useGlobalVariants();
-
-  const $state = useDollarState(stateSpecs, {
-    $props,
-    $ctx,
-    $queries: {},
-    $q: {},
-    $refs
-  });
 
   const pageMetadata = generateDynamicMetadata(
     wrapQueriesWithLoadingProxy({}),
@@ -416,81 +399,33 @@ function PlasmicEvents__RenderFunc(props: {
             className={classNames("all", sty.eventListContainer)}
           >
             <button
-              data-plasmic-name={"massToggleButton"}
-              data-plasmic-override={overrides.massToggleButton}
+              data-plasmic-name={"collapseAllButton"}
+              data-plasmic-override={overrides.collapseAllButton}
               className={classNames(
                 "all",
                 "button",
                 "button__6FNNC",
-                sty.massToggleButton
+                sty.collapseAllButton
               )}
-              onClick={async event => {
-                const $steps = {};
-
-                $steps["updateEventListCollapsed"] = true
-                  ? (() => {
-                      const actionArgs = {
-                        variable: {
-                          objRoot: $state,
-                          variablePath: ["eventListCollapsed"]
-                        },
-                        operation: 4
-                      };
-                      return (({
-                        variable,
-                        value,
-                        startIndex,
-                        deleteCount
-                      }) => {
-                        if (!variable) {
-                          return;
-                        }
-                        const { objRoot, variablePath } = variable;
-
-                        const oldValue = $stateGet(objRoot, variablePath);
-                        $stateSet(objRoot, variablePath, !oldValue);
-                        return !oldValue;
-                      })?.apply(null, [actionArgs]);
-                    })()
-                  : undefined;
-                if (
-                  $steps["updateEventListCollapsed"] != null &&
-                  typeof $steps["updateEventListCollapsed"] === "object" &&
-                  typeof $steps["updateEventListCollapsed"].then === "function"
-                ) {
-                  $steps["updateEventListCollapsed"] =
-                    await $steps["updateEventListCollapsed"];
-                }
-              }}
+              onClick={args.massToggleButtonOnClick}
               ref={ref => {
-                $refs["massToggleButton"] = ref;
+                $refs["collapseAllButton"] = ref;
               }}
             >
-              <SettingsIcon
+              <XCloseIcon
                 className={classNames("all", sty.svg__pzz8P)}
                 role={"img"}
               />
 
               <div className={classNames("all", "__wab_text", sty.text__kris)}>
-                <React.Fragment>
-                  {(() => {
-                    try {
-                      return $state.eventListCollapsed
-                        ? "Expand All"
-                        : "Collapse All";
-                    } catch (e) {
-                      if (
-                        e instanceof TypeError ||
-                        e?.plasmicType === "PlasmicUndefinedDataError"
-                      ) {
-                        return "Expand / Collapse All";
-                      }
-                      throw e;
-                    }
-                  })()}
-                </React.Fragment>
+                {"Collapse All"}
               </div>
             </button>
+            <div
+              data-plasmic-name={"subContainer"}
+              data-plasmic-override={overrides.subContainer}
+              className={classNames("all", sty.subContainer)}
+            />
           </div>
         </div>
       </div>
@@ -513,7 +448,8 @@ const PlasmicDescendants = {
     "nextPageButton",
     "navigationBar",
     "eventListContainer",
-    "massToggleButton"
+    "collapseAllButton",
+    "subContainer"
   ],
   header: [
     "header",
@@ -550,8 +486,13 @@ const PlasmicDescendants = {
   pageNumber: ["pageNumber"],
   nextPageButton: ["nextPageButton"],
   navigationBar: ["navigationBar"],
-  eventListContainer: ["eventListContainer", "massToggleButton"],
-  massToggleButton: ["massToggleButton"]
+  eventListContainer: [
+    "eventListContainer",
+    "collapseAllButton",
+    "subContainer"
+  ],
+  collapseAllButton: ["collapseAllButton"],
+  subContainer: ["subContainer"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
@@ -570,7 +511,8 @@ type NodeDefaultElementType = {
   nextPageButton: "button";
   navigationBar: typeof NavigationBar;
   eventListContainer: "div";
-  massToggleButton: "button";
+  collapseAllButton: "button";
+  subContainer: "div";
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -647,7 +589,8 @@ export const PlasmicEvents = Object.assign(
     nextPageButton: makeNodeComponent("nextPageButton"),
     navigationBar: makeNodeComponent("navigationBar"),
     eventListContainer: makeNodeComponent("eventListContainer"),
-    massToggleButton: makeNodeComponent("massToggleButton"),
+    collapseAllButton: makeNodeComponent("collapseAllButton"),
+    subContainer: makeNodeComponent("subContainer"),
 
     // Metadata about props expected for PlasmicEvents
     internalVariantProps: PlasmicEvents__VariantProps,

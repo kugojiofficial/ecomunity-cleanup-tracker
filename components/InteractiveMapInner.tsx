@@ -1,5 +1,5 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, Popup, Circle, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { getWasteLogs, getEventWasteLogs, type WasteLog } from "../lib/api";
@@ -15,24 +15,7 @@ export type InteractiveMapProps = {
 const DEFAULT_CENTER: [number, number] = [40.7128, -74.006];
 const DEFAULT_ZOOM = 13;
 const POINT_HALF_SPAN = 0.005; // ~500m half-box drawn around a single point
-
-const iconCache = new Map<string, L.DivIcon>();
-function dotIcon(color: string): L.DivIcon {
-  let icon = iconCache.get(color);
-  if (!icon) {
-    icon = L.divIcon({
-      className: "",
-      html:
-        `<div style="width:16px;height:16px;border-radius:9999px;background:${color};` +
-        'border:2px solid #ffffff;box-shadow:0 0 0 1px rgba(0,0,0,.25)"></div>',
-      iconSize: [16, 16],
-      iconAnchor: [8, 8],
-      popupAnchor: [0, -8],
-    });
-    iconCache.set(color, icon);
-  }
-  return icon;
-}
+const MARKER_RADIUS = 6;
 
 function sameCalendarDay(a: string, b: string): boolean {
   return new Date(a).toDateString() === new Date(b).toDateString();
@@ -150,11 +133,12 @@ export default function InteractiveMapInner({ eventId, live, liveUntil }: Intera
   }, [logs]);
 
   return (
-    <div style={{ width: "100%", height: "500px" }}>
+    <div style={{ width: "100%", height: "100%", minHeight: 0 }}>
       <MapContainer
         center={DEFAULT_CENTER}
         zoom={DEFAULT_ZOOM}
         scrollWheelZoom={true}
+        preferCanvas={true}
         style={{ width: "100%", height: "100%", borderRadius: "12px" }}
       >
         <TileLayer
@@ -170,15 +154,22 @@ export default function InteractiveMapInner({ eventId, live, liveUntil }: Intera
                 center={[log.latitude, log.longitude]}
                 radius={log.accuracy_meters}
                 pathOptions={{
-                  stroke: false, // filled circle, no ring outline
+                  stroke: false,
                   fillColor: wasteTypeColor(log.waste_type),
                   fillOpacity: 0.2,
                 }}
               />
             ) : null}
-            <Marker
-              position={[log.latitude, log.longitude]}
-              icon={dotIcon(wasteTypeColor(log.waste_type))}
+            <CircleMarker
+              center={[log.latitude, log.longitude]}
+              radius={MARKER_RADIUS}
+              pathOptions={{
+                color: "#ffffff",
+                weight: 1.5,
+                fillColor: wasteTypeColor(log.waste_type),
+                fillOpacity: 1,
+                opacity: 1,
+              }}
               eventHandlers={{
                 popupopen: () => setOpenLogId(log.id),
                 popupclose: () => setOpenLogId((cur) => (cur === log.id ? null : cur)),
@@ -195,7 +186,7 @@ export default function InteractiveMapInner({ eventId, live, liveUntil }: Intera
                     : new Date(log.created_at).toLocaleString()
                   : "Unknown"}
               </Popup>
-            </Marker>
+            </CircleMarker>
           </Fragment>
         ))}
       </MapContainer>

@@ -95,7 +95,18 @@ function SignUp() {
     const { data, error } = await signUp({ email, password, firstName, lastName });
     setBusy(false);
     if (error) {
-      setGeneralError(error.message);
+      // Duplicate when "Confirm email" is off — Supabase returns an error.
+      setGeneralError(
+        /already registered|already exists|already been registered/i.test(error.message)
+          ? "An account with this email already exists."
+          : error.message
+      );
+      return;
+    }
+    // Duplicate when "Confirm email" is on — Supabase hides it (anti-enumeration)
+    // by returning a user with an empty identities array instead of an error.
+    if (data.user && data.user.identities && data.user.identities.length === 0) {
+      setGeneralError("An account with this email already exists.");
       return;
     }
     if (data.session) {

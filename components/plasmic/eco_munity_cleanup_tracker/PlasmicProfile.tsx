@@ -65,10 +65,11 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 
 import sty from "./PlasmicProfile.module.css"; // plasmic-import: EnVcSZGZQy5n/css
 
-import ProfileIcon from "./icons/PlasmicIcon__Profile"; // plasmic-import: OkMjqJNO-au2/icon
-import TriangleFilledIcon from "./icons/PlasmicIcon__TriangleFilled"; // plasmic-import: 31rbojHD3Acy/icon
+import UserCircleIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__UserCircle"; // plasmic-import: Czqva9FxC5IN/icon
+import StarFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__StarFilled"; // plasmic-import: hkZTt7XysTNC/icon
 import MovingTrashIcon from "./icons/PlasmicIcon__MovingTrash"; // plasmic-import: VWc3kj67KFnJ/icon
 import ClockIcon from "./icons/PlasmicIcon__Clock"; // plasmic-import: dqr28RDSI9p9/icon
+import EditIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Edit"; // plasmic-import: Q3Mz32feM0mm/icon
 import LogoutIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Logout"; // plasmic-import: UOnydwul0hWX/icon
 import PlusIcon from "./icons/PlasmicIcon__Plus"; // plasmic-import: vPBVvVS45CP9/icon
 import ArrowBigLeftFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__ArrowBigLeftFilled"; // plasmic-import: l8ygS1BRem5y/icon
@@ -149,6 +150,8 @@ export type PlasmicProfile__OverridesType = {
   totalHoursStatContainer?: Flex__<"div">;
   totalHoursStatValueLabel?: Flex__<"h1">;
   totalHoursStatLabel?: Flex__<"h1">;
+  editNameButton?: Flex__<"button">;
+  changeEmailButton?: Flex__<"button">;
   logOutButton?: Flex__<"button">;
   leaderboardContainer?: Flex__<"div">;
   leaderboardTitle?: Flex__<"h1">;
@@ -273,7 +276,7 @@ function PlasmicProfile__RenderFunc(props: {
               data-plasmic-override={overrides.profileHeader}
               className={classNames("all", sty.profileHeader)}
             >
-              <ProfileIcon
+              <UserCircleIcon
                 className={classNames("all", sty.svg__bmB)}
                 role={"img"}
               />
@@ -319,7 +322,7 @@ function PlasmicProfile__RenderFunc(props: {
                 data-plasmic-override={overrides.pointsStatContainer}
                 className={classNames("all", sty.pointsStatContainer)}
               >
-                <TriangleFilledIcon
+                <StarFilledIcon
                   className={classNames("all", sty.svg__jFjsG)}
                   role={"img"}
                 />
@@ -427,6 +430,50 @@ function PlasmicProfile__RenderFunc(props: {
               </div>
             </div>
           </div>
+          <button
+            data-plasmic-name={"editNameButton"}
+            data-plasmic-override={overrides.editNameButton}
+            className={classNames(
+              "all",
+              "button",
+              "button__6FNNC",
+              sty.editNameButton
+            )}
+            ref={ref => {
+              $refs["editNameButton"] = ref;
+            }}
+          >
+            <EditIcon
+              className={classNames("all", sty.svg__yqfp8)}
+              role={"img"}
+            />
+
+            <div className={classNames("all", "__wab_text", sty.text___7JQbS)}>
+              {"Edit Name"}
+            </div>
+          </button>
+          <button
+            data-plasmic-name={"changeEmailButton"}
+            data-plasmic-override={overrides.changeEmailButton}
+            className={classNames(
+              "all",
+              "button",
+              "button__6FNNC",
+              sty.changeEmailButton
+            )}
+            ref={ref => {
+              $refs["changeEmailButton"] = ref;
+            }}
+          >
+            <EditIcon
+              className={classNames("all", sty.svg__yvEnz)}
+              role={"img"}
+            />
+
+            <div className={classNames("all", "__wab_text", sty.text__piwEr)}>
+              {"Change Email"}
+            </div>
+          </button>
           <button
             data-plasmic-name={"logOutButton"}
             data-plasmic-override={overrides.logOutButton}
@@ -588,6 +635,8 @@ const PlasmicDescendants = {
     "totalHoursStatContainer",
     "totalHoursStatValueLabel",
     "totalHoursStatLabel",
+    "editNameButton",
+    "changeEmailButton",
     "logOutButton",
     "leaderboardContainer",
     "leaderboardTitle",
@@ -663,6 +712,8 @@ const PlasmicDescendants = {
   ],
   totalHoursStatValueLabel: ["totalHoursStatValueLabel"],
   totalHoursStatLabel: ["totalHoursStatLabel"],
+  editNameButton: ["editNameButton"],
+  changeEmailButton: ["changeEmailButton"],
   logOutButton: ["logOutButton"],
   leaderboardContainer: [
     "leaderboardContainer",
@@ -717,6 +768,8 @@ type NodeDefaultElementType = {
   totalHoursStatContainer: "div";
   totalHoursStatValueLabel: "h1";
   totalHoursStatLabel: "h1";
+  editNameButton: "button";
+  changeEmailButton: "button";
   logOutButton: "button";
   leaderboardContainer: "div";
   leaderboardTitle: "h1";
@@ -811,6 +864,8 @@ export const PlasmicProfile = Object.assign(
     totalHoursStatContainer: makeNodeComponent("totalHoursStatContainer"),
     totalHoursStatValueLabel: makeNodeComponent("totalHoursStatValueLabel"),
     totalHoursStatLabel: makeNodeComponent("totalHoursStatLabel"),
+    editNameButton: makeNodeComponent("editNameButton"),
+    changeEmailButton: makeNodeComponent("changeEmailButton"),
     logOutButton: makeNodeComponent("logOutButton"),
     leaderboardContainer: makeNodeComponent("leaderboardContainer"),
     leaderboardTitle: makeNodeComponent("leaderboardTitle"),

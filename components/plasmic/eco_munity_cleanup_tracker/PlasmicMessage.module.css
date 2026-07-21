@@ -8,6 +8,12 @@
   justify-self: flex-start;
   padding: 0px;
 }
+@media (max-width: 800px) {
+  .message {
+    width: 100%;
+    min-width: 0;
+  }
+}
 .messagewarning {
   padding-top: 0px;
   margin-top: 0px;

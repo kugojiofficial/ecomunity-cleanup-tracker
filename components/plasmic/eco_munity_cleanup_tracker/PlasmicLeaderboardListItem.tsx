@@ -65,7 +65,7 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 import sty from "./PlasmicLeaderboardListItem.module.css"; // plasmic-import: NdhG8kvmuxmI/css
 
 import ProfileIcon from "./icons/PlasmicIcon__Profile"; // plasmic-import: OkMjqJNO-au2/icon
-import TriangleFilledIcon from "./icons/PlasmicIcon__TriangleFilled"; // plasmic-import: 31rbojHD3Acy/icon
+import StarFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__StarFilled"; // plasmic-import: hkZTt7XysTNC/icon
 
 export type PlasmicLeaderboardListItem__VariantMembers = {};
 export type PlasmicLeaderboardListItem__VariantsArgs = {};
@@ -91,6 +91,7 @@ export type PlasmicLeaderboardListItem__OverridesType = {
   leaderboardListItem?: Flex__<"div">;
   leaderboardListItemHeader?: Flex__<"div">;
   leaderboardListItemPositionLabel?: Flex__<"h1">;
+  leaderboardListItemProfileLayout?: Flex__<"div">;
   leaderboardListItemProfileInfoContainer?: Flex__<"div">;
   leaderboardListItemProfileUserNameLabel?: Flex__<"h1">;
   leaderboardListItemProfileJoinDateLabel?: Flex__<"div">;
@@ -208,129 +209,137 @@ function PlasmicLeaderboardListItem__RenderFunc(props: {
         />
 
         <div
-          data-plasmic-name={"leaderboardListItemProfileInfoContainer"}
-          data-plasmic-override={
-            overrides.leaderboardListItemProfileInfoContainer
-          }
-          className={classNames(
-            "all",
-            sty.leaderboardListItemProfileInfoContainer
-          )}
+          data-plasmic-name={"leaderboardListItemProfileLayout"}
+          data-plasmic-override={overrides.leaderboardListItemProfileLayout}
+          className={classNames("all", sty.leaderboardListItemProfileLayout)}
         >
-          <h1
-            data-plasmic-name={"leaderboardListItemProfileUserNameLabel"}
-            data-plasmic-override={
-              overrides.leaderboardListItemProfileUserNameLabel
-            }
-            className={classNames(
-              "all",
-              "h1",
-              "h1__6FNNC",
-              "__wab_text",
-              sty.leaderboardListItemProfileUserNameLabel
-            )}
-          >
-            <React.Fragment>
-              {(() => {
-                try {
-                  return $props.displayName;
-                } catch (e) {
-                  if (
-                    e instanceof TypeError ||
-                    e?.plasmicType === "PlasmicUndefinedDataError"
-                  ) {
-                    return "User Name";
-                  }
-                  throw e;
-                }
-              })()}
-            </React.Fragment>
-          </h1>
           <div
-            data-plasmic-name={"leaderboardListItemProfileJoinDateLabel"}
+            data-plasmic-name={"leaderboardListItemProfileInfoContainer"}
             data-plasmic-override={
-              overrides.leaderboardListItemProfileJoinDateLabel
+              overrides.leaderboardListItemProfileInfoContainer
             }
             className={classNames(
               "all",
-              "__wab_text",
-              sty.leaderboardListItemProfileJoinDateLabel
+              sty.leaderboardListItemProfileInfoContainer
             )}
           >
-            <React.Fragment>
-              {(() => {
-                try {
-                  return $props.joinDateText;
-                } catch (e) {
-                  if (
-                    e instanceof TypeError ||
-                    e?.plasmicType === "PlasmicUndefinedDataError"
-                  ) {
-                    return "Joined XXXX-XX-XX\n\r";
+            <h1
+              data-plasmic-name={"leaderboardListItemProfileUserNameLabel"}
+              data-plasmic-override={
+                overrides.leaderboardListItemProfileUserNameLabel
+              }
+              className={classNames(
+                "all",
+                "h1",
+                "h1__6FNNC",
+                "__wab_text",
+                sty.leaderboardListItemProfileUserNameLabel
+              )}
+            >
+              <React.Fragment>
+                {(() => {
+                  try {
+                    return $props.displayName;
+                  } catch (e) {
+                    if (
+                      e instanceof TypeError ||
+                      e?.plasmicType === "PlasmicUndefinedDataError"
+                    ) {
+                      return "User Name";
+                    }
+                    throw e;
                   }
-                  throw e;
-                }
-              })()}
-            </React.Fragment>
+                })()}
+              </React.Fragment>
+            </h1>
+            <div
+              data-plasmic-name={"leaderboardListItemProfileJoinDateLabel"}
+              data-plasmic-override={
+                overrides.leaderboardListItemProfileJoinDateLabel
+              }
+              className={classNames(
+                "all",
+                "__wab_text",
+                sty.leaderboardListItemProfileJoinDateLabel
+              )}
+            >
+              <React.Fragment>
+                {(() => {
+                  try {
+                    return $props.joinDateText;
+                  } catch (e) {
+                    if (
+                      e instanceof TypeError ||
+                      e?.plasmicType === "PlasmicUndefinedDataError"
+                    ) {
+                      return "Joined XXXX-XX-XX\n\r";
+                    }
+                    throw e;
+                  }
+                })()}
+              </React.Fragment>
+            </div>
           </div>
-        </div>
-        <div
-          data-plasmic-name={"leaderboardListItemPointsStatContainer"}
-          data-plasmic-override={
-            overrides.leaderboardListItemPointsStatContainer
-          }
-          className={classNames(
-            "all",
-            sty.leaderboardListItemPointsStatContainer
-          )}
-        >
-          <TriangleFilledIcon
-            className={classNames("all", sty.svg___2IlAr)}
-            role={"img"}
-          />
-
-          <h1
-            data-plasmic-name={"leaderboardListItemPointsStatValueLabel"}
+          <div
+            data-plasmic-name={"leaderboardListItemPointsStatContainer"}
             data-plasmic-override={
-              overrides.leaderboardListItemPointsStatValueLabel
+              overrides.leaderboardListItemPointsStatContainer
             }
             className={classNames(
               "all",
-              "h1",
-              "h1__6FNNC",
-              "__wab_text",
-              sty.leaderboardListItemPointsStatValueLabel
+              sty.leaderboardListItemPointsStatContainer
             )}
           >
-            <React.Fragment>
-              {(() => {
-                try {
-                  return $props.points;
-                } catch (e) {
-                  if (
-                    e instanceof TypeError ||
-                    e?.plasmicType === "PlasmicUndefinedDataError"
-                  ) {
-                    return "0";
+            <StarFilledIcon
+              className={classNames("all", sty.svg___2IlAr)}
+              role={"img"}
+            />
+
+            <h1
+              data-plasmic-name={"leaderboardListItemPointsStatValueLabel"}
+              data-plasmic-override={
+                overrides.leaderboardListItemPointsStatValueLabel
+              }
+              className={classNames(
+                "all",
+                "h1",
+                "h1__6FNNC",
+                "__wab_text",
+                sty.leaderboardListItemPointsStatValueLabel
+              )}
+            >
+              <React.Fragment>
+                {(() => {
+                  try {
+                    return $props.points;
+                  } catch (e) {
+                    if (
+                      e instanceof TypeError ||
+                      e?.plasmicType === "PlasmicUndefinedDataError"
+                    ) {
+                      return "0";
+                    }
+                    throw e;
                   }
-                  throw e;
-                }
-              })()}
-            </React.Fragment>
-          </h1>
-          <h1
-            data-plasmic-name={"leaderboardListItemPointsStatLabel"}
-            data-plasmic-override={overrides.leaderboardListItemPointsStatLabel}
-            className={classNames(
-              "all",
-              "h1",
-              "h1__6FNNC",
-              "__wab_text",
-              sty.leaderboardListItemPointsStatLabel
-            )}
-          >
-            {"points"}
-          </h1>
+                })()}
+              </React.Fragment>
+            </h1>
+            <h1
+              data-plasmic-name={"leaderboardListItemPointsStatLabel"}
+              data-plasmic-override={
+                overrides.leaderboardListItemPointsStatLabel
+              }
+              className={classNames(
+                "all",
+                "h1",
+                "h1__6FNNC",
+                "__wab_text",
+                sty.leaderboardListItemPointsStatLabel
+              )}
+            >
+              {"points"}
+            </h1>
+          </div>
         </div>
       </div>
     </div>
@@ -342,6 +351,7 @@ const PlasmicDescendants = {
     "leaderboardListItem",
     "leaderboardListItemHeader",
     "leaderboardListItemPositionLabel",
+    "leaderboardListItemProfileLayout",
     "leaderboardListItemProfileInfoContainer",
     "leaderboardListItemProfileUserNameLabel",
     "leaderboardListItemProfileJoinDateLabel",
@@ -352,6 +362,7 @@ const PlasmicDescendants = {
   leaderboardListItemHeader: [
     "leaderboardListItemHeader",
     "leaderboardListItemPositionLabel",
+    "leaderboardListItemProfileLayout",
     "leaderboardListItemProfileInfoContainer",
     "leaderboardListItemProfileUserNameLabel",
     "leaderboardListItemProfileJoinDateLabel",
@@ -360,6 +371,15 @@ const PlasmicDescendants = {
     "leaderboardListItemPointsStatLabel"
   ],
   leaderboardListItemPositionLabel: ["leaderboardListItemPositionLabel"],
+  leaderboardListItemProfileLayout: [
+    "leaderboardListItemProfileLayout",
+    "leaderboardListItemProfileInfoContainer",
+    "leaderboardListItemProfileUserNameLabel",
+    "leaderboardListItemProfileJoinDateLabel",
+    "leaderboardListItemPointsStatContainer",
+    "leaderboardListItemPointsStatValueLabel",
+    "leaderboardListItemPointsStatLabel"
+  ],
   leaderboardListItemProfileInfoContainer: [
     "leaderboardListItemProfileInfoContainer",
     "leaderboardListItemProfileUserNameLabel",
@@ -388,6 +408,7 @@ type NodeDefaultElementType = {
   leaderboardListItem: "div";
   leaderboardListItemHeader: "div";
   leaderboardListItemPositionLabel: "h1";
+  leaderboardListItemProfileLayout: "div";
   leaderboardListItemProfileInfoContainer: "div";
   leaderboardListItemProfileUserNameLabel: "h1";
   leaderboardListItemProfileJoinDateLabel: "div";
@@ -461,6 +482,9 @@ export const PlasmicLeaderboardListItem = Object.assign(
     leaderboardListItemHeader: makeNodeComponent("leaderboardListItemHeader"),
     leaderboardListItemPositionLabel: makeNodeComponent(
       "leaderboardListItemPositionLabel"
+    ),
+    leaderboardListItemProfileLayout: makeNodeComponent(
+      "leaderboardListItemProfileLayout"
     ),
     leaderboardListItemProfileInfoContainer: makeNodeComponent(
       "leaderboardListItemProfileInfoContainer"

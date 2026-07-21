@@ -30,7 +30,7 @@
   display: flex;
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 150vh;
   max-width: 100%;
   justify-self: center;
   left: auto;
@@ -38,12 +38,18 @@
   z-index: 1;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 25px;
   margin-bottom: 25px;
+  max-height: 100%;
   grid-column-start: 1 !important;
   grid-column-end: -1 !important;
   padding: 0px;
+}
+@media (max-width: 800px) {
+  .flex {
+    height: 125vh;
+  }
 }
 .container {
   animation: none;
@@ -239,7 +245,6 @@
     justify-content: center;
     align-items: center;
     width: 95%;
-    display: flex;
   }
 }
 .lastNameErrorContent {
@@ -480,7 +485,7 @@
 }
 .signUpButton {
   cursor: default;
-  background: var(--token-_ghsv35bfxZ2);
+  background: var(--token-ytzaa9i3sK9d);
   font-weight: 700;
   color: #ffffff;
   animation: none;
@@ -500,7 +505,7 @@
   min-width: 0;
   border-radius: 10px;
   padding: 10px 24px;
-  border: 3px solid var(--token--LLXgMeNdajs);
+  border: 3px solid var(--token-ytzaa9i3sK9d);
 }
 @media (max-width: 800px) {
   .signUpButton {
@@ -624,7 +629,7 @@
 }
 .logInRedirectButton {
   cursor: default;
-  background: var(--token-_ghsv35bfxZ2);
+  background: none;
   font-weight: 700;
   color: #ffffff;
   animation: none;
@@ -644,7 +649,7 @@
   min-width: 0;
   border-radius: 10px;
   padding: 10px 24px;
-  border: 3px solid var(--token--LLXgMeNdajs);
+  border: 0px solid #ffffff;
 }
 @media (max-width: 800px) {
   .logInRedirectButton {
@@ -665,7 +670,7 @@
   font-size: 24px;
   text-align: center;
   font-style: normal;
-  text-transform: capitalize;
+  text-transform: none;
   line-height: 1;
   letter-spacing: normal;
   white-space: pre;
@@ -673,9 +678,11 @@
   text-decoration-line: none;
   align-self: center;
   font-weight: 600;
-  padding-top: 3px;
   padding-bottom: 0px;
   height: auto;
+  padding-top: 3px;
+  color: var(--token--LLXgMeNdajs);
+  cursor: pointer;
 }
 @media (max-width: 800px) {
   .text__wj1Pf {
@@ -760,7 +767,7 @@
     min-height: 0;
   }
 }
-.svg {
+.svg___6M1NF {
   animation: none;
   object-fit: cover;
   max-width: 100%;

@@ -65,7 +65,9 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 
 import sty from "./PlasmicLogIn.module.css"; // plasmic-import: k4hp2P0Ip_cu/css
 
+import MailIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Mail"; // plasmic-import: g0KBv68uO4-w/icon
 import CircleIcon from "./icons/PlasmicIcon__Circle"; // plasmic-import: 0qv-KGqIe6NJ/icon
+import LockIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Lock"; // plasmic-import: hwRGGXIppyrw/icon
 import Login2Icon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Login2"; // plasmic-import: csbhyrMqT37P/icon
 import EnterIcon from "./icons/PlasmicIcon__Enter"; // plasmic-import: P5DSv3AH-d_Z/icon
 
@@ -292,6 +294,7 @@ function PlasmicLogIn__RenderFunc(props: {
                 className={classNames("__wab_instance", sty.emailContainer)}
                 description={"ex. name@example.com"}
                 disabled={false}
+                iconStart={true}
                 inputMode={"email"}
                 label={
                   <div
@@ -317,6 +320,12 @@ function PlasmicLogIn__RenderFunc(props: {
                 placeholder={"..."}
                 showDescription={false}
                 showLabel={true}
+                start={
+                  <MailIcon
+                    className={classNames("all", sty.svg__waBa9)}
+                    role={"img"}
+                  />
+                }
                 type={"email"}
                 value={generateStateValueProp($state, [
                   "emailContainer",
@@ -331,7 +340,8 @@ function PlasmicLogIn__RenderFunc(props: {
                 className={classNames("__wab_instance", sty.passwordContainer)}
                 description={""}
                 disabled={false}
-                inputMode={"none"}
+                iconStart={true}
+                inputMode={"text"}
                 label={
                   <div
                     className={classNames(
@@ -360,6 +370,12 @@ function PlasmicLogIn__RenderFunc(props: {
                 placeholder={"..."}
                 showDescription={false}
                 showLabel={true}
+                start={
+                  <LockIcon
+                    className={classNames("all", sty.svg__qSd2L)}
+                    role={"img"}
+                  />
+                }
                 type={"password"}
                 value={generateStateValueProp($state, [
                   "passwordContainer",
@@ -466,7 +482,7 @@ function PlasmicLogIn__RenderFunc(props: {
                   <div
                     className={classNames("all", "__wab_text", sty.text__awxdC)}
                   >
-                    {"Sign up"}
+                    {"Sign up instead"}
                   </div>
                 </button>
               </div>

@@ -64,10 +64,13 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 
 import sty from "./PlasmicNavigationBar.module.css"; // plasmic-import: 9ar3kGz7iBUD/css
 
-import DashboardIcon from "./icons/PlasmicIcon__Dashboard"; // plasmic-import: p0a7-45MOC77/icon
+import LayoutDashboardIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__LayoutDashboard"; // plasmic-import: HWTpSbFCoWAh/icon
+import LayoutDashboardFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__LayoutDashboardFilled"; // plasmic-import: _xQ2qZ4iPYcE/icon
 import CalendarIcon from "./icons/PlasmicIcon__Calendar"; // plasmic-import: CPTBTnszI8ug/icon
-import ProfileIcon from "./icons/PlasmicIcon__Profile"; // plasmic-import: OkMjqJNO-au2/icon
-import SettingsIcon from "./icons/PlasmicIcon__Settings"; // plasmic-import: al57NTSJDXc9/icon
+import UserIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__User"; // plasmic-import: d1LJS78vGoJH/icon
+import UserFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__UserFilled"; // plasmic-import: 2Yu5Q5j4morB/icon
+import SettingsCogIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__SettingsCog"; // plasmic-import: 9qK83KbdR3Yy/icon
+import SettingsFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__SettingsFilled"; // plasmic-import: RiaJeooMb1Et/icon
 
 export type PlasmicNavigationBar__VariantMembers = {
   tab: "dashboard" | "events" | "adminPortal" | "profile";
@@ -189,6 +192,11 @@ function PlasmicNavigationBar__RenderFunc(props: {
             $state,
             "loggedOut",
             "loggedOut"
+          ),
+          [sty.navigationBartab_adminPortal]: hasVariant(
+            $state,
+            "tab",
+            "adminPortal"
           )
         }
       )}
@@ -206,6 +214,11 @@ function PlasmicNavigationBar__RenderFunc(props: {
               $state,
               "loggedOut",
               "loggedOut"
+            ),
+            [sty.dashboardPageButtontab_adminPortal]: hasVariant(
+              $state,
+              "tab",
+              "adminPortal"
             ),
             [sty.dashboardPageButtontab_dashboard]: hasVariant(
               $state,
@@ -246,7 +259,12 @@ function PlasmicNavigationBar__RenderFunc(props: {
           $refs["dashboardPageButton"] = ref;
         }}
       >
-        <DashboardIcon
+        <PlasmicIcon__
+          PlasmicIconType={
+            hasVariant($state, "tab", "dashboard")
+              ? LayoutDashboardFilledIcon
+              : LayoutDashboardIcon
+          }
           className={classNames("all", sty.svg__anMfb, {
             [sty.svgtab_dashboard__anMfblOhXr]: hasVariant(
               $state,
@@ -263,7 +281,14 @@ function PlasmicNavigationBar__RenderFunc(props: {
             "h1",
             "h1__6FNNC",
             "__wab_text",
-            sty.h1__hlXHk
+            sty.h1__hlXHk,
+            {
+              [sty.h1tab_adminPortal__hlXHkqxQ]: hasVariant(
+                $state,
+                "tab",
+                "adminPortal"
+              )
+            }
           )}
         >
           {"Dashboard"}
@@ -282,6 +307,11 @@ function PlasmicNavigationBar__RenderFunc(props: {
               $state,
               "loggedOut",
               "loggedOut"
+            ),
+            [sty.sessionsPageButtontab_adminPortal]: hasVariant(
+              $state,
+              "tab",
+              "adminPortal"
             ),
             [sty.sessionsPageButtontab_dashboard]: hasVariant(
               $state,
@@ -370,6 +400,11 @@ function PlasmicNavigationBar__RenderFunc(props: {
               "loggedOut",
               "loggedOut"
             ),
+            [sty.profilePageButtontab_adminPortal]: hasVariant(
+              $state,
+              "tab",
+              "adminPortal"
+            ),
             [sty.profilePageButtontab_dashboard]: hasVariant(
               $state,
               "tab",
@@ -419,7 +454,10 @@ function PlasmicNavigationBar__RenderFunc(props: {
           $refs["profilePageButton"] = ref;
         }}
       >
-        <ProfileIcon
+        <PlasmicIcon__
+          PlasmicIconType={
+            hasVariant($state, "tab", "profile") ? UserFilledIcon : UserIcon
+          }
           className={classNames("all", sty.svg__zp5VL, {
             [sty.svgtab_adminPortal__zp5VLqxQ]: hasVariant(
               $state,
@@ -495,7 +533,12 @@ function PlasmicNavigationBar__RenderFunc(props: {
         platform={"nextjs"}
         target={hasVariant($state, "tab", "dashboard") ? undefined : undefined}
       >
-        <SettingsIcon
+        <PlasmicIcon__
+          PlasmicIconType={
+            hasVariant($state, "tab", "adminPortal")
+              ? SettingsFilledIcon
+              : SettingsCogIcon
+          }
           className={classNames("all", sty.svg__rm7Zi, {
             [sty.svgtab_adminPortal__rm7ZiqxQ]: hasVariant(
               $state,

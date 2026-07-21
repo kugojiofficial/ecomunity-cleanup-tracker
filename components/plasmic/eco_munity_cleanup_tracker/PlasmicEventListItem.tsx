@@ -57,7 +57,7 @@ import {
   useGlobalActions
 } from "@plasmicapp/react-web/lib/host";
 
-import { InteractiveMap } from "../../InteractiveMap"; // plasmic-import: XvO_ZZU8bF0U/codeComponent
+import { InteractiveMap } from "../../InteractiveMap"; // plasmic-import: fQ3a6IEKrV0-/codeComponent
 import { _useGlobalVariants } from "./plasmic"; // plasmic-import: 6FNNC7rfkE9HMPqXDPWwTm/projectModule
 import { _useStyleTokens } from "./PlasmicStyleTokensProvider"; // plasmic-import: 6FNNC7rfkE9HMPqXDPWwTm/styleTokensProvider
 
@@ -66,12 +66,12 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 import sty from "./PlasmicEventListItem.module.css"; // plasmic-import: QSNcDEs3p2EG/css
 
 import CalendarIcon from "./icons/PlasmicIcon__Calendar"; // plasmic-import: CPTBTnszI8ug/icon
-import PeopleIcon from "./icons/PlasmicIcon__People"; // plasmic-import: 9nm8GnVbav_y/icon
-import MovingTrashIcon from "./icons/PlasmicIcon__MovingTrash"; // plasmic-import: VWc3kj67KFnJ/icon
-import ClockIcon from "./icons/PlasmicIcon__Clock"; // plasmic-import: dqr28RDSI9p9/icon
-import ChevronUpIcon from "./icons/PlasmicIcon__ChevronUp"; // plasmic-import: mpVHKLiWHnf7/icon
+import UsersIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Users"; // plasmic-import: JrpdS-Pm49Zg/icon
+import TrashIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Trash"; // plasmic-import: uJVL4__Mg7cD/icon
+import ClockHour4Icon from "../library_tabler_3_2_icons/icons/PlasmicIcon__ClockHour4"; // plasmic-import: 0KwlUK7Uz6QJ/icon
+import ChevronUpIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__ChevronUp"; // plasmic-import: QmrXNzziUhu4/icon
 import ChevronDownIcon from "./icons/PlasmicIcon__ChevronDown"; // plasmic-import: phBLxJ4vlRyi/icon
-import DownloadIcon from "./icons/PlasmicIcon__Download"; // plasmic-import: QcKmgMaHPSAz/icon
+import FileDownloadIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__FileDownload"; // plasmic-import: hGJakEfBLuHS/icon
 
 export type PlasmicEventListItem__VariantMembers = {
   showingDetails: "showingDetails";
@@ -89,9 +89,9 @@ export type PlasmicEventListItem__ArgsType = {
   participantsCount?: number;
   collectedWasteAmount?: number;
   duration?: number;
-  slotWasteListContainer?: React.ReactNode;
   dateBegan?: string;
   dateEnded?: string;
+  slotWasteListContainer?: React.ReactNode;
 };
 type ArgPropType = keyof PlasmicEventListItem__ArgsType;
 export const PlasmicEventListItem__ArgProps = new Array<ArgPropType>(
@@ -99,9 +99,9 @@ export const PlasmicEventListItem__ArgProps = new Array<ArgPropType>(
   "participantsCount",
   "collectedWasteAmount",
   "duration",
-  "slotWasteListContainer",
   "dateBegan",
-  "dateEnded"
+  "dateEnded",
+  "slotWasteListContainer"
 );
 
 export type PlasmicEventListItem__OverridesType = {
@@ -139,9 +139,9 @@ export interface DefaultEventListItemProps {
   participantsCount?: number;
   collectedWasteAmount?: number;
   duration?: number;
-  slotWasteListContainer?: React.ReactNode;
   dateBegan?: string;
   dateEnded?: string;
+  slotWasteListContainer?: React.ReactNode;
   showingDetails?: SingleBooleanChoiceArg<"showingDetails">;
   className?: string;
 }
@@ -360,7 +360,7 @@ function PlasmicEventListItem__RenderFunc(props: {
           data-plasmic-override={overrides.eventListItemParticipantsStat}
           className={classNames("all", sty.eventListItemParticipantsStat)}
         >
-          <PeopleIcon
+          <UsersIcon
             className={classNames("all", sty.svg__yijWq)}
             role={"img"}
           />
@@ -414,7 +414,7 @@ function PlasmicEventListItem__RenderFunc(props: {
           data-plasmic-override={overrides.eventListItemCollectedWasteStat}
           className={classNames("all", sty.eventListItemCollectedWasteStat)}
         >
-          <MovingTrashIcon
+          <TrashIcon
             className={classNames("all", sty.svg__fr3PL)}
             role={"img"}
           />
@@ -470,7 +470,7 @@ function PlasmicEventListItem__RenderFunc(props: {
           data-plasmic-override={overrides.eventListItemTimeStat}
           className={classNames("all", sty.eventListItemTimeStat)}
         >
-          <ClockIcon
+          <ClockHour4Icon
             className={classNames("all", sty.svg__fky8L)}
             role={"img"}
           />
@@ -613,14 +613,11 @@ function PlasmicEventListItem__RenderFunc(props: {
                 "button__6FNNC",
                 sty.eventListItemDownloadCsvButton
               )}
-              onClick={async event => {
-                const $steps = {};
-              }}
               ref={ref => {
                 $refs["eventListItemDownloadCsvButton"] = ref;
               }}
             >
-              <DownloadIcon
+              <FileDownloadIcon
                 className={classNames("all", sty.svg___32HqH)}
                 role={"img"}
               />
@@ -641,40 +638,11 @@ function PlasmicEventListItem__RenderFunc(props: {
                 "button__6FNNC",
                 sty.eventListItemDownloadJsonButton
               )}
-              onClick={async event => {
-                const $steps = {};
-
-                $steps["updateStateVariable"] = true
-                  ? (() => {
-                      const actionArgs = {};
-                      return (({
-                        variable,
-                        value,
-                        startIndex,
-                        deleteCount
-                      }) => {
-                        if (!variable) {
-                          return;
-                        }
-                        const { objRoot, variablePath } = variable;
-                        undefined;
-                      })?.apply(null, [actionArgs]);
-                    })()
-                  : undefined;
-                if (
-                  $steps["updateStateVariable"] != null &&
-                  typeof $steps["updateStateVariable"] === "object" &&
-                  typeof $steps["updateStateVariable"].then === "function"
-                ) {
-                  $steps["updateStateVariable"] =
-                    await $steps["updateStateVariable"];
-                }
-              }}
               ref={ref => {
                 $refs["eventListItemDownloadJsonButton"] = ref;
               }}
             >
-              <DownloadIcon
+              <FileDownloadIcon
                 className={classNames("all", sty.svg__oSup9)}
                 role={"img"}
               />

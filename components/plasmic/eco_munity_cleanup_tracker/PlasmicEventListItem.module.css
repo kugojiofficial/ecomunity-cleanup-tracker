@@ -323,7 +323,7 @@
   }
 }
 .eventListItemDetailsButton {
-  cursor: default;
+  cursor: pointer;
   background: var(--token-ytzaa9i3sK9d);
   font-weight: 700;
   color: #ffffff;
@@ -377,7 +377,7 @@
   line-height: 1;
   letter-spacing: normal;
   white-space: pre;
-  user-select: text;
+  user-select: none;
   text-decoration-line: none;
   align-self: center;
   font-weight: 600;
@@ -442,6 +442,7 @@
   }
 }
 .interactiveMap:global(.__wab_instance) {
+  animation: none;
   max-width: 100%;
   object-fit: cover;
 }
@@ -474,6 +475,8 @@
   column-gap: 10px;
   height: auto;
   width: 100%;
+  justify-content: center;
+  align-items: center;
   min-width: 0;
   border-radius: 10px;
   padding: 5px 24px 5px 16px;
@@ -505,7 +508,7 @@
   animation: none;
   font-family: "Inter", sans-serif;
   font-size: 24px;
-  text-align: center;
+  text-align: left;
   font-style: normal;
   text-transform: capitalize;
   line-height: 1.5;
@@ -516,8 +519,7 @@
   align-self: center;
   font-weight: 600;
   padding-top: 3px;
-  width: 100%;
-  min-width: 0;
+  width: auto;
 }
 @media (max-width: 800px) {
   .text__lAvTp {
@@ -541,9 +543,8 @@
   align-self: center;
   font-weight: 600;
   padding-top: 3px;
-  width: 100%;
+  width: auto;
   padding-right: 0px;
-  min-width: 0;
   display: none;
 }
 @media (max-width: 800px) {
@@ -569,6 +570,8 @@
   column-gap: 10px;
   height: auto;
   width: 100%;
+  justify-content: center;
+  align-items: center;
   min-width: 0;
   border-radius: 10px;
   padding: 5px 24px 5px 16px;
@@ -600,7 +603,7 @@
   animation: none;
   font-family: "Inter", sans-serif;
   font-size: 24px;
-  text-align: center;
+  text-align: left;
   font-style: normal;
   text-transform: capitalize;
   line-height: 1.5;
@@ -611,8 +614,7 @@
   align-self: center;
   font-weight: 600;
   padding-top: 3px;
-  width: 100%;
-  min-width: 0;
+  width: auto;
 }
 @media (max-width: 800px) {
   .text__gYovT {
@@ -636,8 +638,7 @@
   align-self: center;
   font-weight: 600;
   padding-top: 3px;
-  width: 100%;
-  min-width: 0;
+  width: auto;
   display: none;
 }
 @media (max-width: 800px) {

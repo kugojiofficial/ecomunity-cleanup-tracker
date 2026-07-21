@@ -25,6 +25,9 @@
     min-width: 0;
   }
 }
+.navigationBartab_adminPortal {
+  background: var(--token-LP3DuU1ILBgj);
+}
 .navigationBarloggedOut {
   background: none;
 }
@@ -39,6 +42,7 @@
   max-width: 100%;
   justify-content: center;
   align-items: center;
+  background: none;
   min-width: 0;
   min-height: 0;
   padding: 8px;
@@ -58,6 +62,9 @@
   font-weight: 700;
   color: #ffffff;
   border-style: solid;
+}
+.dashboardPageButtontab_adminPortal {
+  background: none;
 }
 .dashboardPageButtonloggedOut {
   display: none;
@@ -80,6 +87,7 @@
   align-self: center;
   color: #ffffff;
   text-align: center;
+  white-space: pre;
   min-width: 0;
 }
 @media (max-width: 800px) {
@@ -98,6 +106,7 @@
   max-width: 100%;
   justify-content: center;
   align-items: center;
+  background: none;
   min-width: 0;
   min-height: 0;
   padding: 8px;
@@ -124,7 +133,7 @@
 .svg___0YQGt {
   object-fit: cover;
   max-width: 100%;
-  width: 40px;
+  width: 45px;
   height: 45px;
   transition-property: all;
   transition-duration: 1s;
@@ -144,6 +153,7 @@
   align-self: center;
   color: var(--token-vOzt3wWwXHfx);
   text-align: center;
+  white-space: pre;
   min-width: 0;
 }
 @media (max-width: 800px) {
@@ -153,7 +163,7 @@
 }
 .profilePageButton {
   cursor: pointer;
-  background: var(--token-QvKZNdbDFRb8);
+  background: none;
   font-weight: 700;
   display: flex;
   flex-direction: column;
@@ -188,7 +198,7 @@
 .svg__zp5VL {
   object-fit: cover;
   max-width: 100%;
-  width: 32px;
+  width: 45px;
   height: 45px;
   transform: translate3d(0px, -0.5px, 0px);
   color: #ffffffd9;
@@ -219,6 +229,7 @@
   flex-grow: 1;
   align-self: center;
   padding-top: 0px;
+  white-space: pre;
   min-width: 0;
 }
 @media (max-width: 800px) {
@@ -256,7 +267,7 @@
 .svg__rm7Zi {
   object-fit: cover;
   max-width: 100%;
-  width: 38px;
+  width: 45px;
   height: 45px;
   transform: translate3d(0px, -0.5px, 0px);
   color: #ffffffd9;

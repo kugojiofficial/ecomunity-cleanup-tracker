@@ -67,6 +67,7 @@
   width: 100%;
   grid-column-start: 3 !important;
   grid-column-end: -3 !important;
+  display: none;
 }
 .text__pCvox {
   margin-bottom: 1.5px;
@@ -90,6 +91,7 @@
   width: 100%;
   grid-column-start: 3 !important;
   grid-column-end: -3 !important;
+  display: none;
   margin: 12px 0px 0px;
 }
 .text__irM4 {

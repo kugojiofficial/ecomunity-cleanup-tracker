@@ -5,7 +5,7 @@ import { PlasmicQueryDataProvider } from "@plasmicapp/react-web/lib/query";
 import { useRouter } from "next/router";
 
 import { PlasmicDashboard } from "../plasmic/eco_munity_cleanup_tracker/PlasmicDashboard";
-import HistoryIcon from "../plasmic/eco_munity_cleanup_tracker/icons/PlasmicIcon__History";
+import CheckIcon from "../plasmic/eco_munity_cleanup_tracker/icons/PlasmicIcon__Check";
 import { getEvents, getWasteLogs, useRequireAuth } from "../../lib/api";
 import { selectActiveOrRecentEvent } from "../../lib/domain/activeEvent";
 import { formatWithCommas } from "../../lib/format/number";
@@ -77,8 +77,10 @@ function Dashboard() {
           participantsCardValue={{ children: cards.participants }}
           wasteCollectedCardValue={{ children: cards.collectedWaste }}
           interactiveMap={{ eventId: activeEventId, live: isActive, liveUntil: endedAt }}
+          // Active → default chevrons-right icon; recent → check icon, with the
+          // title + heatmap text flipped to match.
+          activeEventTitleIcon={isActive ? undefined : { as: CheckIcon }}
           mapTitle={isActive ? undefined : { children: "Recent Event Heatmap" }}
-          activeEventTitleIcon={isActive ? undefined : { as: HistoryIcon }}
           activeEventTitleContent={isActive ? undefined : { children: "Recent Event" }}
         />
       </PageParamsProvider__>

@@ -57,7 +57,7 @@ import {
   useGlobalActions
 } from "@plasmicapp/react-web/lib/host";
 
-import { InteractiveMap } from "../../InteractiveMap"; // plasmic-import: XvO_ZZU8bF0U/codeComponent
+import { InteractiveMap } from "../../InteractiveMap"; // plasmic-import: fQ3a6IEKrV0-/codeComponent
 import NavigationBar from "../../NavigationBar"; // plasmic-import: 9ar3kGz7iBUD/component
 import { _useGlobalVariants } from "./plasmic"; // plasmic-import: 6FNNC7rfkE9HMPqXDPWwTm/projectModule
 import { _useStyleTokens } from "./PlasmicStyleTokensProvider"; // plasmic-import: 6FNNC7rfkE9HMPqXDPWwTm/styleTokensProvider
@@ -66,9 +66,9 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 
 import sty from "./PlasmicDashboard.module.css"; // plasmic-import: C7cUxPqd2zr6/css
 
-import DoubleChevronRightIcon from "./icons/PlasmicIcon__DoubleChevronRight"; // plasmic-import: 4kOhv-a8yPCd/icon
-import PeopleIcon from "./icons/PlasmicIcon__People"; // plasmic-import: 9nm8GnVbav_y/icon
-import MovingTrashIcon from "./icons/PlasmicIcon__MovingTrash"; // plasmic-import: VWc3kj67KFnJ/icon
+import ChevronsRightIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__ChevronsRight"; // plasmic-import: yQA1jfb0RgwK/icon
+import UsersIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Users"; // plasmic-import: JrpdS-Pm49Zg/icon
+import TrashIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Trash"; // plasmic-import: uJVL4__Mg7cD/icon
 import MapAndPinIcon from "./icons/PlasmicIcon__MapAndPin"; // plasmic-import: 6t3FPM1-PqG4/icon
 
 const emptyProxy: any = new Proxy(() => "", {
@@ -253,7 +253,7 @@ function PlasmicDashboard__RenderFunc(props: {
                 data-plasmic-override={overrides.activeEventTitle}
                 className={classNames("all", sty.activeEventTitle)}
               >
-                <DoubleChevronRightIcon
+                <ChevronsRightIcon
                   data-plasmic-name={"activeEventTitleIcon"}
                   data-plasmic-override={overrides.activeEventTitleIcon}
                   className={classNames("all", sty.activeEventTitleIcon)}
@@ -292,7 +292,7 @@ function PlasmicDashboard__RenderFunc(props: {
               className={classNames("all", sty.participantsCard)}
             >
               <div className={classNames("all", sty.freeBox___1PNiP)}>
-                <PeopleIcon
+                <UsersIcon
                   className={classNames("all", sty.svg__cbREx)}
                   role={"img"}
                 />
@@ -327,7 +327,7 @@ function PlasmicDashboard__RenderFunc(props: {
               className={classNames("all", sty.wasteCollectedCard)}
             >
               <div className={classNames("all", sty.freeBox__buxYm)}>
-                <MovingTrashIcon
+                <TrashIcon
                   className={classNames("all", sty.svg__xn0Vt)}
                   role={"img"}
                 />

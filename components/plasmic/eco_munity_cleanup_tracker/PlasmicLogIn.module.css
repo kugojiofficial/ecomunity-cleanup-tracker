@@ -139,7 +139,7 @@
 }
 .logInButton {
   cursor: default;
-  background: var(--token-_ghsv35bfxZ2);
+  background: var(--token-ytzaa9i3sK9d);
   font-weight: 700;
   color: #ffffff;
   animation: none;
@@ -159,7 +159,7 @@
   min-width: 0;
   border-radius: 10px;
   padding: 5px 24px 5px 16px;
-  border: 3px solid var(--token--LLXgMeNdajs);
+  border: 3px solid var(--token-ytzaa9i3sK9d);
 }
 @media (max-width: 800px) {
   .logInButton {
@@ -295,7 +295,7 @@
 }
 .signUpRedirectButton {
   cursor: default;
-  background: var(--token-_ghsv35bfxZ2);
+  background: none;
   font-weight: 700;
   color: #ffffff;
   animation: none;
@@ -315,7 +315,7 @@
   min-width: 0;
   border-radius: 10px;
   padding: 10px 24px;
-  border: 3px solid var(--token--LLXgMeNdajs);
+  border: 0px solid #ffffff;
 }
 @media (max-width: 800px) {
   .signUpRedirectButton {
@@ -336,7 +336,7 @@
   font-size: 24px;
   text-align: center;
   font-style: normal;
-  text-transform: capitalize;
+  text-transform: none;
   line-height: 1;
   letter-spacing: normal;
   white-space: pre;
@@ -347,6 +347,8 @@
   padding-top: 3px;
   padding-bottom: 0px;
   height: auto;
+  color: var(--token--LLXgMeNdajs);
+  cursor: pointer;
 }
 @media (max-width: 800px) {
   .text__awxdC {

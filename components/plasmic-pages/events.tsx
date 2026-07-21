@@ -22,7 +22,7 @@ type EventListEntry = {
   duration: number;
 };
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 8;
 const HOURS = 1000 * 60 * 60;
 const DISABLED: React.CSSProperties = { opacity: 0.4, pointerEvents: "none" };
 
@@ -33,6 +33,10 @@ function Events() {
   const [refreshTick, setRefreshTick] = useState(0);
   const [events, setEvents] = useState<EventListEntry[]>([]);
   const [total, setTotal] = useState(0);
+  // Collapse-all: each click re-keys every row so it re-seeds to collapsed —
+  // even rows a user expanded individually. The per-item details buttons still
+  // control each row in between.
+  const [collapseNonce, setCollapseNonce] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -121,13 +125,15 @@ function Events() {
             style: hasNext ? undefined : DISABLED,
           }}
           pageNumber={{ children: `${page + 1} / ${totalPages}` }}
-          eventListContainer={
+          collapseAllButton={{ onClick: () => setCollapseNonce((n) => n + 1) }}
+          subContainer={
             events.length > 0
               ? {
                   children: events.map((event) => (
                     <EventListItem
-                      key={event.id}
+                      key={`${event.id}-${collapseNonce}`}
                       eventId={event.id}
+                      showingDetails={false}
                       name={event.name}
                       dateBegan={event.dateBegan}
                       dateEnded={event.dateEnded}
