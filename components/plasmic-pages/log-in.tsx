@@ -27,7 +27,11 @@ function LogIn() {
     const { error } = await signIn(email, password);
     setBusy(false);
     if (error) {
-      setError(error.message);
+      setError(
+        /invalid login credentials/i.test(error.message)
+          ? "Email or password is incorrect."
+          : error.message
+      );
       return;
     }
     router.push("/dashboard");
@@ -51,7 +55,7 @@ function LogIn() {
             onChange: setPassword,
             style: loggedIn ? HIDDEN : undefined,
           }}
-          error={{ style: !loggedIn && error ? SHOWN : undefined }}
+          error={{ style: !loggedIn && error ? SHOWN : HIDDEN }}
           errorContent={{ children: error ?? "" }}
           logInButton={{
             onClick: (e: React.MouseEvent) => {

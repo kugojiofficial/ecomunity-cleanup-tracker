@@ -46,6 +46,20 @@ export async function getWasteLogs(limit = 100, ascending = false): Promise<ApiR
   return { success: true, data: (data ?? []) as WasteLog[] };
 }
 
+export async function getEventWasteLogs(eventId: string, limit = 2000): Promise<ApiResponse<WasteLog[]>> {
+  const { data, error } = await getSupabaseBrowserClient()
+    .from("waste_logs")
+    .select(
+      "id, event_id, waste_type, image_url, user_id, latitude, longitude, accuracy_meters, points, created_at"
+    )
+    .eq("event_id", eventId)
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  if (error) return { success: false, error: error.message };
+  return { success: true, data: (data ?? []) as WasteLog[] };
+}
+
 export async function insertWasteLog(input: InsertWasteLogInput): Promise<ApiResponse<WasteLog>> {
   return jsonFetch<WasteLog>("/api/waste_logs/insert-waste-log", {
     method: "POST",

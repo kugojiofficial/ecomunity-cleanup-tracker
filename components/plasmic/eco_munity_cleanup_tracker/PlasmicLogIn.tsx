@@ -66,6 +66,7 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 import sty from "./PlasmicLogIn.module.css"; // plasmic-import: k4hp2P0Ip_cu/css
 
 import CircleIcon from "./icons/PlasmicIcon__Circle"; // plasmic-import: 0qv-KGqIe6NJ/icon
+import Login2Icon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Login2"; // plasmic-import: csbhyrMqT37P/icon
 import EnterIcon from "./icons/PlasmicIcon__Enter"; // plasmic-import: P5DSv3AH-d_Z/icon
 
 const emptyProxy: any = new Proxy(() => "", {
@@ -128,9 +129,9 @@ export type PlasmicLogIn__OverridesType = {
   title?: Flex__<"h1">;
   emailContainer?: Flex__<typeof TextField>;
   passwordContainer?: Flex__<typeof TextField>;
+  logInButton?: Flex__<"button">;
   error?: Flex__<"div">;
   errorContent?: Flex__<"div">;
-  logInButton?: Flex__<"button">;
   signUpRedirect?: Flex__<"div">;
   h1?: Flex__<"h1">;
   signUpRedirectButton?: Flex__<"button">;
@@ -197,6 +198,8 @@ function PlasmicLogIn__RenderFunc(props: {
     ],
     [$props, $ctx, $refs]
   );
+
+  const globalVariants = _useGlobalVariants();
 
   const $state = useDollarState(stateSpecs, {
     $props,
@@ -364,19 +367,6 @@ function PlasmicLogIn__RenderFunc(props: {
                 ])}
               />
 
-              <div
-                data-plasmic-name={"error"}
-                data-plasmic-override={overrides.error}
-                className={classNames("all", sty.error)}
-              >
-                <div
-                  data-plasmic-name={"errorContent"}
-                  data-plasmic-override={overrides.errorContent}
-                  className={classNames("all", "__wab_text", sty.errorContent)}
-                >
-                  {"Password must be..."}
-                </div>
-              </div>
               <button
                 data-plasmic-name={"logInButton"}
                 data-plasmic-override={overrides.logInButton}
@@ -390,7 +380,7 @@ function PlasmicLogIn__RenderFunc(props: {
                   $refs["logInButton"] = ref;
                 }}
               >
-                <EnterIcon
+                <Login2Icon
                   className={classNames("all", sty.svg__cfmzD)}
                   role={"img"}
                 />
@@ -401,6 +391,19 @@ function PlasmicLogIn__RenderFunc(props: {
                   {"Continue"}
                 </div>
               </button>
+              <div
+                data-plasmic-name={"error"}
+                data-plasmic-override={overrides.error}
+                className={classNames("all", sty.error)}
+              >
+                <div
+                  data-plasmic-name={"errorContent"}
+                  data-plasmic-override={overrides.errorContent}
+                  className={classNames("all", "__wab_text", sty.errorContent)}
+                >
+                  {"Password must be..."}
+                </div>
+              </div>
               <div
                 data-plasmic-name={"signUpRedirect"}
                 data-plasmic-override={overrides.signUpRedirect}
@@ -554,9 +557,9 @@ const PlasmicDescendants = {
     "title",
     "emailContainer",
     "passwordContainer",
+    "logInButton",
     "error",
     "errorContent",
-    "logInButton",
     "signUpRedirect",
     "h1",
     "signUpRedirectButton",
@@ -570,9 +573,9 @@ const PlasmicDescendants = {
     "title",
     "emailContainer",
     "passwordContainer",
+    "logInButton",
     "error",
     "errorContent",
-    "logInButton",
     "signUpRedirect",
     "h1",
     "signUpRedirectButton",
@@ -585,9 +588,9 @@ const PlasmicDescendants = {
     "title",
     "emailContainer",
     "passwordContainer",
+    "logInButton",
     "error",
     "errorContent",
-    "logInButton",
     "signUpRedirect",
     "h1",
     "signUpRedirectButton"
@@ -595,9 +598,9 @@ const PlasmicDescendants = {
   title: ["title"],
   emailContainer: ["emailContainer"],
   passwordContainer: ["passwordContainer"],
+  logInButton: ["logInButton"],
   error: ["error", "errorContent"],
   errorContent: ["errorContent"],
-  logInButton: ["logInButton"],
   signUpRedirect: ["signUpRedirect", "h1", "signUpRedirectButton"],
   h1: ["h1"],
   signUpRedirectButton: ["signUpRedirectButton"],
@@ -615,9 +618,9 @@ type NodeDefaultElementType = {
   title: "h1";
   emailContainer: typeof TextField;
   passwordContainer: typeof TextField;
+  logInButton: "button";
   error: "div";
   errorContent: "div";
-  logInButton: "button";
   signUpRedirect: "div";
   h1: "h1";
   signUpRedirectButton: "button";
@@ -693,9 +696,9 @@ export const PlasmicLogIn = Object.assign(
     title: makeNodeComponent("title"),
     emailContainer: makeNodeComponent("emailContainer"),
     passwordContainer: makeNodeComponent("passwordContainer"),
+    logInButton: makeNodeComponent("logInButton"),
     error: makeNodeComponent("error"),
     errorContent: makeNodeComponent("errorContent"),
-    logInButton: makeNodeComponent("logInButton"),
     signUpRedirect: makeNodeComponent("signUpRedirect"),
     h1: makeNodeComponent("h1"),
     signUpRedirectButton: makeNodeComponent("signUpRedirectButton"),

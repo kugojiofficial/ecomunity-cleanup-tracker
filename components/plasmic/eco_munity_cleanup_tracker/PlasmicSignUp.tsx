@@ -127,19 +127,28 @@ export type PlasmicSignUp__OverridesType = {
   container?: Flex__<"div">;
   title?: Flex__<"h1">;
   firstNameContainer?: Flex__<typeof TextField>;
+  firstNameError?: Flex__<"div">;
+  firstNameErrorContent?: Flex__<"div">;
   lastNameContainer?: Flex__<typeof TextField>;
+  lastNameError?: Flex__<"div">;
+  lastNameErrorContent?: Flex__<"div">;
   emailContainer?: Flex__<typeof TextField>;
+  emailError?: Flex__<"div">;
+  emailErrorContent?: Flex__<"div">;
   passwordContainer?: Flex__<typeof TextField>;
   confirmPasswordContainer?: Flex__<typeof TextField>;
-  error?: Flex__<"div">;
-  errorContent?: Flex__<"div">;
+  passwordError?: Flex__<"div">;
+  passwordErrorContent?: Flex__<"div">;
   signUpButton?: Flex__<"button">;
+  generalError?: Flex__<"div">;
+  generalErrorContent?: Flex__<"div">;
   logInRedirect?: Flex__<"div">;
   h1?: Flex__<"h1">;
   logInRedirectButton?: Flex__<"button">;
   alreadyLoggedIn?: Flex__<"div">;
   notice?: Flex__<"h1">;
   toDashboardButton?: Flex__<"button">;
+  svg?: Flex__<"svg">;
 };
 
 export interface DefaultSignUpProps {}
@@ -218,6 +227,8 @@ function PlasmicSignUp__RenderFunc(props: {
     ],
     [$props, $ctx, $refs]
   );
+
+  const globalVariants = _useGlobalVariants();
 
   const $state = useDollarState(stateSpecs, {
     $props,
@@ -342,6 +353,23 @@ function PlasmicSignUp__RenderFunc(props: {
                 ])}
               />
 
+              <div
+                data-plasmic-name={"firstNameError"}
+                data-plasmic-override={overrides.firstNameError}
+                className={classNames("all", sty.firstNameError)}
+              >
+                <div
+                  data-plasmic-name={"firstNameErrorContent"}
+                  data-plasmic-override={overrides.firstNameErrorContent}
+                  className={classNames(
+                    "all",
+                    "__wab_text",
+                    sty.firstNameErrorContent
+                  )}
+                >
+                  {"..."}
+                </div>
+              </div>
               <TextField
                 data-plasmic-name={"lastNameContainer"}
                 data-plasmic-override={overrides.lastNameContainer}
@@ -382,6 +410,23 @@ function PlasmicSignUp__RenderFunc(props: {
                 ])}
               />
 
+              <div
+                data-plasmic-name={"lastNameError"}
+                data-plasmic-override={overrides.lastNameError}
+                className={classNames("all", sty.lastNameError)}
+              >
+                <div
+                  data-plasmic-name={"lastNameErrorContent"}
+                  data-plasmic-override={overrides.lastNameErrorContent}
+                  className={classNames(
+                    "all",
+                    "__wab_text",
+                    sty.lastNameErrorContent
+                  )}
+                >
+                  {"..."}
+                </div>
+              </div>
               <TextField
                 data-plasmic-name={"emailContainer"}
                 data-plasmic-override={overrides.emailContainer}
@@ -422,6 +467,23 @@ function PlasmicSignUp__RenderFunc(props: {
                 ])}
               />
 
+              <div
+                data-plasmic-name={"emailError"}
+                data-plasmic-override={overrides.emailError}
+                className={classNames("all", sty.emailError)}
+              >
+                <div
+                  data-plasmic-name={"emailErrorContent"}
+                  data-plasmic-override={overrides.emailErrorContent}
+                  className={classNames(
+                    "all",
+                    "__wab_text",
+                    sty.emailErrorContent
+                  )}
+                >
+                  {"..."}
+                </div>
+              </div>
               <TextField
                 data-plasmic-name={"passwordContainer"}
                 data-plasmic-override={overrides.passwordContainer}
@@ -451,7 +513,7 @@ function PlasmicSignUp__RenderFunc(props: {
                     return;
                   }
                 }}
-                placeholder={"No less than 8 characters"}
+                placeholder={"..."}
                 showDescription={false}
                 showLabel={true}
                 type={"password"}
@@ -504,16 +566,20 @@ function PlasmicSignUp__RenderFunc(props: {
               />
 
               <div
-                data-plasmic-name={"error"}
-                data-plasmic-override={overrides.error}
-                className={classNames("all", sty.error)}
+                data-plasmic-name={"passwordError"}
+                data-plasmic-override={overrides.passwordError}
+                className={classNames("all", sty.passwordError)}
               >
                 <div
-                  data-plasmic-name={"errorContent"}
-                  data-plasmic-override={overrides.errorContent}
-                  className={classNames("all", "__wab_text", sty.errorContent)}
+                  data-plasmic-name={"passwordErrorContent"}
+                  data-plasmic-override={overrides.passwordErrorContent}
+                  className={classNames(
+                    "all",
+                    "__wab_text",
+                    sty.passwordErrorContent
+                  )}
                 >
-                  {"Password must be..."}
+                  {"..."}
                 </div>
               </div>
               <button
@@ -529,17 +595,29 @@ function PlasmicSignUp__RenderFunc(props: {
                   $refs["signUpButton"] = ref;
                 }}
               >
-                <EnterIcon
-                  className={classNames("all", sty.svg__o7E4Y)}
-                  role={"img"}
-                />
-
                 <div
                   className={classNames("all", "__wab_text", sty.text__uIeda)}
                 >
                   {"Create Account"}
                 </div>
               </button>
+              <div
+                data-plasmic-name={"generalError"}
+                data-plasmic-override={overrides.generalError}
+                className={classNames("all", sty.generalError)}
+              >
+                <div
+                  data-plasmic-name={"generalErrorContent"}
+                  data-plasmic-override={overrides.generalErrorContent}
+                  className={classNames(
+                    "all",
+                    "__wab_text",
+                    sty.generalErrorContent
+                  )}
+                >
+                  {"Password must be..."}
+                </div>
+              </div>
               <div
                 data-plasmic-name={"logInRedirect"}
                 data-plasmic-override={overrides.logInRedirect}
@@ -667,7 +745,9 @@ function PlasmicSignUp__RenderFunc(props: {
                 }}
               >
                 <EnterIcon
-                  className={classNames("all", sty.svg___6M1NF)}
+                  data-plasmic-name={"svg"}
+                  data-plasmic-override={overrides.svg}
+                  className={classNames("all", sty.svg)}
                   role={"img"}
                 />
 
@@ -692,69 +772,104 @@ const PlasmicDescendants = {
     "container",
     "title",
     "firstNameContainer",
+    "firstNameError",
+    "firstNameErrorContent",
     "lastNameContainer",
+    "lastNameError",
+    "lastNameErrorContent",
     "emailContainer",
+    "emailError",
+    "emailErrorContent",
     "passwordContainer",
     "confirmPasswordContainer",
-    "error",
-    "errorContent",
+    "passwordError",
+    "passwordErrorContent",
     "signUpButton",
+    "generalError",
+    "generalErrorContent",
     "logInRedirect",
     "h1",
     "logInRedirectButton",
     "alreadyLoggedIn",
     "notice",
-    "toDashboardButton"
+    "toDashboardButton",
+    "svg"
   ],
   flex: [
     "flex",
     "container",
     "title",
     "firstNameContainer",
+    "firstNameError",
+    "firstNameErrorContent",
     "lastNameContainer",
+    "lastNameError",
+    "lastNameErrorContent",
     "emailContainer",
+    "emailError",
+    "emailErrorContent",
     "passwordContainer",
     "confirmPasswordContainer",
-    "error",
-    "errorContent",
+    "passwordError",
+    "passwordErrorContent",
     "signUpButton",
+    "generalError",
+    "generalErrorContent",
     "logInRedirect",
     "h1",
     "logInRedirectButton",
     "alreadyLoggedIn",
     "notice",
-    "toDashboardButton"
+    "toDashboardButton",
+    "svg"
   ],
   container: [
     "container",
     "title",
     "firstNameContainer",
+    "firstNameError",
+    "firstNameErrorContent",
     "lastNameContainer",
+    "lastNameError",
+    "lastNameErrorContent",
     "emailContainer",
+    "emailError",
+    "emailErrorContent",
     "passwordContainer",
     "confirmPasswordContainer",
-    "error",
-    "errorContent",
+    "passwordError",
+    "passwordErrorContent",
     "signUpButton",
+    "generalError",
+    "generalErrorContent",
     "logInRedirect",
     "h1",
     "logInRedirectButton"
   ],
   title: ["title"],
   firstNameContainer: ["firstNameContainer"],
+  firstNameError: ["firstNameError", "firstNameErrorContent"],
+  firstNameErrorContent: ["firstNameErrorContent"],
   lastNameContainer: ["lastNameContainer"],
+  lastNameError: ["lastNameError", "lastNameErrorContent"],
+  lastNameErrorContent: ["lastNameErrorContent"],
   emailContainer: ["emailContainer"],
+  emailError: ["emailError", "emailErrorContent"],
+  emailErrorContent: ["emailErrorContent"],
   passwordContainer: ["passwordContainer"],
   confirmPasswordContainer: ["confirmPasswordContainer"],
-  error: ["error", "errorContent"],
-  errorContent: ["errorContent"],
+  passwordError: ["passwordError", "passwordErrorContent"],
+  passwordErrorContent: ["passwordErrorContent"],
   signUpButton: ["signUpButton"],
+  generalError: ["generalError", "generalErrorContent"],
+  generalErrorContent: ["generalErrorContent"],
   logInRedirect: ["logInRedirect", "h1", "logInRedirectButton"],
   h1: ["h1"],
   logInRedirectButton: ["logInRedirectButton"],
-  alreadyLoggedIn: ["alreadyLoggedIn", "notice", "toDashboardButton"],
+  alreadyLoggedIn: ["alreadyLoggedIn", "notice", "toDashboardButton", "svg"],
   notice: ["notice"],
-  toDashboardButton: ["toDashboardButton"]
+  toDashboardButton: ["toDashboardButton", "svg"],
+  svg: ["svg"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
@@ -765,19 +880,28 @@ type NodeDefaultElementType = {
   container: "div";
   title: "h1";
   firstNameContainer: typeof TextField;
+  firstNameError: "div";
+  firstNameErrorContent: "div";
   lastNameContainer: typeof TextField;
+  lastNameError: "div";
+  lastNameErrorContent: "div";
   emailContainer: typeof TextField;
+  emailError: "div";
+  emailErrorContent: "div";
   passwordContainer: typeof TextField;
   confirmPasswordContainer: typeof TextField;
-  error: "div";
-  errorContent: "div";
+  passwordError: "div";
+  passwordErrorContent: "div";
   signUpButton: "button";
+  generalError: "div";
+  generalErrorContent: "div";
   logInRedirect: "div";
   h1: "h1";
   logInRedirectButton: "button";
   alreadyLoggedIn: "div";
   notice: "h1";
   toDashboardButton: "button";
+  svg: "svg";
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -846,19 +970,28 @@ export const PlasmicSignUp = Object.assign(
     container: makeNodeComponent("container"),
     title: makeNodeComponent("title"),
     firstNameContainer: makeNodeComponent("firstNameContainer"),
+    firstNameError: makeNodeComponent("firstNameError"),
+    firstNameErrorContent: makeNodeComponent("firstNameErrorContent"),
     lastNameContainer: makeNodeComponent("lastNameContainer"),
+    lastNameError: makeNodeComponent("lastNameError"),
+    lastNameErrorContent: makeNodeComponent("lastNameErrorContent"),
     emailContainer: makeNodeComponent("emailContainer"),
+    emailError: makeNodeComponent("emailError"),
+    emailErrorContent: makeNodeComponent("emailErrorContent"),
     passwordContainer: makeNodeComponent("passwordContainer"),
     confirmPasswordContainer: makeNodeComponent("confirmPasswordContainer"),
-    error: makeNodeComponent("error"),
-    errorContent: makeNodeComponent("errorContent"),
+    passwordError: makeNodeComponent("passwordError"),
+    passwordErrorContent: makeNodeComponent("passwordErrorContent"),
     signUpButton: makeNodeComponent("signUpButton"),
+    generalError: makeNodeComponent("generalError"),
+    generalErrorContent: makeNodeComponent("generalErrorContent"),
     logInRedirect: makeNodeComponent("logInRedirect"),
     h1: makeNodeComponent("h1"),
     logInRedirectButton: makeNodeComponent("logInRedirectButton"),
     alreadyLoggedIn: makeNodeComponent("alreadyLoggedIn"),
     notice: makeNodeComponent("notice"),
     toDashboardButton: makeNodeComponent("toDashboardButton"),
+    svg: makeNodeComponent("svg"),
 
     // Metadata about props expected for PlasmicSignUp
     internalVariantProps: PlasmicSignUp__VariantProps,

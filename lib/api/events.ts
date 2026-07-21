@@ -1,4 +1,4 @@
-import { jsonFetch, type ApiResponse } from "./common";
+import { jsonFetch, type ApiResponse, type Paged } from "./common";
 import { getSupabaseBrowserClient } from "../supabase/browser";
 
 export type EventRecord = {
@@ -33,6 +33,45 @@ export async function getEvents(limit = 100, ascending = false): Promise<ApiResp
 
   if (error) return { success: false, error: error.message };
   return { success: true, data: (data ?? []) as EventRecord[] };
+}
+
+export type EventWasteBreakdownRow = {
+  event_id: string;
+  waste_type: string;
+  amount: number;
+};
+
+export async function getPastEventsPage(
+  page: number,
+  pageSize: number
+): Promise<ApiResponse<Paged<EventRecord>>> {
+  const from = page * pageSize;
+  const to = from + pageSize - 1;
+  const nowIso = new Date().toISOString();
+
+  const { data, count, error } = await getSupabaseBrowserClient()
+    .from("events")
+    .select("id, name, created_at, began_at, ended_at, participant_count", { count: "exact" })
+    .lt("ended_at", nowIso)
+    .order("began_at", { ascending: false })
+    .range(from, to);
+
+  if (error) return { success: false, error: error.message };
+  return { success: true, data: { rows: (data ?? []) as EventRecord[], total: count ?? 0 } };
+}
+
+export async function getEventWasteBreakdown(
+  eventIds: string[]
+): Promise<ApiResponse<EventWasteBreakdownRow[]>> {
+  if (eventIds.length === 0) return { success: true, data: [] };
+
+  const { data, error } = await getSupabaseBrowserClient()
+    .from("event_waste_breakdown")
+    .select("event_id, waste_type, amount")
+    .in("event_id", eventIds);
+
+  if (error) return { success: false, error: error.message };
+  return { success: true, data: (data ?? []) as EventWasteBreakdownRow[] };
 }
 
 export async function insertEvent(input: InsertEventInput): Promise<ApiResponse<EventRecord>> {

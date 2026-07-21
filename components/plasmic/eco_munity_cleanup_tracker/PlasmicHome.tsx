@@ -65,6 +65,7 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 import sty from "./PlasmicHome.module.css"; // plasmic-import: r-pDIpZK-Lk_/css
 
 import EnterIcon from "./icons/PlasmicIcon__Enter"; // plasmic-import: P5DSv3AH-d_Z/icon
+import ArrowBigRightFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__ArrowBigRightFilled"; // plasmic-import: 6uggRkEYeTKa/icon
 import IconIcon from "../plasmic_tabs/icons/PlasmicIcon__Icon"; // plasmic-import: 8K40faRNhuCj/icon
 
 const emptyProxy: any = new Proxy(() => "", {
@@ -304,6 +305,34 @@ function PlasmicHome__RenderFunc(props: {
                 data-plasmic-name={"logInButton"}
                 data-plasmic-override={overrides.logInButton}
                 className={classNames("all", sty.logInButton)}
+                onClick={async event => {
+                  const $steps = {};
+
+                  $steps["goToLogIn"] = true
+                    ? (() => {
+                        const actionArgs = { destination: `/log-in` };
+                        return (({ destination }) => {
+                          if (
+                            typeof destination === "string" &&
+                            destination.startsWith("#")
+                          ) {
+                            document
+                              .getElementById(destination.substr(1))
+                              .scrollIntoView({ behavior: "smooth" });
+                          } else {
+                            __nextRouter?.push(destination);
+                          }
+                        })?.apply(null, [actionArgs]);
+                      })()
+                    : undefined;
+                  if (
+                    $steps["goToLogIn"] != null &&
+                    typeof $steps["goToLogIn"] === "object" &&
+                    typeof $steps["goToLogIn"].then === "function"
+                  ) {
+                    $steps["goToLogIn"] = await $steps["goToLogIn"];
+                  }
+                }}
               >
                 <h1
                   className={classNames(
@@ -365,7 +394,7 @@ function PlasmicHome__RenderFunc(props: {
                 >
                   {"Open Live Dashboard"}
                 </h1>
-                <IconIcon
+                <ArrowBigRightFilledIcon
                   className={classNames("all", sty.svg__v3MYy)}
                   role={"img"}
                 />
@@ -414,7 +443,7 @@ function PlasmicHome__RenderFunc(props: {
                 >
                   {"View Cleanup Events"}
                 </h1>
-                <IconIcon
+                <ArrowBigRightFilledIcon
                   className={classNames("all", sty.svg__bpb6D)}
                   role={"img"}
                 />
@@ -423,6 +452,34 @@ function PlasmicHome__RenderFunc(props: {
                 data-plasmic-name={"signUpButton"}
                 data-plasmic-override={overrides.signUpButton}
                 className={classNames("all", sty.signUpButton)}
+                onClick={async event => {
+                  const $steps = {};
+
+                  $steps["goToSignUp"] = true
+                    ? (() => {
+                        const actionArgs = { destination: `/register` };
+                        return (({ destination }) => {
+                          if (
+                            typeof destination === "string" &&
+                            destination.startsWith("#")
+                          ) {
+                            document
+                              .getElementById(destination.substr(1))
+                              .scrollIntoView({ behavior: "smooth" });
+                          } else {
+                            __nextRouter?.push(destination);
+                          }
+                        })?.apply(null, [actionArgs]);
+                      })()
+                    : undefined;
+                  if (
+                    $steps["goToSignUp"] != null &&
+                    typeof $steps["goToSignUp"] === "object" &&
+                    typeof $steps["goToSignUp"].then === "function"
+                  ) {
+                    $steps["goToSignUp"] = await $steps["goToSignUp"];
+                  }
+                }}
               >
                 <h1
                   className={classNames(

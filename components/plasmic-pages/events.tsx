@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { PlasmicEvents } from "../plasmic/eco_munity_cleanup_tracker/PlasmicEvents";
 import EventListItem from "../EventListItem";
 import EventWasteTypeListItem from "../EventWasteTypeListItem";
-import { getEvents, getWasteLogs, useRequireAuth } from "../../lib/api";
+import { getPastEventsPage, getEventWasteBreakdown, useRequireAuth } from "../../lib/api";
 import { formatStartDateTime, formatEndedRelative } from "../../lib/format/date";
 import { formatWasteType } from "../../lib/format/wasteType";
 
@@ -22,46 +22,47 @@ type EventListEntry = {
   duration: number;
 };
 
+const PAGE_SIZE = 10;
 const HOURS = 1000 * 60 * 60;
+const DISABLED: React.CSSProperties = { opacity: 0.4, pointerEvents: "none" };
 
 function Events() {
   const router = useRouter();
   const { user } = useRequireAuth();
+  const [page, setPage] = useState(0);
+  const [refreshTick, setRefreshTick] = useState(0);
   const [events, setEvents] = useState<EventListEntry[]>([]);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
 
     (async () => {
-      const [eventsRes, wasteRes] = await Promise.all([getEvents(), getWasteLogs(1000)]);
+      const eventsRes = await getPastEventsPage(page, PAGE_SIZE);
       if (cancelled) return;
-
       if (!eventsRes.success) {
         console.error("Failed to load events:", eventsRes.error);
         return;
       }
 
-      const wasteByEvent = new Map<string, Map<string, number>>();
-      if (wasteRes.success) {
-        for (const log of wasteRes.data) {
-          let byType = wasteByEvent.get(log.event_id);
-          if (!byType) {
-            byType = new Map<string, number>();
-            wasteByEvent.set(log.event_id, byType);
-          }
-          byType.set(log.waste_type, (byType.get(log.waste_type) ?? 0) + 1);
+      const rows = eventsRes.data.rows;
+      const breakdownRes = await getEventWasteBreakdown(rows.map((e) => e.id));
+      if (cancelled) return;
+
+      const byEvent = new Map<string, { type: string; amount: number }[]>();
+      if (breakdownRes.success) {
+        for (const b of breakdownRes.data) {
+          const list = byEvent.get(b.event_id) ?? [];
+          list.push({ type: b.waste_type, amount: b.amount });
+          byEvent.set(b.event_id, list);
         }
       } else {
-        console.error("Failed to load waste logs:", wasteRes.error);
+        console.error("Failed to load waste breakdown:", breakdownRes.error);
       }
 
-      const nowMs = Date.now();
-      const pastEvents = eventsRes.data.filter(
-        (event) => event.ended_at != null && new Date(event.ended_at).getTime() < nowMs
-      );
-
+      setTotal(eventsRes.data.total);
       setEvents(
-        pastEvents.map((event) => {
+        rows.map((event) => {
           const duration =
             event.began_at && event.ended_at
               ? Number(
@@ -71,13 +72,8 @@ function Events() {
                   ).toFixed(1)
                 )
               : 0;
-
-          const byType = wasteByEvent.get(event.id);
-          const wasteByType = byType
-            ? [...byType.entries()].map(([type, amount]) => ({ type, amount }))
-            : [];
+          const wasteByType = byEvent.get(event.id) ?? [];
           const collectedWasteAmount = wasteByType.reduce((sum, w) => sum + w.amount, 0);
-
           return {
             id: event.id,
             name: event.name,
@@ -95,7 +91,11 @@ function Events() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [page, refreshTick]);
+
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const hasPrev = page > 0;
+  const hasNext = page < totalPages - 1;
 
   if (!user) return null;
 
@@ -107,6 +107,20 @@ function Events() {
         query={router?.query}
       >
         <PlasmicEvents
+          refreshButtonOnClick={() => setRefreshTick((t) => t + 1)}
+          previousPageButton={{
+            onClick: () => {
+              if (hasPrev) setPage((p) => p - 1);
+            },
+            style: hasPrev ? undefined : DISABLED,
+          }}
+          nextPageButton={{
+            onClick: () => {
+              if (hasNext) setPage((p) => p + 1);
+            },
+            style: hasNext ? undefined : DISABLED,
+          }}
+          pageNumber={{ children: `${page + 1} / ${totalPages}` }}
           eventListContainer={
             events.length > 0
               ? {

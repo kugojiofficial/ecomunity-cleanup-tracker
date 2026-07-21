@@ -8,7 +8,7 @@ import { PlasmicProfile } from "../plasmic/eco_munity_cleanup_tracker/PlasmicPro
 import LeaderboardListItem from "../LeaderboardListItem";
 import {
   getMyProfile,
-  getLeaderboard,
+  getLeaderboardPage,
   useRequireAuth,
   signOut,
   type UserProfile,
@@ -16,6 +16,10 @@ import {
 } from "../../lib/api";
 import { formatWithCommas } from "../../lib/format/number";
 import { formatJoinDate } from "../../lib/format/date";
+import { getSupabaseBrowserClient } from "../../lib/supabase/browser";
+
+const PAGE_SIZE = 10;
+const DISABLED: React.CSSProperties = { opacity: 0.4, pointerEvents: "none" };
 
 function positionColorFor(rank: number): string {
   switch (rank) {
@@ -45,23 +49,59 @@ function Profile() {
   const { user } = useRequireAuth();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [lbPage, setLbPage] = useState(0);
+  const [lbTotal, setLbTotal] = useState(0);
+  const [refreshTick, setRefreshTick] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
-
     (async () => {
-      const [profileRes, lbRes] = await Promise.all([getMyProfile(), getLeaderboard(100)]);
+      const res = await getMyProfile();
       if (cancelled) return;
-
-      if (profileRes.success) setProfile(profileRes.data);
-      else console.error("Failed to load profile:", profileRes.error);
-
-      if (lbRes.success) setLeaderboard(lbRes.data);
-      else console.error("Failed to load leaderboard:", lbRes.error);
+      if (res.success) setProfile(res.data);
+      else console.error("Failed to load profile:", res.error);
     })();
-
     return () => {
       cancelled = true;
+    };
+  }, [refreshTick]);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const res = await getLeaderboardPage(lbPage, PAGE_SIZE);
+      if (cancelled) return;
+      if (res.success) {
+        setLeaderboard(res.data.rows);
+        setLbTotal(res.data.total);
+      } else {
+        console.error("Failed to load leaderboard:", res.error);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [lbPage, refreshTick]);
+
+  // Almost-live refresh: any change to a user row (points/totals) refetches the
+  // profile + leaderboard. Debounced so a burst of updates triggers one reload.
+  useEffect(() => {
+    const supabase = getSupabaseBrowserClient();
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const channel = supabase
+      .channel("profile-users-live")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "users" },
+        () => {
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(() => setRefreshTick((t) => t + 1), 500);
+        }
+      )
+      .subscribe();
+    return () => {
+      if (timer) clearTimeout(timer);
+      supabase.removeChannel(channel);
     };
   }, []);
 
@@ -69,6 +109,10 @@ function Profile() {
     await signOut();
     router.replace("/log-in");
   }
+
+  const totalPages = Math.max(1, Math.ceil(lbTotal / PAGE_SIZE));
+  const hasPrev = lbPage > 0;
+  const hasNext = lbPage < totalPages - 1;
 
   if (!user) return null;
 
@@ -95,6 +139,19 @@ function Profile() {
           totalHoursStatValueLabel={{
             children: formatHours(profile?.total_event_hours ?? 0),
           }}
+          previousPageButton={{
+            onClick: () => {
+              if (hasPrev) setLbPage((p) => p - 1);
+            },
+            style: hasPrev ? undefined : DISABLED,
+          }}
+          nextPageButton={{
+            onClick: () => {
+              if (hasNext) setLbPage((p) => p + 1);
+            },
+            style: hasNext ? undefined : DISABLED,
+          }}
+          pageNumber={{ children: `${lbPage + 1} / ${totalPages}` }}
           leaderboardListContainer={
             leaderboard.length > 0
               ? {

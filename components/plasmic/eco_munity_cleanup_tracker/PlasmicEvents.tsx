@@ -65,8 +65,10 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 
 import sty from "./PlasmicEvents.module.css"; // plasmic-import: Gcy8DhclJP5U/css
 
-import RefreshIcon from "./icons/PlasmicIcon__Refresh"; // plasmic-import: 7WPWcRmpVJdi/icon
+import RefreshIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Refresh"; // plasmic-import: lpTB_cWHZ1PJ/icon
 import PlusIcon from "./icons/PlasmicIcon__Plus"; // plasmic-import: vPBVvVS45CP9/icon
+import ArrowBigLeftFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__ArrowBigLeftFilled"; // plasmic-import: l8ygS1BRem5y/icon
+import ArrowBigRightFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__ArrowBigRightFilled"; // plasmic-import: 6uggRkEYeTKa/icon
 import SettingsIcon from "./icons/PlasmicIcon__Settings"; // plasmic-import: al57NTSJDXc9/icon
 
 const emptyProxy: any = new Proxy(() => "", {
@@ -118,9 +120,13 @@ export type PlasmicEvents__VariantsArgs = {};
 type VariantPropType = keyof PlasmicEvents__VariantsArgs;
 export const PlasmicEvents__VariantProps = new Array<VariantPropType>();
 
-export type PlasmicEvents__ArgsType = {};
+export type PlasmicEvents__ArgsType = {
+  refreshButtonOnClick?: (event: any) => void;
+};
 type ArgPropType = keyof PlasmicEvents__ArgsType;
-export const PlasmicEvents__ArgProps = new Array<ArgPropType>();
+export const PlasmicEvents__ArgProps = new Array<ArgPropType>(
+  "refreshButtonOnClick"
+);
 
 export type PlasmicEvents__OverridesType = {
   eventsPage?: Flex__<"div">;
@@ -130,6 +136,10 @@ export type PlasmicEvents__OverridesType = {
   headerButtons?: Flex__<"div">;
   refreshButton?: Flex__<"button">;
   createEventButton?: Flex__<"button">;
+  pageNavigation?: Flex__<"div">;
+  previousPageButton?: Flex__<"button">;
+  pageNumber?: Flex__<"div">;
+  nextPageButton?: Flex__<"button">;
   navigationBar?: Flex__<typeof NavigationBar>;
   eventListContainer?: Flex__<"div">;
   massToggleButton?: Flex__<"button">;
@@ -187,6 +197,8 @@ function PlasmicEvents__RenderFunc(props: {
     ],
     [$props, $ctx, $refs]
   );
+
+  const globalVariants = _useGlobalVariants();
 
   const $state = useDollarState(stateSpecs, {
     $props,
@@ -289,6 +301,7 @@ function PlasmicEvents__RenderFunc(props: {
                   "button__6FNNC",
                   sty.refreshButton
                 )}
+                onClick={args.refreshButtonOnClick}
                 ref={ref => {
                   $refs["refreshButton"] = ref;
                 }}
@@ -328,6 +341,66 @@ function PlasmicEvents__RenderFunc(props: {
                   {"Create New Event"}
                 </div>
               </button>
+              <div
+                data-plasmic-name={"pageNavigation"}
+                data-plasmic-override={overrides.pageNavigation}
+                className={classNames("all", sty.pageNavigation)}
+              >
+                <button
+                  data-plasmic-name={"previousPageButton"}
+                  data-plasmic-override={overrides.previousPageButton}
+                  className={classNames(
+                    "all",
+                    "button",
+                    "button__6FNNC",
+                    sty.previousPageButton
+                  )}
+                  ref={ref => {
+                    $refs["previousPageButton"] = ref;
+                  }}
+                >
+                  <ArrowBigLeftFilledIcon
+                    className={classNames("all", sty.svg__kf7Uk)}
+                    role={"img"}
+                  />
+
+                  <div
+                    className={classNames("all", "__wab_text", sty.text__egLp)}
+                  >
+                    {"Previous"}
+                  </div>
+                </button>
+                <div
+                  data-plasmic-name={"pageNumber"}
+                  data-plasmic-override={overrides.pageNumber}
+                  className={classNames("all", "__wab_text", sty.pageNumber)}
+                >
+                  {"1 / 1"}
+                </div>
+                <button
+                  data-plasmic-name={"nextPageButton"}
+                  data-plasmic-override={overrides.nextPageButton}
+                  className={classNames(
+                    "all",
+                    "button",
+                    "button__6FNNC",
+                    sty.nextPageButton
+                  )}
+                  ref={ref => {
+                    $refs["nextPageButton"] = ref;
+                  }}
+                >
+                  <div
+                    className={classNames("all", "__wab_text", sty.text___5HnN)}
+                  >
+                    {"Next"}
+                  </div>
+                  <ArrowBigRightFilledIcon
+                    className={classNames("all", sty.svg__sSf9Y)}
+                    role={"img"}
+                  />
+                </button>
+              </div>
             </div>
           </div>
           <NavigationBar
@@ -434,6 +507,10 @@ const PlasmicDescendants = {
     "headerButtons",
     "refreshButton",
     "createEventButton",
+    "pageNavigation",
+    "previousPageButton",
+    "pageNumber",
+    "nextPageButton",
     "navigationBar",
     "eventListContainer",
     "massToggleButton"
@@ -444,13 +521,34 @@ const PlasmicDescendants = {
     "h1",
     "headerButtons",
     "refreshButton",
-    "createEventButton"
+    "createEventButton",
+    "pageNavigation",
+    "previousPageButton",
+    "pageNumber",
+    "nextPageButton"
   ],
   headerLabels: ["headerLabels", "h1"],
   h1: ["h1"],
-  headerButtons: ["headerButtons", "refreshButton", "createEventButton"],
+  headerButtons: [
+    "headerButtons",
+    "refreshButton",
+    "createEventButton",
+    "pageNavigation",
+    "previousPageButton",
+    "pageNumber",
+    "nextPageButton"
+  ],
   refreshButton: ["refreshButton"],
   createEventButton: ["createEventButton"],
+  pageNavigation: [
+    "pageNavigation",
+    "previousPageButton",
+    "pageNumber",
+    "nextPageButton"
+  ],
+  previousPageButton: ["previousPageButton"],
+  pageNumber: ["pageNumber"],
+  nextPageButton: ["nextPageButton"],
   navigationBar: ["navigationBar"],
   eventListContainer: ["eventListContainer", "massToggleButton"],
   massToggleButton: ["massToggleButton"]
@@ -466,6 +564,10 @@ type NodeDefaultElementType = {
   headerButtons: "div";
   refreshButton: "button";
   createEventButton: "button";
+  pageNavigation: "div";
+  previousPageButton: "button";
+  pageNumber: "div";
+  nextPageButton: "button";
   navigationBar: typeof NavigationBar;
   eventListContainer: "div";
   massToggleButton: "button";
@@ -539,6 +641,10 @@ export const PlasmicEvents = Object.assign(
     headerButtons: makeNodeComponent("headerButtons"),
     refreshButton: makeNodeComponent("refreshButton"),
     createEventButton: makeNodeComponent("createEventButton"),
+    pageNavigation: makeNodeComponent("pageNavigation"),
+    previousPageButton: makeNodeComponent("previousPageButton"),
+    pageNumber: makeNodeComponent("pageNumber"),
+    nextPageButton: makeNodeComponent("nextPageButton"),
     navigationBar: makeNodeComponent("navigationBar"),
     eventListContainer: makeNodeComponent("eventListContainer"),
     massToggleButton: makeNodeComponent("massToggleButton"),

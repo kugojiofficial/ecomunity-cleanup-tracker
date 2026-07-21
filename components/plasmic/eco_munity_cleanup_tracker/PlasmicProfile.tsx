@@ -69,7 +69,10 @@ import ProfileIcon from "./icons/PlasmicIcon__Profile"; // plasmic-import: OkMjq
 import TriangleFilledIcon from "./icons/PlasmicIcon__TriangleFilled"; // plasmic-import: 31rbojHD3Acy/icon
 import MovingTrashIcon from "./icons/PlasmicIcon__MovingTrash"; // plasmic-import: VWc3kj67KFnJ/icon
 import ClockIcon from "./icons/PlasmicIcon__Clock"; // plasmic-import: dqr28RDSI9p9/icon
-import ExitIcon from "./icons/PlasmicIcon__Exit"; // plasmic-import: ls_1Bif9RNoB/icon
+import LogoutIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Logout"; // plasmic-import: UOnydwul0hWX/icon
+import PlusIcon from "./icons/PlasmicIcon__Plus"; // plasmic-import: vPBVvVS45CP9/icon
+import ArrowBigLeftFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__ArrowBigLeftFilled"; // plasmic-import: l8ygS1BRem5y/icon
+import ArrowBigRightFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__ArrowBigRightFilled"; // plasmic-import: 6uggRkEYeTKa/icon
 
 const emptyProxy: any = new Proxy(() => "", {
   get(_, prop) {
@@ -120,9 +123,13 @@ export type PlasmicProfile__VariantsArgs = {};
 type VariantPropType = keyof PlasmicProfile__VariantsArgs;
 export const PlasmicProfile__VariantProps = new Array<VariantPropType>();
 
-export type PlasmicProfile__ArgsType = {};
+export type PlasmicProfile__ArgsType = {
+  refreshButtonOnClick?: (event: any) => void;
+};
 type ArgPropType = keyof PlasmicProfile__ArgsType;
-export const PlasmicProfile__ArgProps = new Array<ArgPropType>();
+export const PlasmicProfile__ArgProps = new Array<ArgPropType>(
+  "refreshButtonOnClick"
+);
 
 export type PlasmicProfile__OverridesType = {
   profilePage?: Flex__<"div">;
@@ -143,9 +150,14 @@ export type PlasmicProfile__OverridesType = {
   totalHoursStatValueLabel?: Flex__<"h1">;
   totalHoursStatLabel?: Flex__<"h1">;
   logOutButton?: Flex__<"button">;
-  text?: Flex__<"div">;
   leaderboardContainer?: Flex__<"div">;
   leaderboardTitle?: Flex__<"h1">;
+  headerButtons?: Flex__<"div">;
+  createEventButton?: Flex__<"button">;
+  pageNavigation?: Flex__<"div">;
+  previousPageButton?: Flex__<"button">;
+  pageNumber?: Flex__<"div">;
+  nextPageButton?: Flex__<"button">;
   leaderboardListContainer?: Flex__<"div">;
 };
 
@@ -428,16 +440,12 @@ function PlasmicProfile__RenderFunc(props: {
               $refs["logOutButton"] = ref;
             }}
           >
-            <ExitIcon
+            <LogoutIcon
               className={classNames("all", sty.svg__uJxbb)}
               role={"img"}
             />
 
-            <div
-              data-plasmic-name={"text"}
-              data-plasmic-override={overrides.text}
-              className={classNames("all", "__wab_text", sty.text)}
-            >
+            <div className={classNames("all", "__wab_text", sty.text__fJt3U)}>
               {"Log Out"}
             </div>
           </button>
@@ -459,6 +467,96 @@ function PlasmicProfile__RenderFunc(props: {
             >
               {"Club Leaderboard"}
             </h1>
+            <div
+              data-plasmic-name={"headerButtons"}
+              data-plasmic-override={overrides.headerButtons}
+              className={classNames("all", sty.headerButtons)}
+            >
+              <button
+                data-plasmic-name={"createEventButton"}
+                data-plasmic-override={overrides.createEventButton}
+                className={classNames(
+                  "all",
+                  "button",
+                  "button__6FNNC",
+                  sty.createEventButton
+                )}
+                ref={ref => {
+                  $refs["createEventButton"] = ref;
+                }}
+              >
+                <PlusIcon
+                  className={classNames("all", sty.svg___1Ln7S)}
+                  role={"img"}
+                />
+
+                <div
+                  className={classNames("all", "__wab_text", sty.text__oVsFa)}
+                >
+                  {"Create New Event"}
+                </div>
+              </button>
+              <div
+                data-plasmic-name={"pageNavigation"}
+                data-plasmic-override={overrides.pageNavigation}
+                className={classNames("all", sty.pageNavigation)}
+              >
+                <button
+                  data-plasmic-name={"previousPageButton"}
+                  data-plasmic-override={overrides.previousPageButton}
+                  className={classNames(
+                    "all",
+                    "button",
+                    "button__6FNNC",
+                    sty.previousPageButton
+                  )}
+                  ref={ref => {
+                    $refs["previousPageButton"] = ref;
+                  }}
+                >
+                  <ArrowBigLeftFilledIcon
+                    className={classNames("all", sty.svg___2Zgf2)}
+                    role={"img"}
+                  />
+
+                  <div
+                    className={classNames("all", "__wab_text", sty.text__nVm2Z)}
+                  >
+                    {"Previous"}
+                  </div>
+                </button>
+                <div
+                  data-plasmic-name={"pageNumber"}
+                  data-plasmic-override={overrides.pageNumber}
+                  className={classNames("all", "__wab_text", sty.pageNumber)}
+                >
+                  {"1 / 1"}
+                </div>
+                <button
+                  data-plasmic-name={"nextPageButton"}
+                  data-plasmic-override={overrides.nextPageButton}
+                  className={classNames(
+                    "all",
+                    "button",
+                    "button__6FNNC",
+                    sty.nextPageButton
+                  )}
+                  ref={ref => {
+                    $refs["nextPageButton"] = ref;
+                  }}
+                >
+                  <div
+                    className={classNames("all", "__wab_text", sty.text__oTc3L)}
+                  >
+                    {"Next"}
+                  </div>
+                  <ArrowBigRightFilledIcon
+                    className={classNames("all", sty.svg__yDTmQ)}
+                    role={"img"}
+                  />
+                </button>
+              </div>
+            </div>
             <div
               data-plasmic-name={"leaderboardListContainer"}
               data-plasmic-override={overrides.leaderboardListContainer}
@@ -491,9 +589,14 @@ const PlasmicDescendants = {
     "totalHoursStatValueLabel",
     "totalHoursStatLabel",
     "logOutButton",
-    "text",
     "leaderboardContainer",
     "leaderboardTitle",
+    "headerButtons",
+    "createEventButton",
+    "pageNavigation",
+    "previousPageButton",
+    "pageNumber",
+    "nextPageButton",
     "leaderboardListContainer"
   ],
   navigationBar: ["navigationBar"],
@@ -560,14 +663,37 @@ const PlasmicDescendants = {
   ],
   totalHoursStatValueLabel: ["totalHoursStatValueLabel"],
   totalHoursStatLabel: ["totalHoursStatLabel"],
-  logOutButton: ["logOutButton", "text"],
-  text: ["text"],
+  logOutButton: ["logOutButton"],
   leaderboardContainer: [
     "leaderboardContainer",
     "leaderboardTitle",
+    "headerButtons",
+    "createEventButton",
+    "pageNavigation",
+    "previousPageButton",
+    "pageNumber",
+    "nextPageButton",
     "leaderboardListContainer"
   ],
   leaderboardTitle: ["leaderboardTitle"],
+  headerButtons: [
+    "headerButtons",
+    "createEventButton",
+    "pageNavigation",
+    "previousPageButton",
+    "pageNumber",
+    "nextPageButton"
+  ],
+  createEventButton: ["createEventButton"],
+  pageNavigation: [
+    "pageNavigation",
+    "previousPageButton",
+    "pageNumber",
+    "nextPageButton"
+  ],
+  previousPageButton: ["previousPageButton"],
+  pageNumber: ["pageNumber"],
+  nextPageButton: ["nextPageButton"],
   leaderboardListContainer: ["leaderboardListContainer"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
@@ -592,9 +718,14 @@ type NodeDefaultElementType = {
   totalHoursStatValueLabel: "h1";
   totalHoursStatLabel: "h1";
   logOutButton: "button";
-  text: "div";
   leaderboardContainer: "div";
   leaderboardTitle: "h1";
+  headerButtons: "div";
+  createEventButton: "button";
+  pageNavigation: "div";
+  previousPageButton: "button";
+  pageNumber: "div";
+  nextPageButton: "button";
   leaderboardListContainer: "div";
 };
 
@@ -681,9 +812,14 @@ export const PlasmicProfile = Object.assign(
     totalHoursStatValueLabel: makeNodeComponent("totalHoursStatValueLabel"),
     totalHoursStatLabel: makeNodeComponent("totalHoursStatLabel"),
     logOutButton: makeNodeComponent("logOutButton"),
-    text: makeNodeComponent("text"),
     leaderboardContainer: makeNodeComponent("leaderboardContainer"),
     leaderboardTitle: makeNodeComponent("leaderboardTitle"),
+    headerButtons: makeNodeComponent("headerButtons"),
+    createEventButton: makeNodeComponent("createEventButton"),
+    pageNavigation: makeNodeComponent("pageNavigation"),
+    previousPageButton: makeNodeComponent("previousPageButton"),
+    pageNumber: makeNodeComponent("pageNumber"),
+    nextPageButton: makeNodeComponent("nextPageButton"),
     leaderboardListContainer: makeNodeComponent("leaderboardListContainer"),
 
     // Metadata about props expected for PlasmicProfile

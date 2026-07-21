@@ -126,6 +126,22 @@ export type Database = {
       }
     }
     Views: {
+      event_waste_breakdown: {
+        Row: {
+          amount: number | null
+          event_id: string | null
+          waste_type: Database["public"]["Enums"]["waste_type"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "waste_logs_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       leaderboard: {
         Row: {
           avatar_url: string | null

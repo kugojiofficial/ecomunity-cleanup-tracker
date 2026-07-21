@@ -2,7 +2,7 @@ import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "rea
 import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { getWasteLogs, type WasteLog } from "../lib/api";
+import { getWasteLogs, getEventWasteLogs, type WasteLog } from "../lib/api";
 import { getSupabaseBrowserClient } from "../lib/supabase/browser";
 import { formatWasteType, wasteTypeColor } from "../lib/format/wasteType";
 
@@ -88,7 +88,8 @@ export default function InteractiveMapInner({ eventId, live, liveUntil }: Intera
   useEffect(() => {
     let cancelled = false;
 
-    getWasteLogs(1000).then((result) => {
+    const request = eventId ? getEventWasteLogs(eventId) : getWasteLogs(1000);
+    request.then((result) => {
       if (cancelled) return;
       if (!result.success) {
         console.error("Error fetching waste logs:", result.error);
