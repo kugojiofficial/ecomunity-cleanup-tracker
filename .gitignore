@@ -42,3 +42,16 @@ next-env.d.ts
 
 #plasmic
 plasmic.lock
+
+# secrets / local env
+shared.env
+
+# local agent tooling
+.claude/
+.agents/
+skills-lock.json
+
+# local-only docs / agent instructions
+ARCHITECTURE.md
+CLAUDE.md
+AGENTS.md

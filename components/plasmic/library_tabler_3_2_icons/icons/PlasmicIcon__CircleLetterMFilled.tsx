@@ -1,0 +1,37 @@
+/* eslint-disable */
+/* tslint:disable */
+// @ts-nocheck
+/* prettier-ignore-start */
+import React from "react";
+import { classNames } from "@plasmicapp/react-web";
+
+export type CircleLetterMFilledIconProps = React.ComponentProps<"svg"> & {
+  title?: string;
+};
+
+export function CircleLetterMFilledIcon(props: CircleLetterMFilledIconProps) {
+  const { className, style, title, ...restProps } = props;
+  return (
+    <svg
+      xmlns={"http://www.w3.org/2000/svg"}
+      fill={"none"}
+      viewBox={"0 0 24 24"}
+      height={"1em"}
+      className={classNames("plasmic-default__svg", className)}
+      style={style}
+      {...restProps}
+    >
+      {title && <title>{title}</title>}
+
+      <path
+        d={
+          "M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zm4 6c0-1.014-1.336-1.384-1.857-.514L12 11.056l-2.143-3.57C9.336 6.616 8 6.986 8 8v8a1 1 0 001 1l.117-.007A1 1 0 0010 16v-4.39l1.143 1.904.074.108a1 1 0 001.64-.108L14 11.61V16a1 1 0 002 0V8z"
+        }
+        fill={"currentColor"}
+      ></path>
+    </svg>
+  );
+}
+
+export default CircleLetterMFilledIcon;
+/* prettier-ignore-end */

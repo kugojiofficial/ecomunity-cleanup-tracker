@@ -1,0 +1,81 @@
+.ariaSelect:global(.__wab_instance) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  row-gap: var(--token-Bqn5pd9oN2N7);
+  min-width: 0;
+}
+.ariaSelect[data-disabled][data-disabled]:global(.__wab_instance) {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.ariaButton:global(.__wab_instance) {
+  box-sizing: border-box;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: inset 0px 0px 0px 1px var(--token-_5Qf8L9vQBPh);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  outline-style: none;
+  background: var(--token-vOzt3wWwXHfx);
+  min-width: 0;
+  border-radius: var(--token-uauosHM9-I-s);
+  padding: 0px;
+  border-style: none;
+}
+.ariaSelect[data-focus-visible] .ariaButton:global(.__wab_instance) {
+  outline-style: solid;
+  outline-width: var(--token-HFjDKt86yt18);
+  outline-offset: 1px;
+  outline-color: var(--token-zVGRgrcCcY9C);
+}
+.ariaSelectedValue:global(.__wab_instance) {
+  font-size: var(--token-7NC-GmBmwPz5);
+  line-height: var(--token-QyaMfyHCjvUJ);
+  padding-top: var(--token-uauosHM9-I-s);
+  padding-bottom: var(--token-uauosHM9-I-s);
+  padding-left: var(--token-Pk7-j3lUPioJ);
+}
+.text {
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  color: var(--token-498fDrf09iPq);
+  min-width: 0;
+}
+.freeBox {
+  display: flex;
+  position: relative;
+  width: var(--token-SnCHKd_1DFQ5);
+  height: var(--token-SnCHKd_1DFQ5);
+  justify-content: center;
+  align-items: center;
+}
+.svg {
+  width: var(--token-A5cij-U-9Z9e);
+  height: var(--token-A5cij-U-9Z9e);
+  flex-shrink: 0;
+}
+.description:global(.__wab_instance):global(.__wab_instance) {
+  position: relative;
+}
+.menuPopover:global(.__wab_instance):global(.__wab_instance) {
+  position: relative;
+  top: auto;
+  left: auto;
+}
+.menuSection___2EwV7:global(.__wab_instance):global(.__wab_instance) {
+  max-width: 100%;
+}
+.text__fOzyH {
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  min-width: 0;
+}

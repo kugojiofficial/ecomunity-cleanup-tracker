@@ -1,0 +1,31 @@
+.eventWasteTypeListItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  background: var(--token-_ghsv35bfxZ2);
+  position: relative;
+  min-width: 0;
+  border-radius: 0px;
+  padding: 3px 10px;
+}
+.wasteTypeAmountLabel {
+  text-align: right;
+  margin-bottom: 0px;
+  width: auto;
+  font-weight: 500;
+  font-size: 20px;
+  order: 1;
+  padding: 0px;
+}
+.wasteTypeNameLabel {
+  text-align: left;
+  margin-bottom: 0px;
+  width: auto;
+  font-weight: 400;
+  font-size: 20px;
+  padding: 0px;
+}

@@ -13,6 +13,15 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    // Plasmic-generated skeleton component wrappers use an empty interface
+    // (`interface XProps extends DefaultXProps {}`) as a deliberate placeholder
+    // for props you may add later — that's intentional, not a smell.
+    files: ["components/*.tsx"],
+    rules: {
+      "@typescript-eslint/no-empty-object-type": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;

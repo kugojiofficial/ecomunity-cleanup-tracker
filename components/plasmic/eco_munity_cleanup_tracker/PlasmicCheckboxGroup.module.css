@@ -1,0 +1,41 @@
+.ariaCheckboxGroup:global(.__wab_instance) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  row-gap: var(--token-Bqn5pd9oN2N7);
+  min-width: 0;
+}
+.ariaCheckboxGroup[data-disabled][data-disabled]:global(.__wab_instance) {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+.ariaCheckboxGroup[data-readonly][data-readonly]:global(.__wab_instance) {
+  pointer-events: none;
+  cursor: default;
+}
+.label:global(.__wab_instance):global(.__wab_instance) {
+  position: relative;
+}
+.freeBox__gdm4I {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--token-Bqn5pd9oN2N7);
+}
+.checkbox__expxR:global(.__wab_instance):global(.__wab_instance) {
+  max-width: 100%;
+}
+.checkbox__ldyeh:global(.__wab_instance):global(.__wab_instance) {
+  max-width: 100%;
+  position: relative;
+}
+.checkbox___9Y0Y4:global(.__wab_instance):global(.__wab_instance) {
+  max-width: 100%;
+  position: relative;
+}
+.description:global(.__wab_instance):global(.__wab_instance) {
+  position: relative;
+}

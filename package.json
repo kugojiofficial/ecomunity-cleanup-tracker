@@ -1,15 +1,21 @@
 {
-  "name": "ecomunity-iot-system-hub",
+  "name": "ecomunity-cleanup-tracker",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "plasmic:sync": "plasmic sync --yes && node scripts/strip-plasmic-font-import.mjs"
   },
   "dependencies": {
-    "@plasmicapp/loader-nextjs": "^2.0.3",
+    "@plasmicapp/react-web": "^1.0.25",
+    "@plasmicapp/react-web-runtime": "^1.0.25",
+    "@plasmicpkgs/plasmic-basic-components": "^0.0.283",
+    "@plasmicpkgs/plasmic-nav": "^0.0.224",
+    "@plasmicpkgs/plasmic-tabs": "^0.0.95",
+    "@plasmicpkgs/react-aria": "^0.0.189",
     "@supabase/supabase-js": "^2.105.4",
     "leaflet": "^1.9.4",
     "next": "16.2.6",
@@ -18,6 +24,7 @@
     "react-leaflet": "^5.0.0"
   },
   "devDependencies": {
+    "@plasmicapp/cli": "^0.1.366",
     "@tailwindcss/postcss": "^4",
     "@types/leaflet": "^1.9.21",
     "@types/node": "^20",
@@ -28,5 +35,8 @@
     "eslint-config-next": "16.2.6",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@plasmicapp/host": "2.0.11"
   }
 }

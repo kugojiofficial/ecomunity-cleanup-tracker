@@ -1,0 +1,210 @@
+.leaderboardListItem {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  background: var(--token-QvKZNdbDFRb8);
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 10px;
+  padding: 8px;
+  border: 3px solid var(--token-ytzaa9i3sK9d);
+}
+.leaderboardListItemHeader {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  min-width: 0;
+  padding: 8px;
+}
+@media (max-width: 800px) {
+  .leaderboardListItemHeader {
+    margin-bottom: 0px;
+    flex-wrap: wrap;
+    align-items: stretch;
+    row-gap: 8px;
+    justify-content: space-between;
+    align-content: flex-start;
+  }
+}
+.leaderboardListItemPositionLabel {
+  width: auto;
+  height: 60px;
+  max-width: 100%;
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 900;
+  margin-bottom: 5px;
+  text-align: center;
+  text-decoration-line: none;
+  text-transform: none;
+  white-space: pre-wrap;
+  align-self: center;
+  margin-right: 10px;
+  position: relative;
+  left: auto;
+  top: auto;
+  background: #1c1c1c;
+  aspect-ratio: 1;
+  flex-grow: 0;
+  font-family: "Aldrich", sans-serif;
+  color: var(--token-vOzt3wWwXHfx);
+  border-radius: 20px;
+  padding: 10px;
+  border: 3px solid var(--token-vOzt3wWwXHfx);
+}
+.svg__hvYz {
+  animation: none;
+  object-fit: cover;
+  max-width: 100%;
+  align-self: flex-start;
+  width: 55px;
+  height: 55px;
+  transform: translate3d(0px, -1px, 0px);
+  margin-top: 3px;
+  flex-shrink: 0;
+  display: none;
+}
+.leaderboardListItemProfileInfoContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  align-self: center;
+  min-width: 0;
+  padding: 0px 8px 0px 12px;
+}
+@media (max-width: 800px) {
+  .leaderboardListItemProfileInfoContainer {
+    width: auto;
+    height: auto;
+  }
+}
+.leaderboardListItemProfileUserNameLabel {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  font-size: 24px;
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 600;
+  margin-bottom: 5px;
+  text-align: left;
+  text-decoration-line: none;
+  text-transform: none;
+  white-space: pre-wrap;
+  padding-top: 0px;
+  min-width: 0;
+}
+@media (max-width: 800px) {
+  .leaderboardListItemProfileUserNameLabel {
+    padding-bottom: 0px;
+    text-align: right;
+  }
+}
+.leaderboardListItemProfileJoinDateLabel {
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  color: #ffffffd9;
+  text-align: left;
+  font-weight: 400;
+  font-size: 15px;
+  padding-top: 0px;
+  min-width: 0;
+}
+@media (max-width: 800px) {
+  .leaderboardListItemProfileJoinDateLabel {
+    text-align: right;
+  }
+}
+.leaderboardListItemPointsStatContainer {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  column-gap: 8px;
+  margin-right: 20px;
+  min-width: 0;
+  padding: 0px;
+}
+@media (max-width: 800px) {
+  .leaderboardListItemPointsStatContainer {
+    justify-content: center;
+    align-items: center;
+    margin-right: 0px;
+  }
+}
+.svg___2IlAr {
+  animation: none;
+  object-fit: cover;
+  max-width: 100%;
+  align-self: center;
+  width: 30px;
+  height: 35px;
+  transform: translate3d(0px, -1px, 0px);
+  margin-top: 3px;
+  color: var(--token-8H0FXC0nPyt4);
+  flex-shrink: 0;
+}
+.leaderboardListItemPointsStatValueLabel {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  font-size: 22px;
+  color: var(--token-8H0FXC0nPyt4);
+  font-style: normal;
+  font-weight: 600;
+  margin-bottom: 0px;
+  text-align: left;
+  text-decoration-line: none;
+  text-transform: none;
+  white-space: pre-wrap;
+  padding-top: 0px;
+  align-self: center;
+}
+@media (max-width: 800px) {
+  .leaderboardListItemPointsStatValueLabel {
+    padding-bottom: 0px;
+  }
+}
+.leaderboardListItemPointsStatLabel {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  font-size: 20px;
+  color: var(--token-sgwJLQo1g3SM);
+  font-style: normal;
+  font-weight: 500;
+  margin-bottom: 0px;
+  text-align: left;
+  text-decoration-line: none;
+  text-transform: none;
+  white-space: pre-wrap;
+  align-self: center;
+}
+@media (max-width: 800px) {
+  .leaderboardListItemPointsStatLabel {
+    padding-bottom: 0px;
+  }
+}

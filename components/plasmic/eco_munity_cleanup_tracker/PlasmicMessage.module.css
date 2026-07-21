@@ -1,0 +1,108 @@
+.message {
+  display: inline-flex;
+  position: relative;
+  height: auto;
+  max-width: 100%;
+  width: auto;
+  flex-direction: column;
+  justify-self: flex-start;
+  padding: 0px;
+}
+.messagewarning {
+  padding-top: 0px;
+  margin-top: 0px;
+}
+.freeBox__jn2Ex {
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  flex-direction: row;
+  min-width: 0;
+  display: none;
+  padding: 0px 0px 0px 12px;
+  margin: 0px;
+}
+.freeBoxwarning__jn2Ex87Qmq {
+  display: flex;
+}
+.slotTargetSlot {
+  font-size: 28px;
+  color: var(--token-sgwJLQo1g3SM);
+}
+.text__wcGc {
+  margin-bottom: 1.5px;
+}
+.freeBox__mh7Dl {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  background: var(--token-uaIxKhkvZhCQ);
+  position: relative;
+  left: auto;
+  display: flex;
+  flex-direction: row;
+  top: auto;
+  z-index: 1;
+  min-height: 0;
+  border-radius: 8px;
+  padding: 16px 21px 16px 20px;
+  margin: 21px 21px 0px 0px;
+  border: 3px solid var(--token-qO-bjBqp0oab);
+}
+@media (max-width: 800px) {
+  .freeBox__mh7Dl {
+    margin-right: 0px;
+  }
+}
+.freeBoxwarning__mh7Dl87Qmq {
+  background: var(--token-sgwJLQo1g3SM);
+  margin-top: 0px;
+  border-color: var(--token-8H0FXC0nPyt4);
+}
+.slotTargetChildren {
+  font-size: 22px;
+  color: #ffffff;
+}
+.slotTargetChildrenwarning {
+  color: var(--token-uaIxKhkvZhCQ);
+}
+.closeButton {
+  display: block;
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  max-width: 100%;
+  left: auto;
+  top: -21px;
+  z-index: 2;
+  background: var(--token-_ghsv35bfxZ2);
+  right: -21px;
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 8px;
+  padding: 8px;
+  border: 2px solid var(--token--LLXgMeNdajs);
+}
+@media (max-width: 800px) {
+  .closeButton {
+    right: 9.5px;
+  }
+}
+.closeButtonwarning {
+  background: var(--token-BoCBPMjbmJFg);
+  border-color: var(--token-i0S2kgM9APLY);
+}
+.svg__c4Hw5 {
+  animation: none;
+  object-fit: cover;
+  max-width: 100%;
+  width: 90%;
+  height: 90%;
+  left: 2.5px;
+  top: 2px;
+  z-index: 1;
+  position: absolute;
+  color: #ffffff;
+  flex-grow: 0;
+}

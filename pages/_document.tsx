@@ -13,6 +13,15 @@ export default function Document() {
 
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+        {/* Plasmic design fonts. Moved here from the generated plasmic.css
+            (its @import broke Turbopack bundling — see that file's note). */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,900&family=Inconsolata:ital,wght@0,400;0,500;0,600;0,700;0,900&family=Aldrich:ital,wght@0,400&display=swap"
+        />
       </Head>
       <body className="antialiased">
         <Main />
