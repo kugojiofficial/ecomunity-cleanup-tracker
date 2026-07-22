@@ -76,7 +76,12 @@ function Dashboard() {
           activeEventCardValue={{ children: cards.name }}
           participantsCardValue={{ children: cards.participants }}
           wasteCollectedCardValue={{ children: cards.collectedWaste }}
-          interactiveMap={{ eventId: activeEventId, live: isActive, liveUntil: endedAt }}
+          interactiveMap={{
+            eventId: activeEventId,
+            live: isActive,
+            liveUntil: endedAt,
+            style: { height: 500 },
+          }}
           // Active → default chevrons-right icon; recent → check icon, with the
           // title + heatmap text flipped to match.
           activeEventTitleIcon={isActive ? undefined : { as: CheckIcon }}

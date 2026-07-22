@@ -76,7 +76,9 @@ function Events() {
                   ).toFixed(1)
                 )
               : 0;
-          const wasteByType = byEvent.get(event.id) ?? [];
+          const wasteByType = [...(byEvent.get(event.id) ?? [])].sort(
+            (a, b) => b.amount - a.amount
+          );
           const collectedWasteAmount = wasteByType.reduce((sum, w) => sum + w.amount, 0);
           return {
             id: event.id,

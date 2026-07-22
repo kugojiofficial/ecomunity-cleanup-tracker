@@ -21,15 +21,12 @@
   .navigationBar {
     animation: none;
     width: 100%;
-    height: 62.5px;
+    height: 80px;
     min-width: 0;
   }
 }
 .navigationBartab_adminPortal {
   background: var(--token-LP3DuU1ILBgj);
-}
-.navigationBarloggedOut {
-  background: none;
 }
 .dashboardPageButton {
   color: #ffffffd9;
@@ -52,7 +49,7 @@
   cursor: default;
   border-top-width: 0px;
   border-right-width: 0px;
-  border-bottom-width: 5px;
+  border-bottom-width: 10px;
   border-left-width: 0px;
   border-top-color: #ffffff;
   border-right-color: #ffffff;
@@ -66,14 +63,12 @@
 .dashboardPageButtontab_adminPortal {
   background: none;
 }
-.dashboardPageButtonloggedOut {
-  display: none;
-}
 .svg__anMfb {
   object-fit: cover;
   max-width: 100%;
   width: 45px;
   height: 45px;
+  margin-bottom: 8px;
   flex-shrink: 0;
 }
 .h1__hlXHk {
@@ -116,7 +111,7 @@
   cursor: default;
   border-top-width: 0px;
   border-right-width: 0px;
-  border-bottom-width: 5px;
+  border-bottom-width: 10px;
   border-left-width: 0px;
   border-top-color: #ffffff;
   border-right-color: #ffffff;
@@ -127,9 +122,6 @@
   color: #ffffff;
   border-style: solid;
 }
-.sessionsPageButtonloggedOut {
-  display: none;
-}
 .svg___0YQGt {
   object-fit: cover;
   max-width: 100%;
@@ -138,6 +130,7 @@
   transition-property: all;
   transition-duration: 1s;
   transform: translate3d(0px, -1px, 0px);
+  margin-bottom: 8px;
   flex-shrink: 0;
   -webkit-transition-property: all;
   -webkit-transition-duration: 1s;
@@ -187,13 +180,10 @@
 .profilePageButtontab_profile {
   border-top-width: 0px;
   border-right-width: 0px;
-  border-bottom-width: 5px;
+  border-bottom-width: 10px;
   border-left-width: 0px;
   background: var(--token-_ghsv35bfxZ2);
   border-color: var(--token-ytzaa9i3sK9d);
-}
-.profilePageButtonloggedOut {
-  display: none;
 }
 .svg__zp5VL {
   object-fit: cover;
@@ -202,6 +192,7 @@
   height: 45px;
   transform: translate3d(0px, -0.5px, 0px);
   color: #ffffffd9;
+  margin-bottom: 8px;
   flex-shrink: 0;
 }
 .svgtab_adminPortal__zp5VLqxQ {
@@ -257,12 +248,9 @@
 .adminPortalButtontab_adminPortal {
   border-top-width: 0px;
   border-right-width: 0px;
-  border-bottom-width: 5px;
+  border-bottom-width: 10px;
   border-left-width: 0px;
   border-color: var(--token-qvPVZoXe_tpJ);
-}
-.adminPortalButtonloggedOut {
-  display: none;
 }
 .svg__rm7Zi {
   object-fit: cover;
@@ -271,6 +259,7 @@
   height: 45px;
   transform: translate3d(0px, -0.5px, 0px);
   color: #ffffffd9;
+  margin-bottom: 8px;
   flex-shrink: 0;
 }
 .svgtab_adminPortal__rm7ZiqxQ {

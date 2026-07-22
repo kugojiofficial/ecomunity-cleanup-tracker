@@ -74,16 +74,13 @@ import SettingsFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__S
 
 export type PlasmicNavigationBar__VariantMembers = {
   tab: "dashboard" | "events" | "adminPortal" | "profile";
-  loggedOut: "loggedOut";
 };
 export type PlasmicNavigationBar__VariantsArgs = {
   tab?: SingleChoiceArg<"dashboard" | "events" | "adminPortal" | "profile">;
-  loggedOut?: SingleBooleanChoiceArg<"loggedOut">;
 };
 type VariantPropType = keyof PlasmicNavigationBar__VariantsArgs;
 export const PlasmicNavigationBar__VariantProps = new Array<VariantPropType>(
-  "tab",
-  "loggedOut"
+  "tab"
 );
 
 export type PlasmicNavigationBar__ArgsType = {};
@@ -101,7 +98,6 @@ export type PlasmicNavigationBar__OverridesType = {
 
 export interface DefaultNavigationBarProps {
   tab?: SingleChoiceArg<"dashboard" | "events" | "adminPortal" | "profile">;
-  loggedOut?: SingleBooleanChoiceArg<"loggedOut">;
   className?: string;
 }
 
@@ -151,12 +147,6 @@ function PlasmicNavigationBar__RenderFunc(props: {
         type: "private",
         variableType: "variant",
         initFunc: ({ $props, $state, $queries, $q, $ctx }) => $props.tab
-      },
-      {
-        path: "loggedOut",
-        type: "private",
-        variableType: "variant",
-        initFunc: ({ $props, $state, $queries, $q, $ctx }) => $props.loggedOut
       }
     ],
     [$props, $ctx, $refs]
@@ -188,11 +178,6 @@ function PlasmicNavigationBar__RenderFunc(props: {
         styleTokensClassNames,
         sty.navigationBar,
         {
-          [sty.navigationBarloggedOut]: hasVariant(
-            $state,
-            "loggedOut",
-            "loggedOut"
-          ),
           [sty.navigationBartab_adminPortal]: hasVariant(
             $state,
             "tab",
@@ -210,11 +195,6 @@ function PlasmicNavigationBar__RenderFunc(props: {
           "button__6FNNC",
           sty.dashboardPageButton,
           {
-            [sty.dashboardPageButtonloggedOut]: hasVariant(
-              $state,
-              "loggedOut",
-              "loggedOut"
-            ),
             [sty.dashboardPageButtontab_adminPortal]: hasVariant(
               $state,
               "tab",
@@ -224,6 +204,11 @@ function PlasmicNavigationBar__RenderFunc(props: {
               $state,
               "tab",
               "dashboard"
+            ),
+            [sty.dashboardPageButtontab_events]: hasVariant(
+              $state,
+              "tab",
+              "events"
             )
           }
         )}
@@ -303,11 +288,6 @@ function PlasmicNavigationBar__RenderFunc(props: {
           "button__6FNNC",
           sty.sessionsPageButton,
           {
-            [sty.sessionsPageButtonloggedOut]: hasVariant(
-              $state,
-              "loggedOut",
-              "loggedOut"
-            ),
             [sty.sessionsPageButtontab_adminPortal]: hasVariant(
               $state,
               "tab",
@@ -395,11 +375,6 @@ function PlasmicNavigationBar__RenderFunc(props: {
           "button__6FNNC",
           sty.profilePageButton,
           {
-            [sty.profilePageButtonloggedOut]: hasVariant(
-              $state,
-              "loggedOut",
-              "loggedOut"
-            ),
             [sty.profilePageButtontab_adminPortal]: hasVariant(
               $state,
               "tab",
@@ -501,11 +476,6 @@ function PlasmicNavigationBar__RenderFunc(props: {
         data-plasmic-name={"adminPortalButton"}
         data-plasmic-override={overrides.adminPortalButton}
         className={classNames("all", "a", "a__6FNNC", sty.adminPortalButton, {
-          [sty.adminPortalButtonloggedOut]: hasVariant(
-            $state,
-            "loggedOut",
-            "loggedOut"
-          ),
           [sty.adminPortalButtontab_adminPortal]: hasVariant(
             $state,
             "tab",

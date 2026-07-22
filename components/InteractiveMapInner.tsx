@@ -38,19 +38,22 @@ function MapController({ logs, eventId }: { logs: WasteLog[]; eventId?: string }
   const fittedFor = useRef<string | null>(null);
 
   const attemptFit = useCallback(() => {
-    map.invalidateSize();
-    const scope = eventId ?? "__all__";
-    if (fittedFor.current === scope) return; // fit once per event, then free
-    const size = map.getSize();
-    if (size.x === 0 || size.y === 0) return; // container not sized yet
-    const bounds = boundsForLogs(logs);
-    if (!bounds) return; // no data yet
-
-    fittedFor.current = scope;
-    if (logs.length === 1) {
-      map.setView(bounds.getCenter(), 16);
-    } else {
-      map.fitBounds(bounds, { padding: [40, 40] });
+    const container = map.getContainer();
+    if (!container || !container.isConnected) return;
+    if (container.offsetWidth === 0 || container.offsetHeight === 0) return;
+    try {
+      map.invalidateSize();
+      const scope = eventId ?? "__all__";
+      if (fittedFor.current === scope) return; // fit once per event, then free
+      const bounds = boundsForLogs(logs);
+      if (!bounds) return; // no data yet
+      fittedFor.current = scope;
+      if (logs.length === 1) {
+        map.setView(bounds.getCenter(), 16);
+      } else {
+        map.fitBounds(bounds, { padding: [40, 40] });
+      }
+    } catch {
     }
   }, [map, logs, eventId]);
 

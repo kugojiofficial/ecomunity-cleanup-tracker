@@ -69,7 +69,7 @@ import sty from "./PlasmicDashboard.module.css"; // plasmic-import: C7cUxPqd2zr6
 import ChevronsRightIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__ChevronsRight"; // plasmic-import: yQA1jfb0RgwK/icon
 import UsersIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Users"; // plasmic-import: JrpdS-Pm49Zg/icon
 import TrashIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Trash"; // plasmic-import: uJVL4__Mg7cD/icon
-import MapAndPinIcon from "./icons/PlasmicIcon__MapAndPin"; // plasmic-import: 6t3FPM1-PqG4/icon
+import MapPin2Icon from "../library_tabler_3_2_icons/icons/PlasmicIcon__MapPin2"; // plasmic-import: 18M0NkLoJClk/icon
 
 const emptyProxy: any = new Proxy(() => "", {
   get(_, prop) {
@@ -141,6 +141,7 @@ export type PlasmicDashboard__OverridesType = {
   mapTitle?: Flex__<"h1">;
   interactiveMap?: Flex__<typeof InteractiveMap>;
   navigationBar?: Flex__<typeof NavigationBar>;
+  pagePadding?: Flex__<"div">;
 };
 
 export interface DefaultDashboardProps {}
@@ -367,7 +368,7 @@ function PlasmicDashboard__RenderFunc(props: {
               data-plasmic-override={overrides.mapHeader}
               className={classNames("all", sty.mapHeader)}
             >
-              <MapAndPinIcon
+              <MapPin2Icon
                 className={classNames("all", sty.svg__yhAk1)}
                 role={"img"}
               />
@@ -398,6 +399,12 @@ function PlasmicDashboard__RenderFunc(props: {
             className={classNames("__wab_instance", sty.navigationBar)}
             tab={"dashboard"}
           />
+
+          <div
+            data-plasmic-name={"pagePadding"}
+            data-plasmic-override={overrides.pagePadding}
+            className={classNames("all", sty.pagePadding)}
+          />
         </div>
       </div>
     </React.Fragment>
@@ -421,7 +428,8 @@ const PlasmicDescendants = {
     "mapHeader",
     "mapTitle",
     "interactiveMap",
-    "navigationBar"
+    "navigationBar",
+    "pagePadding"
   ],
   eventCards: [
     "eventCards",
@@ -458,7 +466,8 @@ const PlasmicDescendants = {
   mapHeader: ["mapHeader", "mapTitle"],
   mapTitle: ["mapTitle"],
   interactiveMap: ["interactiveMap"],
-  navigationBar: ["navigationBar"]
+  navigationBar: ["navigationBar"],
+  pagePadding: ["pagePadding"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
@@ -480,6 +489,7 @@ type NodeDefaultElementType = {
   mapTitle: "h1";
   interactiveMap: typeof InteractiveMap;
   navigationBar: typeof NavigationBar;
+  pagePadding: "div";
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -559,6 +569,7 @@ export const PlasmicDashboard = Object.assign(
     mapTitle: makeNodeComponent("mapTitle"),
     interactiveMap: makeNodeComponent("interactiveMap"),
     navigationBar: makeNodeComponent("navigationBar"),
+    pagePadding: makeNodeComponent("pagePadding"),
 
     // Metadata about props expected for PlasmicDashboard
     internalVariantProps: PlasmicDashboard__VariantProps,
