@@ -97,12 +97,35 @@ export async function requireAdmin(
   const { res, supabaseAdmin } = ctx;
   const { data: profile, error } = await supabaseAdmin
     .from("users")
-    .select("is_admin")
+    .select("role")
     .eq("id", authed.userId)
     .single();
 
-  if (error || !profile?.is_admin) {
+  // Developer is a strict superset of admin.
+  const role = profile?.role;
+  if (error || (role !== "admin" && role !== "developer")) {
     sendError(res, "Admin privileges required.", 403);
+    return null;
+  }
+
+  return authed;
+}
+
+export async function requireDeveloper(
+  ctx: SupabaseApiContext
+): Promise<{ userId: string } | null> {
+  const authed = await resolveAuthedUser(ctx);
+  if (!authed) return null;
+
+  const { res, supabaseAdmin } = ctx;
+  const { data: profile, error } = await supabaseAdmin
+    .from("users")
+    .select("role")
+    .eq("id", authed.userId)
+    .single();
+
+  if (error || profile?.role !== "developer") {
+    sendError(res, "Developer privileges required.", 403);
     return null;
   }
 

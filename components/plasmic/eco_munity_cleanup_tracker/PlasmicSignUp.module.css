@@ -49,6 +49,7 @@
 @media (max-width: 800px) {
   .flex {
     height: 125vh;
+    margin-bottom: 50px;
   }
 }
 .container {
@@ -484,7 +485,7 @@
   }
 }
 .signUpButton {
-  cursor: default;
+  cursor: pointer;
   background: var(--token-ytzaa9i3sK9d);
   font-weight: 700;
   color: #ffffff;

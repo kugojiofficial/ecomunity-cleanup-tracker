@@ -130,6 +130,8 @@ function Profile() {
               void handleLogOut();
             },
           }}
+          changePasswordButton={{ onClick: () => router.push("/change-password") }}
+          changeEmailButton={{ onClick: () => router.push("/change-email") }}
           profileUserNameLabel={{ children: fullName(profile?.first_name, profile?.last_name) }}
           profileJoinDateLabel={{ children: formatJoinDate(profile?.created_at) }}
           pointsStatValueLabel={{ children: formatWithCommas(profile?.points ?? 0) }}

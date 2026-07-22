@@ -5,20 +5,33 @@ import { PlasmicQueryDataProvider } from "@plasmicapp/react-web/lib/query";
 import { useRouter } from "next/router";
 
 import { PlasmicLogIn } from "../plasmic/eco_munity_cleanup_tracker/PlasmicLogIn";
-import { signIn, useAuthUser } from "../../lib/api";
+import { signIn, sendPasswordReset, validateEmail, useAuthUser } from "../../lib/api";
 
 const HIDDEN = { display: "none" } as const;
 const SHOWN = { display: "flex" } as const;
 
+type Mode = "login" | "forgot";
+
 function LogIn() {
   const router = useRouter();
   const { user } = useAuthUser();
+  const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
+  // Forgot-password sub-flow.
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [forgotError, setForgotError] = useState<string | null>(null);
+  const [forgotSent, setForgotSent] = useState(false);
+  const [forgotBusy, setForgotBusy] = useState(false);
+
   const loggedIn = !!user;
+  const showLoginForm = !loggedIn && mode === "login";
+  const showForgot = !loggedIn && mode === "forgot";
+  const showForgotForm = showForgot && !forgotSent;
+  const showEmailNotice = showForgot && forgotSent;
 
   async function handleLogIn() {
     if (busy) return;
@@ -37,6 +50,39 @@ function LogIn() {
     router.push("/dashboard");
   }
 
+  function openForgot() {
+    // Carry over whatever they already typed in the log-in email field.
+    setForgotEmail(email);
+    setForgotError(null);
+    setForgotSent(false);
+    setMode("forgot");
+  }
+
+  function backToLogin() {
+    setForgotError(null);
+    setForgotSent(false);
+    setMode("login");
+  }
+
+  async function handleForgotContinue() {
+    if (forgotBusy) return;
+    const emailErr = validateEmail(forgotEmail);
+    if (emailErr) {
+      setForgotError(emailErr);
+      return;
+    }
+    setForgotError(null);
+    setForgotBusy(true);
+    const { error } = await sendPasswordReset(forgotEmail);
+    setForgotBusy(false);
+    if (error) {
+      setForgotError(error.message);
+      return;
+    }
+    // Supabase returns success even for unknown emails (anti-enumeration).
+    setForgotSent(true);
+  }
+
   return (
     <PlasmicQueryDataProvider>
       <PageParamsProvider__
@@ -45,27 +91,62 @@ function LogIn() {
         query={router?.query}
       >
         <PlasmicLogIn
+          // Hide the whole log-in form group while in forgot mode.
+          container={{ style: mode === "forgot" ? HIDDEN : undefined }}
           emailContainer={{
             value: email,
             onChange: setEmail,
-            style: loggedIn ? HIDDEN : undefined,
+            style: showLoginForm ? undefined : HIDDEN,
           }}
           passwordContainer={{
             value: password,
             onChange: setPassword,
-            style: loggedIn ? HIDDEN : undefined,
+            style: showLoginForm ? undefined : HIDDEN,
           }}
-          error={{ style: !loggedIn && error ? SHOWN : HIDDEN }}
+          error={{ style: showLoginForm && error ? SHOWN : HIDDEN }}
           errorContent={{ children: error ?? "" }}
+          forgotPasswordButton={{
+            onClick: (e: React.MouseEvent) => {
+              e.preventDefault();
+              openForgot();
+            },
+            style: showLoginForm ? undefined : HIDDEN,
+          }}
           logInButton={{
             onClick: (e: React.MouseEvent) => {
               e.preventDefault();
               void handleLogIn();
             },
-            style: loggedIn ? HIDDEN : undefined,
+            style: showLoginForm ? undefined : HIDDEN,
           }}
-          signUpRedirect={{ style: loggedIn ? HIDDEN : undefined }}
+          signUpRedirect={{ style: showLoginForm ? undefined : HIDDEN }}
           signUpRedirectButton={{ onClick: () => router.push("/register") }}
+          // ---- Forgot-password container + fields ----
+          forgotPassword={{ style: showForgotForm ? SHOWN : HIDDEN }}
+          forgotPasswordEmailContainer={{
+            value: forgotEmail,
+            onChange: (v: string) => {
+              setForgotEmail(v);
+              if (forgotError) setForgotError(null);
+            },
+          }}
+          // This error node ships display:flex, so it must be explicitly hidden.
+          forgotPasswordError={{ style: showForgotForm && forgotError ? SHOWN : HIDDEN }}
+          forgotPasswordErrorContent={{ children: forgotError ?? "" }}
+          continueButton={{
+            onClick: (e: React.MouseEvent) => {
+              e.preventDefault();
+              void handleForgotContinue();
+            },
+          }}
+          backButton={{
+            onClick: (e: React.MouseEvent) => {
+              e.preventDefault();
+              backToLogin();
+            },
+          }}
+          // "A recovery link has been sent to your email." (sibling of the form)
+          emailNoticeContainer={{ style: showEmailNotice ? SHOWN : HIDDEN }}
           alreadyLoggedIn={{ style: loggedIn ? undefined : HIDDEN }}
           toDashboardButton={{ onClick: () => router.push("/dashboard") }}
         />

@@ -152,6 +152,7 @@ export type PlasmicProfile__OverridesType = {
   totalHoursStatLabel?: Flex__<"h1">;
   editNameButton?: Flex__<"button">;
   changeEmailButton?: Flex__<"button">;
+  changePasswordButton?: Flex__<"button">;
   logOutButton?: Flex__<"button">;
   leaderboardContainer?: Flex__<"div">;
   leaderboardTitle?: Flex__<"h1">;
@@ -475,6 +476,28 @@ function PlasmicProfile__RenderFunc(props: {
             </div>
           </button>
           <button
+            data-plasmic-name={"changePasswordButton"}
+            data-plasmic-override={overrides.changePasswordButton}
+            className={classNames(
+              "all",
+              "button",
+              "button__6FNNC",
+              sty.changePasswordButton
+            )}
+            ref={ref => {
+              $refs["changePasswordButton"] = ref;
+            }}
+          >
+            <EditIcon
+              className={classNames("all", sty.svg__eITqz)}
+              role={"img"}
+            />
+
+            <div className={classNames("all", "__wab_text", sty.text___0P7XM)}>
+              {"Change Password"}
+            </div>
+          </button>
+          <button
             data-plasmic-name={"logOutButton"}
             data-plasmic-override={overrides.logOutButton}
             className={classNames(
@@ -637,6 +660,7 @@ const PlasmicDescendants = {
     "totalHoursStatLabel",
     "editNameButton",
     "changeEmailButton",
+    "changePasswordButton",
     "logOutButton",
     "leaderboardContainer",
     "leaderboardTitle",
@@ -714,6 +738,7 @@ const PlasmicDescendants = {
   totalHoursStatLabel: ["totalHoursStatLabel"],
   editNameButton: ["editNameButton"],
   changeEmailButton: ["changeEmailButton"],
+  changePasswordButton: ["changePasswordButton"],
   logOutButton: ["logOutButton"],
   leaderboardContainer: [
     "leaderboardContainer",
@@ -770,6 +795,7 @@ type NodeDefaultElementType = {
   totalHoursStatLabel: "h1";
   editNameButton: "button";
   changeEmailButton: "button";
+  changePasswordButton: "button";
   logOutButton: "button";
   leaderboardContainer: "div";
   leaderboardTitle: "h1";
@@ -866,6 +892,7 @@ export const PlasmicProfile = Object.assign(
     totalHoursStatLabel: makeNodeComponent("totalHoursStatLabel"),
     editNameButton: makeNodeComponent("editNameButton"),
     changeEmailButton: makeNodeComponent("changeEmailButton"),
+    changePasswordButton: makeNodeComponent("changePasswordButton"),
     logOutButton: makeNodeComponent("logOutButton"),
     leaderboardContainer: makeNodeComponent("leaderboardContainer"),
     leaderboardTitle: makeNodeComponent("leaderboardTitle"),

@@ -34,18 +34,14 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  // A field's error unlocks only after a real focus → type → blur cycle: it must
-  // have been changed (dirty) AND blurred. Or after a create-account attempt.
-  const [dirty, setDirty] = useState<Flags>(NO_FLAGS);
-  const [blurred, setBlurred] = useState<Flags>(NO_FLAGS);
+  
+  const [flagged, setFlagged] = useState<Flags>(NO_FLAGS);
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [generalError, setGeneralError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
   const loggedIn = !!user;
 
-  // Live per-field validation. The password error node covers both the password
-  // rules and the confirm-password match.
   const firstNameError = validateName(firstName, "your first name");
   const lastNameError = validateName(lastName, "your last name");
   const emailError = validateEmail(email);
@@ -61,7 +57,7 @@ function SignUp() {
 
   const hasFieldErrors = !!(firstNameError || lastNameError || emailError || passwordError);
 
-  const unlocked = (field: Field) => (dirty[field] && blurred[field]) || submitAttempted;
+  const unlocked = (field: Field) => flagged[field] || submitAttempted;
 
   const showFirst = unlocked("firstName") && !!firstNameError;
   const showLast = unlocked("lastName") && !!lastNameError;
@@ -70,22 +66,20 @@ function SignUp() {
     (!!pwRuleError && unlocked("password")) ||
     (!pwRuleError && !!confirmError && unlocked("confirmPassword"));
 
-  function onChangeField(setter: (v: string) => void, field: Field) {
+  function onChangeField(setter: (v: string) => void) {
     return (value: string) => {
       setter(value);
-      setDirty((d) => (d[field] ? d : { ...d, [field]: true }));
       if (generalError) setGeneralError(null);
     };
   }
 
   function onBlurField(field: Field) {
-    return () => setBlurred((b) => (b[field] ? b : { ...b, [field]: true }));
+    return () => setFlagged((f) => (f[field] ? f : { ...f, [field]: true }));
   }
 
   async function handleSignUp() {
     if (busy) return;
-    // Any invalid input blocks account creation; flag every field so its error
-    // shows even if it was never touched.
+
     if (hasFieldErrors) {
       setSubmitAttempted(true);
       return;
@@ -95,7 +89,7 @@ function SignUp() {
     const { data, error } = await signUp({ email, password, firstName, lastName });
     setBusy(false);
     if (error) {
-      // Duplicate when "Confirm email" is off — Supabase returns an error.
+      // Duplicate when "Confirm email" is off (Supabase returns an error)
       setGeneralError(
         /already registered|already exists|already been registered/i.test(error.message)
           ? "An account with this email already exists."
@@ -103,8 +97,8 @@ function SignUp() {
       );
       return;
     }
-    // Duplicate when "Confirm email" is on — Supabase hides it (anti-enumeration)
-    // by returning a user with an empty identities array instead of an error.
+
+    // Duplicate when "Confirm email" is on (Supabase hides it)
     if (data.user && data.user.identities && data.user.identities.length === 0) {
       setGeneralError("An account with this email already exists.");
       return;
@@ -126,7 +120,7 @@ function SignUp() {
         <PlasmicSignUp
           firstNameContainer={{
             value: firstName,
-            onChange: onChangeField(setFirstName, "firstName"),
+            onChange: onChangeField(setFirstName),
             onBlur: onBlurField("firstName"),
             style: loggedIn ? HIDDEN : undefined,
           }}
@@ -134,7 +128,7 @@ function SignUp() {
           firstNameErrorContent={{ children: firstNameError ?? "" }}
           lastNameContainer={{
             value: lastName,
-            onChange: onChangeField(setLastName, "lastName"),
+            onChange: onChangeField(setLastName),
             onBlur: onBlurField("lastName"),
             style: loggedIn ? HIDDEN : undefined,
           }}
@@ -142,7 +136,7 @@ function SignUp() {
           lastNameErrorContent={{ children: lastNameError ?? "" }}
           emailContainer={{
             value: email,
-            onChange: onChangeField(setEmail, "email"),
+            onChange: onChangeField(setEmail),
             onBlur: onBlurField("email"),
             style: loggedIn ? HIDDEN : undefined,
           }}
@@ -150,13 +144,13 @@ function SignUp() {
           emailErrorContent={{ children: emailError ?? "" }}
           passwordContainer={{
             value: password,
-            onChange: onChangeField(setPassword, "password"),
+            onChange: onChangeField(setPassword),
             onBlur: onBlurField("password"),
             style: loggedIn ? HIDDEN : undefined,
           }}
           confirmPasswordContainer={{
             value: confirmPassword,
-            onChange: onChangeField(setConfirmPassword, "confirmPassword"),
+            onChange: onChangeField(setConfirmPassword),
             onBlur: onBlurField("confirmPassword"),
             disabled: password.length === 0,
             style: loggedIn ? HIDDEN : undefined,

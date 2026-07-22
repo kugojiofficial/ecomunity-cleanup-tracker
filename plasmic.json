@@ -907,6 +907,48 @@
           "cssFilePath": "plasmic/eco_munity_cleanup_tracker/PlasmicTooltip.module.css",
           "scheme": "blackbox",
           "componentType": "component"
+        },
+        {
+          "id": "lLmZHWk7BVTv",
+          "name": "LogWaste",
+          "type": "managed",
+          "projectId": "6FNNC7rfkE9HMPqXDPWwTm",
+          "renderModuleFilePath": "plasmic/eco_munity_cleanup_tracker/PlasmicLogWaste.tsx",
+          "importSpec": {
+            "modulePath": "plasmic-pages/log-waste.tsx"
+          },
+          "cssFilePath": "plasmic/eco_munity_cleanup_tracker/PlasmicLogWaste.module.css",
+          "scheme": "blackbox",
+          "componentType": "page",
+          "path": "/log-waste"
+        },
+        {
+          "id": "3i9Xvqt5CyxM",
+          "name": "ChangePassword",
+          "type": "managed",
+          "projectId": "6FNNC7rfkE9HMPqXDPWwTm",
+          "renderModuleFilePath": "plasmic/eco_munity_cleanup_tracker/PlasmicChangePassword.tsx",
+          "importSpec": {
+            "modulePath": "plasmic-pages/change-password.tsx"
+          },
+          "cssFilePath": "plasmic/eco_munity_cleanup_tracker/PlasmicChangePassword.module.css",
+          "scheme": "blackbox",
+          "componentType": "page",
+          "path": "/change-password"
+        },
+        {
+          "id": "2Ie9kOJo2875",
+          "name": "ChangeEmail",
+          "type": "managed",
+          "projectId": "6FNNC7rfkE9HMPqXDPWwTm",
+          "renderModuleFilePath": "plasmic/eco_munity_cleanup_tracker/PlasmicChangeEmail.tsx",
+          "importSpec": {
+            "modulePath": "plasmic-pages/change-email.tsx"
+          },
+          "cssFilePath": "plasmic/eco_munity_cleanup_tracker/PlasmicChangeEmail.module.css",
+          "scheme": "blackbox",
+          "componentType": "page",
+          "path": "/change-email"
         }
       ],
       "icons": [

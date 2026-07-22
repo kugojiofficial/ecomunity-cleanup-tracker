@@ -50,6 +50,7 @@ export type Database = {
           is_admin: boolean
           last_name: string | null
           points: number
+          role: Database["public"]["Enums"]["app_role"]
           total_collected_waste: number
           total_event_hours: number
         }
@@ -61,6 +62,7 @@ export type Database = {
           is_admin?: boolean
           last_name?: string | null
           points?: number
+          role?: Database["public"]["Enums"]["app_role"]
           total_collected_waste?: number
           total_event_hours?: number
         }
@@ -72,6 +74,7 @@ export type Database = {
           is_admin?: boolean
           last_name?: string | null
           points?: number
+          role?: Database["public"]["Enums"]["app_role"]
           total_collected_waste?: number
           total_event_hours?: number
         }
@@ -165,6 +168,7 @@ export type Database = {
       }
     }
     Enums: {
+      app_role: "user" | "admin" | "developer"
       waste_type:
         | "plastic"
         | "paper"
@@ -310,6 +314,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["user", "admin", "developer"],
       waste_type: [
         "plastic",
         "paper",

@@ -460,7 +460,7 @@
   padding: 0px;
 }
 .eventListItemDownloadCsvButton {
-  cursor: default;
+  cursor: pointer;
   background: var(--token-ytzaa9i3sK9d);
   font-weight: 700;
   color: #ffffff;
@@ -555,7 +555,7 @@
   }
 }
 .eventListItemDownloadJsonButton {
-  cursor: default;
+  cursor: pointer;
   background: var(--token-ytzaa9i3sK9d);
   font-weight: 700;
   color: #ffffff;

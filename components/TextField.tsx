@@ -6,38 +6,47 @@ import {
 } from "./plasmic/eco_munity_cleanup_tracker/PlasmicTextField";
 
 export interface TextFieldProps extends DefaultTextFieldProps {
+  // Fires once the user has typed in this field AND focus has genuinely left it.
   onBlur?: () => void;
 }
 
 function TextField({ onBlur, ...props }: TextFieldProps) {
   const ref = useRef<HTMLDivElement>(null);
   const onBlurRef = useRef(onBlur);
+  const typedRef = useRef(false);
 
   useEffect(() => {
     onBlurRef.current = onBlur;
   }, [onBlur]);
 
-  // Detect focus genuinely leaving this field. `focusout` bubbles (unlike
-  // `blur`), so a listener on the stable wrapper keeps working even when
-  // react-aria re-creates the inner input. The deferred activeElement check
-  // ignores focus churn that stays inside the field (which is what fired the
-  // error too early while typing) — it only reports a blur once focus has
-  // actually moved outside the field.
+  // `input` and `focusout` both bubble, so listening on this stable wrapper keeps working even when react-aria re-creates the inner <input>
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const handle = () => {
+    const root = ref.current;
+    if (!root) return;
+
+    const handleInput = () => {
+      typedRef.current = true;
+    };
+    const handleFocusOut = () => {
       window.setTimeout(() => {
-        if (el.isConnected && !el.contains(document.activeElement)) {
+        if (
+          typedRef.current &&
+          root.isConnected &&
+          !root.contains(document.activeElement)
+        ) {
           onBlurRef.current?.();
         }
       }, 0);
     };
-    el.addEventListener("focusout", handle);
-    return () => el.removeEventListener("focusout", handle);
-  }, []);
 
-  // display:contents keeps the wrapper out of layout.
+    root.addEventListener("input", handleInput);
+    root.addEventListener("focusout", handleFocusOut);
+    return () => {
+      root.removeEventListener("input", handleInput);
+      root.removeEventListener("focusout", handleFocusOut);
+    };
+  }, []);
+  
   return (
     <div ref={ref} style={{ display: "contents" }}>
       <PlasmicTextField {...props} />
