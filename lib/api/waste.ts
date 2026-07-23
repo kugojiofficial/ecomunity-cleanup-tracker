@@ -12,6 +12,7 @@ export type WasteLog = {
 };
 
 export type InsertWasteLogInput = {
+  id?: string;
   event_id: string;
   waste_type: string;
   latitude: number;
@@ -35,10 +36,18 @@ import { getSupabaseBrowserClient } from "../supabase/browser";
 
 const WASTE_IMAGES_BUCKET = "waste_log_images";
 
-// Uploads to the owner-scoped path <userId>/<uuid>.jpg; returns the object path
-// to store in waste_logs.image_url.
-export async function uploadWasteImage(userId: string, blob: Blob): Promise<ApiResponse<string>> {
-  const path = `${userId}/${crypto.randomUUID()}.jpg`;
+// Uploads to <eventId>/<userId>/<logId>.jpg and returns the object path to store
+// in waste_logs.image_url. The path groups images by cleanup event then volunteer,
+// and the filename is the waste-log id so every image traces to exactly one row
+// (its label, GPS, time) for model training. Owner-scoped RLS keys off the userId
+// segment, so a user can only ever write their own images.
+export async function uploadWasteImage(
+  eventId: string,
+  userId: string,
+  logId: string,
+  blob: Blob
+): Promise<ApiResponse<string>> {
+  const path = `${eventId}/${userId}/${logId}.jpg`;
   const { error } = await getSupabaseBrowserClient()
     .storage.from(WASTE_IMAGES_BUCKET)
     .upload(path, blob, { contentType: "image/jpeg", upsert: false });

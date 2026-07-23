@@ -270,6 +270,7 @@
   left: auto;
   top: auto;
   position: relative;
+  display: flex;
   flex-direction: row;
   column-gap: 10px;
   height: 60px;
@@ -279,7 +280,6 @@
   align-items: center;
   min-width: 0;
   flex-shrink: 0;
-  display: none;
   border-radius: 10px;
   padding: 5px 16px;
   border: 3px solid var(--token-ytzaa9i3sK9d);

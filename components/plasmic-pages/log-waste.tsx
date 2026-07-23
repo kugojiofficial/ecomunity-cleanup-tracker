@@ -147,11 +147,15 @@ function LogWaste() {
       return;
     }
 
+    // Generate the log id up front so the photo can be named after it
+    // (<eventId>/<userId>/<logId>.jpg) and inserted under the same id.
+    const logId = crypto.randomUUID();
+
     // Best-effort photo: no camera → log without one; upload failure blocks the log.
     let imagePath: string | null = null;
     const blob = await captureFrameBlob();
     if (blob) {
-      const up = await uploadWasteImage(user.id, blob);
+      const up = await uploadWasteImage(activeEventId, user.id, logId, blob);
       if (!up.success) {
         setBusy(false);
         setError(`Couldn't upload the photo: ${up.error}`);
@@ -161,6 +165,7 @@ function LogWaste() {
     }
 
     const res = await insertWasteLog({
+      id: logId,
       event_id: activeEventId,
       waste_type: wasteType,
       latitude: position.coords.latitude,

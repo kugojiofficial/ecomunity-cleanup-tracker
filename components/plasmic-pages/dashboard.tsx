@@ -22,6 +22,9 @@ function Dashboard() {
   const [activeEventId, setActiveEventId] = useState<string | undefined>(undefined);
   const [endedAt, setEndedAt] = useState<string | null>(null);
   const [isActive, setIsActive] = useState(true);
+  // Gates the Log Waste button; starts false so it stays hidden until we confirm
+  // an event is actually running (and stays hidden when there's none / load fails).
+  const [hasActiveEvent, setHasActiveEvent] = useState(false);
   const [cards, setCards] = useState<CardStats>({
     name: "N/A",
     participants: "N/A",
@@ -51,6 +54,7 @@ function Dashboard() {
       setActiveEventId(active.id);
       setEndedAt(active.ended_at);
       setIsActive(result.isActive);
+      setHasActiveEvent(result.isActive);
       setCards({
         name: active.name || "N/A",
         participants: formatWithCommas(active.participant_count ?? 0),
@@ -75,6 +79,9 @@ function Dashboard() {
         <PlasmicDashboard
           // The dashboard `logWasteButton` navigates to /log-waste — that click
           // is wired in Plasmic Studio, so no onClick override is needed here.
+          // Only shown while an event is actually running (you can't log to a
+          // non-active event; the server rejects it too).
+          logWasteButton={{ style: hasActiveEvent ? undefined : { display: "none" } }}
           activeEventCardValue={{ children: cards.name }}
           participantsCardValue={{ children: cards.participants }}
           wasteCollectedCardValue={{ children: cards.collectedWaste }}
@@ -84,11 +91,11 @@ function Dashboard() {
             liveUntil: endedAt,
             style: { height: 500 },
           }}
-          // Active → default chevrons-right icon; recent → check icon, with the
+          // Active -> default chevrons-right icon; recent -> check icon, with the
           // title + heatmap text flipped to match.
           activeEventTitleIcon={isActive ? undefined : { as: CheckIcon }}
-          mapTitle={isActive ? undefined : { children: "Recent Event Heatmap" }}
-          activeEventTitleContent={isActive ? undefined : { children: "Recent Event" }}
+          mapTitle={{ children: isActive ? "Live Event Map" : "Recent Event Map" }}
+          activeEventTitleContent={{ children: isActive ? "Active Event" : "Recent Event" }}
         />
       </PageParamsProvider__>
     </PlasmicQueryDataProvider>

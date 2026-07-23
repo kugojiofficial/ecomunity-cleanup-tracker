@@ -9,7 +9,9 @@
     "lint": "eslint",
     "plasmic:sync": "plasmic sync --yes && node scripts/strip-plasmic-font-import.mjs",
     "postinstall": "node scripts/copy-ort.mjs",
-    "setup:yolo": "node scripts/copy-ort.mjs"
+    "setup:yolo": "node scripts/copy-ort.mjs",
+    "train:export": "node scripts/export-training-data.mjs",
+    "storage:migrate": "node scripts/migrate-storage-layout.mjs"
   },
   "dependencies": {
     "@plasmicapp/react-web": "^1.0.25",

@@ -2,6 +2,7 @@ import { withSupabaseApi, sendSuccess, sendError, requireUser } from "../../../l
 import { Constants } from "../../../lib/supabase/database.types";
 
 type InsertWasteLogBody = {
+  id?: string;
   event_id: string;
   waste_type: string;
   latitude: number;
@@ -11,6 +12,10 @@ type InsertWasteLogBody = {
 };
 
 const WASTE_TYPES: readonly string[] = Constants.public.Enums.waste_type;
+
+// The client generates the row id up front so the uploaded image can be named
+// after it (<eventId>/<userId>/<logId>.jpg); a colliding/garbage id just errors.
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export default withSupabaseApi(async (ctx) => {
   const { req, res, supabaseAdmin } = ctx;
@@ -27,6 +32,7 @@ export default withSupabaseApi(async (ctx) => {
   }
 
   const {
+    id,
     event_id,
     waste_type,
     latitude,
@@ -34,6 +40,10 @@ export default withSupabaseApi(async (ctx) => {
     accuracy_meters = null,
     image_url = null,
   } = req.body as InsertWasteLogBody;
+
+  if (id !== undefined && (typeof id !== "string" || !UUID_RE.test(id))) {
+    return sendError(res, "id must be a UUID when provided.", 400);
+  }
 
   if (typeof event_id !== "string" || event_id.trim() === "") {
     return sendError(res, "event_id is required and must be a non-empty string.", 400);
@@ -84,6 +94,7 @@ export default withSupabaseApi(async (ctx) => {
   const { data, error } = await supabaseAdmin
     .from("waste_logs")
     .insert({
+      ...(id ? { id } : {}),
       event_id,
       waste_type,
       latitude,
@@ -97,6 +108,10 @@ export default withSupabaseApi(async (ctx) => {
 
   if (error) {
     console.error("Supabase insert error:", error);
+    // 23505 = unique_violation: the client-supplied id already exists.
+    if (error.code === "23505") {
+      return sendError(res, "A log with this id already exists.", 409);
+    }
     return sendError(res, "Failed to insert waste log.", 500);
   }
 

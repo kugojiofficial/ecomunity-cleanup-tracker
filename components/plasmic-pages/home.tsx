@@ -7,8 +7,6 @@ import { PlasmicHome } from "../plasmic/eco_munity_cleanup_tracker/PlasmicHome";
 import { useAuthUser } from "../../lib/api";
 
 const HIDDEN = { display: "none" } as const;
-// logInButton / signUpButton ship display:none in the design, so logged-out
-// visitors need them explicitly shown.
 const SHOWN = { display: "flex" } as const;
 
 function Home() {

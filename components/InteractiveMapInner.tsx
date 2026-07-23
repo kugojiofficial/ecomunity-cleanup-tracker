@@ -20,8 +20,13 @@ const SINGLE_POINT_ZOOM = 18;
 const POINT_HALF_SPAN = 0.005;
 const MARKER_RADIUS = 6;
 
-function sameCalendarDay(a: string, b: string): boolean {
-  return new Date(a).toDateString() === new Date(b).toDateString();
+// Popup timestamp: show just the time for logs made today (local), but include
+// the full date once it's a later local calendar day than when it was logged.
+function formatLogTimestamp(createdAt: string): string {
+  const logged = new Date(createdAt);
+  return logged.toDateString() === new Date().toDateString()
+    ? logged.toLocaleTimeString()
+    : logged.toLocaleString();
 }
 
 function boundsForLogs(logs: WasteLog[]): L.LatLngBounds | null {
@@ -130,14 +135,6 @@ export default function InteractiveMapInner({ eventId, live, liveUntil }: Intera
     [wasteLogs, eventId]
   );
 
-  const allSameDay = useMemo(() => {
-    const stamped = logs.filter((l) => l.created_at);
-    return (
-      stamped.length > 0 &&
-      stamped.every((l) => sameCalendarDay(l.created_at!, stamped[0].created_at!))
-    );
-  }, [logs]);
-
   return (
     <div style={{ width: "100%", height: "100%", minHeight: 0 }}>
       <MapContainer
@@ -189,11 +186,7 @@ export default function InteractiveMapInner({ eventId, live, liveUntil }: Intera
                 <br />
                 Type: {log.waste_type ? formatWasteType(log.waste_type) : "Unknown"}
                 <br />
-                {log.created_at
-                  ? allSameDay
-                    ? new Date(log.created_at).toLocaleTimeString()
-                    : new Date(log.created_at).toLocaleString()
-                  : "Unknown"}
+                {log.created_at ? formatLogTimestamp(log.created_at) : "Unknown"}
               </Popup>
             </CircleMarker>
           </Fragment>
