@@ -33,6 +33,30 @@ export type UpdateWasteLogInput = Partial<{
 import { jsonFetch, type ApiResponse } from "./common";
 import { getSupabaseBrowserClient } from "../supabase/browser";
 
+const WASTE_IMAGES_BUCKET = "waste_log_images";
+
+// Uploads to the owner-scoped path <userId>/<uuid>.jpg; returns the object path
+// to store in waste_logs.image_url.
+export async function uploadWasteImage(userId: string, blob: Blob): Promise<ApiResponse<string>> {
+  const path = `${userId}/${crypto.randomUUID()}.jpg`;
+  const { error } = await getSupabaseBrowserClient()
+    .storage.from(WASTE_IMAGES_BUCKET)
+    .upload(path, blob, { contentType: "image/jpeg", upsert: false });
+
+  if (error) return { success: false, error: error.message };
+  return { success: true, data: path };
+}
+
+// Signed URL for a stored image path (the bucket is private).
+export async function getWasteImageUrl(path: string, expiresInSeconds = 3600): Promise<ApiResponse<string>> {
+  const { data, error } = await getSupabaseBrowserClient()
+    .storage.from(WASTE_IMAGES_BUCKET)
+    .createSignedUrl(path, expiresInSeconds);
+
+  if (error || !data) return { success: false, error: error?.message ?? "Could not sign image URL." };
+  return { success: true, data: data.signedUrl };
+}
+
 export async function getWasteLogs(limit = 100, ascending = false): Promise<ApiResponse<WasteLog[]>> {
   const { data, error } = await getSupabaseBrowserClient()
     .from("waste_logs")

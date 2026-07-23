@@ -149,6 +149,7 @@ export type PlasmicLogIn__OverridesType = {
   backButton?: Flex__<"button">;
   emailNoticeContainer?: Flex__<"div">;
   emailNotice?: Flex__<"h1">;
+  emailNoticeBackButton?: Flex__<"button">;
 };
 
 export interface DefaultLogInProps {}
@@ -263,445 +264,446 @@ function PlasmicLogIn__RenderFunc(props: {
         }
       `}</style>
 
-      <div className={"plasmic_page_wrapper"}>
+      <div
+        data-plasmic-name={"logInPage"}
+        data-plasmic-override={overrides.logInPage}
+        data-plasmic-root={true}
+        data-plasmic-for-node={forNode}
+        className={classNames(
+          "all",
+          "root_reset_6FNNC7rfkE9HMPqXDPWwTm",
+          "plasmic_default_styles",
+          "plasmic_mixins",
+          styleTokensClassNames,
+          sty.logInPage
+        )}
+      >
         <div
-          data-plasmic-name={"logInPage"}
-          data-plasmic-override={overrides.logInPage}
-          data-plasmic-root={true}
-          data-plasmic-for-node={forNode}
-          className={classNames(
-            "all",
-            "root_reset_6FNNC7rfkE9HMPqXDPWwTm",
-            "plasmic_default_styles",
-            "plasmic_mixins",
-            styleTokensClassNames,
-            sty.logInPage
-          )}
+          data-plasmic-name={"flex"}
+          data-plasmic-override={overrides.flex}
+          className={classNames("all", sty.flex)}
         >
           <div
-            data-plasmic-name={"flex"}
-            data-plasmic-override={overrides.flex}
-            className={classNames("all", sty.flex)}
+            data-plasmic-name={"container"}
+            data-plasmic-override={overrides.container}
+            className={classNames("all", sty.container)}
           >
-            <div
-              data-plasmic-name={"container"}
-              data-plasmic-override={overrides.container}
-              className={classNames("all", sty.container)}
+            <h1
+              data-plasmic-name={"title"}
+              data-plasmic-override={overrides.title}
+              className={classNames(
+                "all",
+                "h1",
+                "h1__6FNNC",
+                "__wab_text",
+                sty.title
+              )}
             >
-              <h1
-                data-plasmic-name={"title"}
-                data-plasmic-override={overrides.title}
-                className={classNames(
-                  "all",
-                  "h1",
-                  "h1__6FNNC",
-                  "__wab_text",
-                  sty.title
-                )}
-              >
-                {"Log In"}
-              </h1>
-              <TextField
-                data-plasmic-name={"emailContainer"}
-                data-plasmic-override={overrides.emailContainer}
-                autoComplete={["email"]}
-                autoFocus={true}
-                className={classNames("__wab_instance", sty.emailContainer)}
-                description={"ex. name@example.com"}
-                disabled={false}
-                iconStart={true}
-                inputMode={"email"}
-                label={
-                  <div
-                    className={classNames("all", "__wab_text", sty.text__pr7H3)}
-                  >
-                    {"Email Address\n"}
-                  </div>
-                }
-                onChange={async (...eventArgs: any) => {
-                  generateStateOnChangeProp($state, [
-                    "emailContainer",
-                    "value"
-                  ]).apply(null, eventArgs);
-
-                  if (
-                    eventArgs.length > 1 &&
-                    eventArgs[1] &&
-                    eventArgs[1]._plasmic_state_init_
-                  ) {
-                    return;
-                  }
-                }}
-                placeholder={"..."}
-                showDescription={false}
-                showLabel={true}
-                start={
-                  <MailIcon
-                    className={classNames("all", sty.svg__waBa9)}
-                    role={"img"}
-                  />
-                }
-                type={"email"}
-                value={generateStateValueProp($state, [
+              {"Log In"}
+            </h1>
+            <TextField
+              data-plasmic-name={"emailContainer"}
+              data-plasmic-override={overrides.emailContainer}
+              autoComplete={["email"]}
+              autoFocus={true}
+              className={classNames("__wab_instance", sty.emailContainer)}
+              description={"ex. name@example.com"}
+              disabled={false}
+              iconStart={true}
+              inputMode={"email"}
+              label={
+                <div
+                  className={classNames("all", "__wab_text", sty.text__pr7H3)}
+                >
+                  {"Email Address\n"}
+                </div>
+              }
+              onChange={async (...eventArgs: any) => {
+                generateStateOnChangeProp($state, [
                   "emailContainer",
                   "value"
-                ])}
-              />
+                ]).apply(null, eventArgs);
 
-              <TextField
-                data-plasmic-name={"passwordContainer"}
-                data-plasmic-override={overrides.passwordContainer}
-                autoComplete={["off"]}
-                className={classNames("__wab_instance", sty.passwordContainer)}
-                description={""}
-                disabled={false}
-                iconStart={true}
-                inputMode={"text"}
-                label={
-                  <div
-                    className={classNames(
-                      "all",
-                      "__wab_text",
-                      sty.text___0FBtx
-                    )}
-                  >
-                    {"Password"}
-                  </div>
+                if (
+                  eventArgs.length > 1 &&
+                  eventArgs[1] &&
+                  eventArgs[1]._plasmic_state_init_
+                ) {
+                  return;
                 }
-                onChange={async (...eventArgs: any) => {
-                  generateStateOnChangeProp($state, [
-                    "passwordContainer",
-                    "value"
-                  ]).apply(null, eventArgs);
-
-                  if (
-                    eventArgs.length > 1 &&
-                    eventArgs[1] &&
-                    eventArgs[1]._plasmic_state_init_
-                  ) {
-                    return;
-                  }
-                }}
-                placeholder={"..."}
-                showDescription={false}
-                showLabel={true}
-                start={
-                  <LockIcon
-                    className={classNames("all", sty.svg__qSd2L)}
-                    role={"img"}
-                  />
-                }
-                type={"password"}
-                value={generateStateValueProp($state, [
-                  "passwordContainer",
-                  "value"
-                ])}
-              />
-
-              <button
-                data-plasmic-name={"forgotPasswordButton"}
-                data-plasmic-override={overrides.forgotPasswordButton}
-                className={classNames(
-                  "all",
-                  "button",
-                  "button__6FNNC",
-                  sty.forgotPasswordButton
-                )}
-                ref={ref => {
-                  $refs["forgotPasswordButton"] = ref;
-                }}
-              >
-                <div
-                  className={classNames("all", "__wab_text", sty.text__neyAt)}
-                >
-                  {"Forgot password?"}
-                </div>
-              </button>
-              <button
-                data-plasmic-name={"logInButton"}
-                data-plasmic-override={overrides.logInButton}
-                className={classNames(
-                  "all",
-                  "button",
-                  "button__6FNNC",
-                  sty.logInButton
-                )}
-                ref={ref => {
-                  $refs["logInButton"] = ref;
-                }}
-              >
-                <Login2Icon
-                  className={classNames("all", sty.svg__cfmzD)}
+              }}
+              placeholder={"..."}
+              showDescription={false}
+              showLabel={true}
+              start={
+                <MailIcon
+                  className={classNames("all", sty.svg__waBa9)}
                   role={"img"}
                 />
+              }
+              type={"email"}
+              value={generateStateValueProp($state, [
+                "emailContainer",
+                "value"
+              ])}
+            />
 
+            <TextField
+              data-plasmic-name={"passwordContainer"}
+              data-plasmic-override={overrides.passwordContainer}
+              autoComplete={["off"]}
+              className={classNames("__wab_instance", sty.passwordContainer)}
+              description={""}
+              disabled={false}
+              iconStart={true}
+              inputMode={"text"}
+              label={
                 <div
-                  className={classNames("all", "__wab_text", sty.text__phJ4W)}
+                  className={classNames("all", "__wab_text", sty.text___0FBtx)}
                 >
-                  {"Continue"}
+                  {"Password"}
                 </div>
-              </button>
-              <div
-                data-plasmic-name={"error"}
-                data-plasmic-override={overrides.error}
-                className={classNames("all", sty.error)}
-              >
-                <div
-                  data-plasmic-name={"errorContent"}
-                  data-plasmic-override={overrides.errorContent}
-                  className={classNames("all", "__wab_text", sty.errorContent)}
-                >
-                  {"Password must be..."}
-                </div>
-              </div>
-              <div
-                data-plasmic-name={"signUpRedirect"}
-                data-plasmic-override={overrides.signUpRedirect}
-                className={classNames("all", sty.signUpRedirect)}
-              >
-                <h1
-                  data-plasmic-name={"h1"}
-                  data-plasmic-override={overrides.h1}
-                  className={classNames(
-                    "all",
-                    "h1",
-                    "h1__6FNNC",
-                    "__wab_text",
-                    sty.h1
-                  )}
-                >
-                  {"Don't have an account?"}
-                </h1>
-                <button
-                  data-plasmic-name={"signUpRedirectButton"}
-                  data-plasmic-override={overrides.signUpRedirectButton}
-                  className={classNames(
-                    "all",
-                    "button",
-                    "button__6FNNC",
-                    sty.signUpRedirectButton
-                  )}
-                  onClick={async event => {
-                    const $steps = {};
-
-                    $steps["goToSignUp"] = true
-                      ? (() => {
-                          const actionArgs = { destination: `/register` };
-                          return (({ destination }) => {
-                            if (
-                              typeof destination === "string" &&
-                              destination.startsWith("#")
-                            ) {
-                              document
-                                .getElementById(destination.substr(1))
-                                .scrollIntoView({ behavior: "smooth" });
-                            } else {
-                              __nextRouter?.push(destination);
-                            }
-                          })?.apply(null, [actionArgs]);
-                        })()
-                      : undefined;
-                    if (
-                      $steps["goToSignUp"] != null &&
-                      typeof $steps["goToSignUp"] === "object" &&
-                      typeof $steps["goToSignUp"].then === "function"
-                    ) {
-                      $steps["goToSignUp"] = await $steps["goToSignUp"];
-                    }
-                  }}
-                  ref={ref => {
-                    $refs["signUpRedirectButton"] = ref;
-                  }}
-                >
-                  <div
-                    className={classNames("all", "__wab_text", sty.text__awxdC)}
-                  >
-                    {"Sign up instead"}
-                  </div>
-                </button>
-              </div>
-            </div>
-            <div
-              data-plasmic-name={"alreadyLoggedIn"}
-              data-plasmic-override={overrides.alreadyLoggedIn}
-              className={classNames("all", sty.alreadyLoggedIn)}
-            >
-              <h1
-                data-plasmic-name={"notice"}
-                data-plasmic-override={overrides.notice}
-                className={classNames(
-                  "all",
-                  "h1",
-                  "h1__6FNNC",
-                  "__wab_text",
-                  sty.notice
-                )}
-              >
-                {"You are already logged in."}
-              </h1>
-              <button
-                data-plasmic-name={"toDashboardButton"}
-                data-plasmic-override={overrides.toDashboardButton}
-                className={classNames(
-                  "all",
-                  "button",
-                  "button__6FNNC",
-                  sty.toDashboardButton
-                )}
-                ref={ref => {
-                  $refs["toDashboardButton"] = ref;
-                }}
-              >
-                <div
-                  className={classNames("all", "__wab_text", sty.text__aWPeF)}
-                >
-                  {"Go To Dashboard"}
-                </div>
-              </button>
-            </div>
-            <div
-              data-plasmic-name={"forgotPassword"}
-              data-plasmic-override={overrides.forgotPassword}
-              className={classNames("all", sty.forgotPassword)}
-            >
-              <h1
-                data-plasmic-name={"forgotPasswordTitle"}
-                data-plasmic-override={overrides.forgotPasswordTitle}
-                className={classNames(
-                  "all",
-                  "h1",
-                  "h1__6FNNC",
-                  "__wab_text",
-                  sty.forgotPasswordTitle
-                )}
-              >
-                {"Account Recovery"}
-              </h1>
-              <TextField
-                data-plasmic-name={"forgotPasswordEmailContainer"}
-                data-plasmic-override={overrides.forgotPasswordEmailContainer}
-                autoComplete={["email"]}
-                autoFocus={true}
-                className={classNames(
-                  "__wab_instance",
-                  sty.forgotPasswordEmailContainer
-                )}
-                description={"ex. name@example.com"}
-                disabled={false}
-                iconStart={true}
-                inputMode={"email"}
-                label={
-                  <div
-                    className={classNames("all", "__wab_text", sty.text__hOpG)}
-                  >
-                    {"Email Address\n"}
-                  </div>
-                }
-                onChange={async (...eventArgs: any) => {
-                  generateStateOnChangeProp($state, [
-                    "forgotPasswordEmailContainer",
-                    "value"
-                  ]).apply(null, eventArgs);
-
-                  if (
-                    eventArgs.length > 1 &&
-                    eventArgs[1] &&
-                    eventArgs[1]._plasmic_state_init_
-                  ) {
-                    return;
-                  }
-                }}
-                placeholder={"..."}
-                showDescription={false}
-                showLabel={true}
-                start={
-                  <MailIcon
-                    className={classNames("all", sty.svg__ts8Pc)}
-                    role={"img"}
-                  />
-                }
-                type={"email"}
-                value={generateStateValueProp($state, [
-                  "forgotPasswordEmailContainer",
+              }
+              onChange={async (...eventArgs: any) => {
+                generateStateOnChangeProp($state, [
+                  "passwordContainer",
                   "value"
-                ])}
+                ]).apply(null, eventArgs);
+
+                if (
+                  eventArgs.length > 1 &&
+                  eventArgs[1] &&
+                  eventArgs[1]._plasmic_state_init_
+                ) {
+                  return;
+                }
+              }}
+              placeholder={"..."}
+              showDescription={false}
+              showLabel={true}
+              start={
+                <LockIcon
+                  className={classNames("all", sty.svg__qSd2L)}
+                  role={"img"}
+                />
+              }
+              type={"password"}
+              value={generateStateValueProp($state, [
+                "passwordContainer",
+                "value"
+              ])}
+            />
+
+            <button
+              data-plasmic-name={"forgotPasswordButton"}
+              data-plasmic-override={overrides.forgotPasswordButton}
+              className={classNames(
+                "all",
+                "button",
+                "button__6FNNC",
+                sty.forgotPasswordButton
+              )}
+              ref={ref => {
+                $refs["forgotPasswordButton"] = ref;
+              }}
+            >
+              <div className={classNames("all", "__wab_text", sty.text__neyAt)}>
+                {"Forgot password?"}
+              </div>
+            </button>
+            <button
+              data-plasmic-name={"logInButton"}
+              data-plasmic-override={overrides.logInButton}
+              className={classNames(
+                "all",
+                "button",
+                "button__6FNNC",
+                sty.logInButton
+              )}
+              ref={ref => {
+                $refs["logInButton"] = ref;
+              }}
+            >
+              <Login2Icon
+                className={classNames("all", sty.svg__cfmzD)}
+                role={"img"}
               />
 
-              <div
-                data-plasmic-name={"forgotPasswordError"}
-                data-plasmic-override={overrides.forgotPasswordError}
-                className={classNames("all", sty.forgotPasswordError)}
-              >
-                <div
-                  data-plasmic-name={"forgotPasswordErrorContent"}
-                  data-plasmic-override={overrides.forgotPasswordErrorContent}
-                  className={classNames(
-                    "all",
-                    "__wab_text",
-                    sty.forgotPasswordErrorContent
-                  )}
-                >
-                  {"Password must be..."}
-                </div>
+              <div className={classNames("all", "__wab_text", sty.text__phJ4W)}>
+                {"Continue"}
               </div>
-              <button
-                data-plasmic-name={"continueButton"}
-                data-plasmic-override={overrides.continueButton}
-                className={classNames(
-                  "all",
-                  "button",
-                  "button__6FNNC",
-                  sty.continueButton
-                )}
-                ref={ref => {
-                  $refs["continueButton"] = ref;
-                }}
+            </button>
+            <div
+              data-plasmic-name={"error"}
+              data-plasmic-override={overrides.error}
+              className={classNames("all", sty.error)}
+            >
+              <div
+                data-plasmic-name={"errorContent"}
+                data-plasmic-override={overrides.errorContent}
+                className={classNames("all", "__wab_text", sty.errorContent)}
               >
-                <div
-                  className={classNames("all", "__wab_text", sty.text__rcVyt)}
-                >
-                  {"Continue"}
-                </div>
-              </button>
-              <button
-                data-plasmic-name={"backButton"}
-                data-plasmic-override={overrides.backButton}
-                className={classNames(
-                  "all",
-                  "button",
-                  "button__6FNNC",
-                  sty.backButton
-                )}
-                ref={ref => {
-                  $refs["backButton"] = ref;
-                }}
-              >
-                <div
-                  className={classNames("all", "__wab_text", sty.text__iQ5Nz)}
-                >
-                  {"Go Back"}
-                </div>
-              </button>
+                {"Password must be..."}
+              </div>
             </div>
             <div
-              data-plasmic-name={"emailNoticeContainer"}
-              data-plasmic-override={overrides.emailNoticeContainer}
-              className={classNames("all", sty.emailNoticeContainer)}
+              data-plasmic-name={"signUpRedirect"}
+              data-plasmic-override={overrides.signUpRedirect}
+              className={classNames("all", sty.signUpRedirect)}
             >
               <h1
-                data-plasmic-name={"emailNotice"}
-                data-plasmic-override={overrides.emailNotice}
+                data-plasmic-name={"h1"}
+                data-plasmic-override={overrides.h1}
                 className={classNames(
                   "all",
                   "h1",
                   "h1__6FNNC",
                   "__wab_text",
-                  sty.emailNotice
+                  sty.h1
                 )}
               >
-                {"Check your email for a password reset link."}
+                {"Don't have an account?"}
               </h1>
+              <button
+                data-plasmic-name={"signUpRedirectButton"}
+                data-plasmic-override={overrides.signUpRedirectButton}
+                className={classNames(
+                  "all",
+                  "button",
+                  "button__6FNNC",
+                  sty.signUpRedirectButton
+                )}
+                onClick={async event => {
+                  const $steps = {};
+
+                  $steps["goToSignUp"] = true
+                    ? (() => {
+                        const actionArgs = { destination: `/register` };
+                        return (({ destination }) => {
+                          if (
+                            typeof destination === "string" &&
+                            destination.startsWith("#")
+                          ) {
+                            document
+                              .getElementById(destination.substr(1))
+                              .scrollIntoView({ behavior: "smooth" });
+                          } else {
+                            __nextRouter?.push(destination);
+                          }
+                        })?.apply(null, [actionArgs]);
+                      })()
+                    : undefined;
+                  if (
+                    $steps["goToSignUp"] != null &&
+                    typeof $steps["goToSignUp"] === "object" &&
+                    typeof $steps["goToSignUp"].then === "function"
+                  ) {
+                    $steps["goToSignUp"] = await $steps["goToSignUp"];
+                  }
+                }}
+                ref={ref => {
+                  $refs["signUpRedirectButton"] = ref;
+                }}
+              >
+                <div
+                  className={classNames("all", "__wab_text", sty.text__awxdC)}
+                >
+                  {"Sign up instead"}
+                </div>
+              </button>
             </div>
+          </div>
+          <div
+            data-plasmic-name={"alreadyLoggedIn"}
+            data-plasmic-override={overrides.alreadyLoggedIn}
+            className={classNames("all", sty.alreadyLoggedIn)}
+          >
+            <h1
+              data-plasmic-name={"notice"}
+              data-plasmic-override={overrides.notice}
+              className={classNames(
+                "all",
+                "h1",
+                "h1__6FNNC",
+                "__wab_text",
+                sty.notice
+              )}
+            >
+              {"You are already logged in."}
+            </h1>
+            <button
+              data-plasmic-name={"toDashboardButton"}
+              data-plasmic-override={overrides.toDashboardButton}
+              className={classNames(
+                "all",
+                "button",
+                "button__6FNNC",
+                sty.toDashboardButton
+              )}
+              ref={ref => {
+                $refs["toDashboardButton"] = ref;
+              }}
+            >
+              <div className={classNames("all", "__wab_text", sty.text__aWPeF)}>
+                {"Go To Dashboard"}
+              </div>
+            </button>
+          </div>
+          <div
+            data-plasmic-name={"forgotPassword"}
+            data-plasmic-override={overrides.forgotPassword}
+            className={classNames("all", sty.forgotPassword)}
+          >
+            <h1
+              data-plasmic-name={"forgotPasswordTitle"}
+              data-plasmic-override={overrides.forgotPasswordTitle}
+              className={classNames(
+                "all",
+                "h1",
+                "h1__6FNNC",
+                "__wab_text",
+                sty.forgotPasswordTitle
+              )}
+            >
+              {"Account Recovery"}
+            </h1>
+            <TextField
+              data-plasmic-name={"forgotPasswordEmailContainer"}
+              data-plasmic-override={overrides.forgotPasswordEmailContainer}
+              autoComplete={["email"]}
+              autoFocus={true}
+              className={classNames(
+                "__wab_instance",
+                sty.forgotPasswordEmailContainer
+              )}
+              description={"ex. name@example.com"}
+              disabled={false}
+              iconStart={true}
+              inputMode={"email"}
+              label={
+                <div
+                  className={classNames("all", "__wab_text", sty.text__hOpG)}
+                >
+                  {"Email Address\n"}
+                </div>
+              }
+              onChange={async (...eventArgs: any) => {
+                generateStateOnChangeProp($state, [
+                  "forgotPasswordEmailContainer",
+                  "value"
+                ]).apply(null, eventArgs);
+
+                if (
+                  eventArgs.length > 1 &&
+                  eventArgs[1] &&
+                  eventArgs[1]._plasmic_state_init_
+                ) {
+                  return;
+                }
+              }}
+              placeholder={"..."}
+              showDescription={false}
+              showLabel={true}
+              start={
+                <MailIcon
+                  className={classNames("all", sty.svg__ts8Pc)}
+                  role={"img"}
+                />
+              }
+              type={"email"}
+              value={generateStateValueProp($state, [
+                "forgotPasswordEmailContainer",
+                "value"
+              ])}
+            />
+
+            <div
+              data-plasmic-name={"forgotPasswordError"}
+              data-plasmic-override={overrides.forgotPasswordError}
+              className={classNames("all", sty.forgotPasswordError)}
+            >
+              <div
+                data-plasmic-name={"forgotPasswordErrorContent"}
+                data-plasmic-override={overrides.forgotPasswordErrorContent}
+                className={classNames(
+                  "all",
+                  "__wab_text",
+                  sty.forgotPasswordErrorContent
+                )}
+              >
+                {"Password must be..."}
+              </div>
+            </div>
+            <button
+              data-plasmic-name={"continueButton"}
+              data-plasmic-override={overrides.continueButton}
+              className={classNames(
+                "all",
+                "button",
+                "button__6FNNC",
+                sty.continueButton
+              )}
+              ref={ref => {
+                $refs["continueButton"] = ref;
+              }}
+            >
+              <div className={classNames("all", "__wab_text", sty.text__rcVyt)}>
+                {"Continue"}
+              </div>
+            </button>
+            <button
+              data-plasmic-name={"backButton"}
+              data-plasmic-override={overrides.backButton}
+              className={classNames(
+                "all",
+                "button",
+                "button__6FNNC",
+                sty.backButton
+              )}
+              ref={ref => {
+                $refs["backButton"] = ref;
+              }}
+            >
+              <div className={classNames("all", "__wab_text", sty.text__iQ5Nz)}>
+                {"Go Back"}
+              </div>
+            </button>
+          </div>
+          <div
+            data-plasmic-name={"emailNoticeContainer"}
+            data-plasmic-override={overrides.emailNoticeContainer}
+            className={classNames("all", sty.emailNoticeContainer)}
+          >
+            <h1
+              data-plasmic-name={"emailNotice"}
+              data-plasmic-override={overrides.emailNotice}
+              className={classNames(
+                "all",
+                "h1",
+                "h1__6FNNC",
+                "__wab_text",
+                sty.emailNotice
+              )}
+            >
+              {"Check your email for a password reset link."}
+            </h1>
+            <button
+              data-plasmic-name={"emailNoticeBackButton"}
+              data-plasmic-override={overrides.emailNoticeBackButton}
+              className={classNames(
+                "all",
+                "button",
+                "button__6FNNC",
+                sty.emailNoticeBackButton
+              )}
+              ref={ref => {
+                $refs["emailNoticeBackButton"] = ref;
+              }}
+            >
+              <div className={classNames("all", "__wab_text", sty.text__ivzW)}>
+                {"Back To Log In"}
+              </div>
+            </button>
           </div>
         </div>
       </div>
@@ -735,7 +737,8 @@ const PlasmicDescendants = {
     "continueButton",
     "backButton",
     "emailNoticeContainer",
-    "emailNotice"
+    "emailNotice",
+    "emailNoticeBackButton"
   ],
   flex: [
     "flex",
@@ -761,7 +764,8 @@ const PlasmicDescendants = {
     "continueButton",
     "backButton",
     "emailNoticeContainer",
-    "emailNotice"
+    "emailNotice",
+    "emailNoticeBackButton"
   ],
   container: [
     "container",
@@ -804,8 +808,13 @@ const PlasmicDescendants = {
   forgotPasswordErrorContent: ["forgotPasswordErrorContent"],
   continueButton: ["continueButton"],
   backButton: ["backButton"],
-  emailNoticeContainer: ["emailNoticeContainer", "emailNotice"],
-  emailNotice: ["emailNotice"]
+  emailNoticeContainer: [
+    "emailNoticeContainer",
+    "emailNotice",
+    "emailNoticeBackButton"
+  ],
+  emailNotice: ["emailNotice"],
+  emailNoticeBackButton: ["emailNoticeBackButton"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
@@ -836,6 +845,7 @@ type NodeDefaultElementType = {
   backButton: "button";
   emailNoticeContainer: "div";
   emailNotice: "h1";
+  emailNoticeBackButton: "button";
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -926,6 +936,7 @@ export const PlasmicLogIn = Object.assign(
     backButton: makeNodeComponent("backButton"),
     emailNoticeContainer: makeNodeComponent("emailNoticeContainer"),
     emailNotice: makeNodeComponent("emailNotice"),
+    emailNoticeBackButton: makeNodeComponent("emailNoticeBackButton"),
 
     // Metadata about props expected for PlasmicLogIn
     internalVariantProps: PlasmicLogIn__VariantProps,

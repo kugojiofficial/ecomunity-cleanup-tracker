@@ -38,18 +38,14 @@ export async function signOut() {
   return getSupabaseBrowserClient().auth.signOut();
 }
 
-// Sends a password-reset email. The link lands on /change-password, where the
-// browser client auto-exchanges the recovery code (detectSessionInUrl) and
-// fires a PASSWORD_RECOVERY auth event → the page shows its recovery container.
+// Reset email → /change-password, where the recovery session fires PASSWORD_RECOVERY.
 export async function sendPasswordReset(email: string) {
   return getSupabaseBrowserClient().auth.resetPasswordForEmail(email.trim(), {
     redirectTo: `${siteOrigin()}/change-password`,
   });
 }
 
-// Regular change (signed-in user): the server validates the current password,
-// so a wrong one comes back as an error we surface as "Current password is
-// incorrect." Requires supabase-js >= 2.102 (current_password field).
+// Signed-in change: the server validates current_password (supabase-js >= 2.102).
 export async function changePassword(currentPassword: string, newPassword: string) {
   return getSupabaseBrowserClient().auth.updateUser({
     password: newPassword,
@@ -57,14 +53,12 @@ export async function changePassword(currentPassword: string, newPassword: strin
   });
 }
 
-// After a recovery link the user is already authenticated by the emailed
-// session, so no current password is required.
+// Recovery-session change (no current password needed).
 export async function completePasswordRecovery(newPassword: string) {
   return getSupabaseBrowserClient().auth.updateUser({ password: newPassword });
 }
 
-// Supabase (with "Secure email change" on) emails a confirmation link to BOTH
-// the old and new address; the change only applies once both are confirmed.
+// Emails confirmation to both old and new address ("Secure email change").
 export async function changeEmail(email: string) {
   return getSupabaseBrowserClient().auth.updateUser(
     { email: email.trim() },
@@ -87,15 +81,8 @@ export function validateEmail(email: string): string | null {
   return null;
 }
 
-// Mirrors the Supabase Auth email settings (min length 8; lowercase + uppercase
-// + digit + symbol). Keep in sync with the dashboard — the server rejects
-// mismatches and the general error box surfaces its message. The leaked-password
-// (HaveIBeenPwned) check is server-side only and can't be replicated here.
-// Supabase Auth only accepts these symbols (plus letters/digits): the set from
-// https://supabase.com/docs/guides/auth/password-security . Anything else
-// (spaces, accented/unicode letters, emoji, …) is rejected. Character class
-// escaped for a JS regex: ] and \ and / are escaped, - is escaped, and ^ is not
-// first so it is literal.
+// Mirrors the Supabase Auth dashboard policy (keep in sync). Allowed symbols are
+// Supabase's set; the leaked-password (HaveIBeenPwned) check is server-side only.
 const UNSUPPORTED_PASSWORD_CHAR = /[^A-Za-z0-9!@#$%^&*()_+\-=\[\]{};'\\:"|<>?,.\/`~]/;
 
 export function validatePassword(password: string): string | null {
@@ -147,8 +134,7 @@ export function useRequireAuth(): { user: User | null; loading: boolean } {
   return { user, loading };
 }
 
-// Authoritative role read (server-controlled `public.users.role`, never JWT
-// metadata). Returns null when signed out or on error.
+// Reads the server-controlled role (never JWT metadata). Null if signed out.
 export async function getMyRole(): Promise<AppRole | null> {
   const supabase = getSupabaseBrowserClient();
   const {
@@ -166,9 +152,7 @@ export async function getMyRole(): Promise<AppRole | null> {
   return data.role;
 }
 
-// Gate a page to Developers. Signed-out users go to /log-in; signed-in
-// non-developers go to /dashboard. This is a UX gate only — the authoritative
-// control is server-side `requireDeveloper` in lib/supabase/server.ts.
+// UX gate to Developers (real control is server-side requireDeveloper).
 export function useRequireDeveloper(): {
   user: User | null;
   role: AppRole | null;

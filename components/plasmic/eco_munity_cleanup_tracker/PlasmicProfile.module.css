@@ -355,7 +355,7 @@
   }
 }
 .editNameButton {
-  cursor: default;
+  cursor: pointer;
   background: var(--token-ytzaa9i3sK9d);
   font-weight: 700;
   color: #ffffff;
@@ -424,7 +424,7 @@
   }
 }
 .changeEmailButton {
-  cursor: default;
+  cursor: pointer;
   background: var(--token-ytzaa9i3sK9d);
   font-weight: 700;
   color: #ffffff;
@@ -492,7 +492,7 @@
   }
 }
 .changePasswordButton {
-  cursor: default;
+  cursor: pointer;
   background: var(--token-ytzaa9i3sK9d);
   font-weight: 700;
   color: #ffffff;
@@ -560,7 +560,7 @@
   }
 }
 .logOutButton {
-  cursor: default;
+  cursor: pointer;
   background: var(--token-gTmQ4pFxL2-w);
   font-weight: 700;
   color: #ffffff;
@@ -767,7 +767,7 @@
   padding: 0px;
 }
 .previousPageButton {
-  cursor: default;
+  cursor: pointer;
   background: var(--token-_ghsv35bfxZ2);
   font-weight: 700;
   color: #ffffff;
@@ -855,7 +855,7 @@
   }
 }
 .nextPageButton {
-  cursor: default;
+  cursor: pointer;
   background: var(--token-_ghsv35bfxZ2);
   font-weight: 700;
   color: #ffffff;

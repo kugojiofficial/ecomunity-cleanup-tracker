@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "plasmic:sync": "plasmic sync --yes && node scripts/strip-plasmic-font-import.mjs"
+    "plasmic:sync": "plasmic sync --yes && node scripts/strip-plasmic-font-import.mjs",
+    "postinstall": "node scripts/copy-ort.mjs",
+    "setup:yolo": "node scripts/copy-ort.mjs"
   },
   "dependencies": {
     "@plasmicapp/react-web": "^1.0.25",
@@ -16,9 +18,11 @@
     "@plasmicpkgs/plasmic-nav": "^0.0.224",
     "@plasmicpkgs/plasmic-tabs": "^0.0.95",
     "@plasmicpkgs/react-aria": "^0.0.189",
+    "@plasmicpkgs/react-youtube": "^7.13.258",
     "@supabase/supabase-js": "^2.105.4",
     "leaflet": "^1.9.4",
     "next": "16.2.6",
+    "onnxruntime-web": "1.27.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-leaflet": "^5.0.0"

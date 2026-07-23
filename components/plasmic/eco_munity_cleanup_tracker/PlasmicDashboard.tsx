@@ -66,6 +66,7 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 
 import sty from "./PlasmicDashboard.module.css"; // plasmic-import: C7cUxPqd2zr6/css
 
+import CameraBoltIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__CameraBolt"; // plasmic-import: 2vD7KAscg36A/icon
 import ChevronsRightIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__ChevronsRight"; // plasmic-import: yQA1jfb0RgwK/icon
 import UsersIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Users"; // plasmic-import: JrpdS-Pm49Zg/icon
 import TrashIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Trash"; // plasmic-import: uJVL4__Mg7cD/icon
@@ -126,6 +127,8 @@ export const PlasmicDashboard__ArgProps = new Array<ArgPropType>();
 
 export type PlasmicDashboard__OverridesType = {
   dashboardPage?: Flex__<"div">;
+  logWasteButton?: Flex__<"button">;
+  text?: Flex__<"div">;
   eventCards?: Flex__<"div">;
   activeEventCard?: Flex__<"div">;
   activeEventTitle?: Flex__<"div">;
@@ -239,6 +242,60 @@ function PlasmicDashboard__RenderFunc(props: {
             sty.dashboardPage
           )}
         >
+          <button
+            data-plasmic-name={"logWasteButton"}
+            data-plasmic-override={overrides.logWasteButton}
+            className={classNames(
+              "all",
+              "button",
+              "button__6FNNC",
+              sty.logWasteButton
+            )}
+            onClick={async event => {
+              const $steps = {};
+
+              $steps["goToLogWaste"] = true
+                ? (() => {
+                    const actionArgs = { destination: `/log-waste` };
+                    return (({ destination }) => {
+                      if (
+                        typeof destination === "string" &&
+                        destination.startsWith("#")
+                      ) {
+                        document
+                          .getElementById(destination.substr(1))
+                          .scrollIntoView({ behavior: "smooth" });
+                      } else {
+                        __nextRouter?.push(destination);
+                      }
+                    })?.apply(null, [actionArgs]);
+                  })()
+                : undefined;
+              if (
+                $steps["goToLogWaste"] != null &&
+                typeof $steps["goToLogWaste"] === "object" &&
+                typeof $steps["goToLogWaste"].then === "function"
+              ) {
+                $steps["goToLogWaste"] = await $steps["goToLogWaste"];
+              }
+            }}
+            ref={ref => {
+              $refs["logWasteButton"] = ref;
+            }}
+          >
+            <CameraBoltIcon
+              className={classNames("all", sty.svg__q78Fq)}
+              role={"img"}
+            />
+
+            <div
+              data-plasmic-name={"text"}
+              data-plasmic-override={overrides.text}
+              className={classNames("all", "__wab_text", sty.text)}
+            >
+              {"Log Waste"}
+            </div>
+          </button>
           <div
             data-plasmic-name={"eventCards"}
             data-plasmic-override={overrides.eventCards}
@@ -414,6 +471,8 @@ function PlasmicDashboard__RenderFunc(props: {
 const PlasmicDescendants = {
   dashboardPage: [
     "dashboardPage",
+    "logWasteButton",
+    "text",
     "eventCards",
     "activeEventCard",
     "activeEventTitle",
@@ -431,6 +490,8 @@ const PlasmicDescendants = {
     "navigationBar",
     "pagePadding"
   ],
+  logWasteButton: ["logWasteButton", "text"],
+  text: ["text"],
   eventCards: [
     "eventCards",
     "activeEventCard",
@@ -474,6 +535,8 @@ type DescendantsType<T extends NodeNameType> =
   (typeof PlasmicDescendants)[T][number];
 type NodeDefaultElementType = {
   dashboardPage: "div";
+  logWasteButton: "button";
+  text: "div";
   eventCards: "div";
   activeEventCard: "div";
   activeEventTitle: "div";
@@ -554,6 +617,8 @@ export const PlasmicDashboard = Object.assign(
   makeNodeComponent("dashboardPage"),
   {
     // Helper components rendering sub-elements
+    logWasteButton: makeNodeComponent("logWasteButton"),
+    text: makeNodeComponent("text"),
     eventCards: makeNodeComponent("eventCards"),
     activeEventCard: makeNodeComponent("activeEventCard"),
     activeEventTitle: makeNodeComponent("activeEventTitle"),

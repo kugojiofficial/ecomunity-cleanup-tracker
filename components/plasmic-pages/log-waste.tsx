@@ -1,25 +1,35 @@
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
+import { PageParamsProvider as PageParamsProvider__ } from "@plasmicapp/react-web/lib/host";
+import { PlasmicQueryDataProvider } from "@plasmicapp/react-web/lib/query";
 import { useRouter } from "next/router";
 
-import { useRequireAuth } from "../../lib/api";
+import { PlasmicLogWaste } from "../plasmic/eco_munity_cleanup_tracker/PlasmicLogWaste";
+import MenuItem from "../MenuItem";
+import { getEvents, insertWasteLog, uploadWasteImage, useRequireAuth } from "../../lib/api";
+import { selectActiveOrRecentEvent } from "../../lib/domain/activeEvent";
 import { Constants } from "../../lib/supabase/database.types";
 import { formatWasteType, wasteTypeColor } from "../../lib/format/wasteType";
+import { useYoloDetector } from "../../lib/yolo/useYoloDetector";
+import styles from "./log-waste.module.css";
 
-// The 17 authoritative waste types (same source as the DB enum).
+const HIDDEN = { display: "none" } as const;
+const SHOWN = { display: "flex" } as const;
+
 const WASTE_TYPES = Constants.public.Enums.waste_type;
 
-// Reuse the project's Plasmic design tokens (defined globally in plasmic.css,
-// imported by pages/_app.tsx) so this hand-built page matches the app's theme.
-const THEME = {
-  pageBg: "var(--token-uaIxKhkvZhCQ, #001606)",
-  cardBg: "var(--token-QvKZNdbDFRb8, #002b0b)",
-  border: "var(--token-_ghsv35bfxZ2, #14532d)",
-  accent: "var(--token-ytzaa9i3sK9d, #16a34a)",
-  text: "var(--token-vOzt3wWwXHfx, #ffffff)",
-  danger: "#dc2626",
-  font: '"Inter", sans-serif',
-} as const;
+function getCurrentPosition(): Promise<GeolocationPosition> {
+  return new Promise((resolve, reject) => {
+    if (typeof navigator === "undefined" || !navigator.geolocation) {
+      reject(new Error("Geolocation is not available."));
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(resolve, reject, {
+      enableHighAccuracy: true,
+      timeout: 10000,
+    });
+  });
+}
 
 function LogWaste() {
   const router = useRouter();
@@ -27,14 +37,16 @@ function LogWaste() {
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const overlayRef = useRef<HTMLCanvasElement>(null);
+  const userPickedTypeRef = useRef(false);
 
+  const [activeEventId, setActiveEventId] = useState<string | null>(null);
+  const [wasteType, setWasteType] = useState<string>("");
   const [cameraError, setCameraError] = useState<string | null>(null);
-  const [wasteType, setWasteType] = useState<string>(WASTE_TYPES[0]);
-  const [photo, setPhoto] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
 
-  // Start the rear camera once we know the user is signed in. `facingMode:
-  // environment` asks for the back camera; playsInline/muted on the <video> keep
-  // it working inside an iOS WebView (the Capacitor target).
+  // Live rear camera; muted + playsInline for the iOS WebView.
   useEffect(() => {
     if (!user) return;
     let active = true;
@@ -57,7 +69,7 @@ function LogWaste() {
         const denied = err instanceof DOMException && err.name === "NotAllowedError";
         setCameraError(
           denied
-            ? "Camera permission was denied. Enable camera access in your browser or app settings, then reload."
+            ? "Camera permission was denied. Enable camera access, then reload."
             : "No camera is available on this device."
         );
       }
@@ -70,173 +82,186 @@ function LogWaste() {
     };
   }, [user]);
 
-  function capturePhoto() {
+  // Active event to log to (the server rejects logs to a non-running event).
+  useEffect(() => {
+    if (!user) return;
+    let active = true;
+
+    (async () => {
+      const res = await getEvents();
+      if (!active || !res.success) return;
+      const selected = selectActiveOrRecentEvent(res.data);
+      if (selected && selected.isActive) setActiveEventId(selected.event.id);
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [user]);
+
+  // Draws boxes + suggests a type (never submits); quiet if there's no model.
+  useYoloDetector({
+    videoRef,
+    overlayRef,
+    enabled: !cameraError,
+    onSuggestion: (wt) => {
+      if (wt && !userPickedTypeRef.current) setWasteType(wt);
+    },
+  });
+
+  function captureFrameBlob(): Promise<Blob | null> {
     const video = videoRef.current;
-    if (!video || !video.videoWidth) return;
+    if (!video || !video.videoWidth) return Promise.resolve(null);
     const canvas = document.createElement("canvas");
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    if (!ctx) return Promise.resolve(null);
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    setPhoto(canvas.toDataURL("image/jpeg", 0.9));
+    return new Promise((resolve) => canvas.toBlob((b) => resolve(b), "image/jpeg", 0.9));
+  }
+
+  async function handleSubmit() {
+    if (busy || !user) return;
+    setError(null);
+
+    if (!wasteType) {
+      setError("Please select a waste type.");
+      return;
+    }
+    if (!activeEventId) {
+      setError("There's no active event to log waste to right now.");
+      return;
+    }
+
+    setBusy(true);
+
+    let position: GeolocationPosition;
+    try {
+      position = await getCurrentPosition();
+    } catch {
+      setBusy(false);
+      setError("Location permission is required to log waste. Enable it and try again.");
+      return;
+    }
+
+    // Best-effort photo: no camera → log without one; upload failure blocks the log.
+    let imagePath: string | null = null;
+    const blob = await captureFrameBlob();
+    if (blob) {
+      const up = await uploadWasteImage(user.id, blob);
+      if (!up.success) {
+        setBusy(false);
+        setError(`Couldn't upload the photo: ${up.error}`);
+        return;
+      }
+      imagePath = up.data;
+    }
+
+    const res = await insertWasteLog({
+      event_id: activeEventId,
+      waste_type: wasteType,
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+      accuracy_meters: position.coords.accuracy ?? null,
+      image_url: imagePath,
+    });
+    setBusy(false);
+
+    if (!res.success) {
+      setError(res.error);
+      return;
+    }
+    router.push("/dashboard");
   }
 
   if (!user) return null;
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: THEME.pageBg,
-        color: THEME.text,
-        fontFamily: THEME.font,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "24px 16px 48px",
-        boxSizing: "border-box",
-      }}
-    >
-      <div style={{ width: "100%", maxWidth: 520, display: "flex", flexDirection: "column", gap: 20 }}>
-        <header style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <button
-            type="button"
-            onClick={() => router.push("/dashboard")}
-            style={{
-              background: "transparent",
-              color: THEME.text,
-              border: "none",
-              cursor: "pointer",
-              fontSize: 16,
-              opacity: 0.8,
-              padding: 0,
-            }}
-          >
-            ← Back
-          </button>
-          <h1 style={{ margin: 0, fontSize: 28, fontWeight: 700 }}>Log Waste</h1>
-          <span style={{ width: 44 }} />
-        </header>
-
-        {/* Camera / captured photo */}
-        <div
-          style={{
-            background: THEME.cardBg,
-            border: `3px solid ${THEME.border}`,
-            borderRadius: 16,
-            overflow: "hidden",
-            aspectRatio: "9 / 14",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
+    <PlasmicQueryDataProvider>
+      <PageParamsProvider__
+        route={router?.pathname}
+        params={router?.query}
+        query={router?.query}
+      >
+        <PlasmicLogWaste
+          cameraFeedContainer={{
+            children: (
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "inherit",
+                  overflow: "hidden",
+                }}
+              >
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  muted
+                  playsInline
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+                <canvas
+                  ref={overlayRef}
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    pointerEvents: "none",
+                  }}
+                />
+                {cameraError && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: 16,
+                      textAlign: "center",
+                      color: "#fecaca",
+                      background: "rgba(0,0,0,0.6)",
+                    }}
+                  >
+                    {cameraError}
+                  </div>
+                )}
+              </div>
+            ),
           }}
-        >
-          {cameraError ? (
-            <p style={{ padding: 24, textAlign: "center", color: "#fecaca", margin: 0 }}>
-              {cameraError}
-            </p>
-          ) : photo ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={photo}
-              alt="Captured waste"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          ) : (
-            <video
-              ref={videoRef}
-              autoPlay
-              muted
-              playsInline
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          )}
-        </div>
-
-        {/* Capture / retake */}
-        {!cameraError &&
-          (photo ? (
-            <button
-              type="button"
-              onClick={() => setPhoto(null)}
-              style={secondaryButtonStyle}
-            >
-              Retake photo
-            </button>
-          ) : (
-            <button type="button" onClick={capturePhoto} style={primaryButtonStyle}>
-              Capture photo
-            </button>
-          ))}
-
-        {/* Trash type selector */}
-        <label style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          <span style={{ fontSize: 15, fontWeight: 600, textAlign: "center" }}>Select Waste Type</span>
-          <div style={{ position: "relative", display: "flex", alignItems: "center", gap: 12 }}>
-            <span
-              aria-hidden
-              style={{
-                width: 18,
-                height: 18,
-                borderRadius: "50%",
-                background: wasteTypeColor(wasteType),
-                border: "2px solid rgba(255,255,255,0.4)",
-                flexShrink: 0,
-              }}
-            />
-            <select
-              value={wasteType}
-              onChange={(e) => setWasteType(e.target.value)}
-              style={{
-                flex: 1,
-                appearance: "none",
-                background: THEME.cardBg,
-                color: THEME.text,
-                border: `2px solid ${THEME.border}`,
-                borderRadius: 10,
-                padding: "12px 14px",
-                fontSize: 16,
-                fontFamily: THEME.font,
-                cursor: "pointer",
-              }}
-            >
-              {WASTE_TYPES.map((t) => (
-                <option key={t} value={t} style={{ background: "#002b0b", color: "#fff" }}>
-                  {formatWasteType(t)}
-                </option>
-              ))}
-            </select>
-          </div>
-        </label>
-      </div>
-    </div>
+          wasteTypeSelector={{
+            "aria-label": "Waste type",
+            value: wasteType,
+            onChange: (v: string) => {
+              userPickedTypeRef.current = true;
+              setWasteType(v);
+              if (error) setError(null);
+            },
+            items: WASTE_TYPES.map((t) => (
+              <MenuItem key={t} value={t} label={formatWasteType(t)} />
+            )),
+            className: styles.selectText,
+          }}
+          wasteTypeColor={{
+            style: { background: wasteType ? wasteTypeColor(wasteType) : "transparent" },
+          }}
+          submitButton={{
+            onClick: (e: React.MouseEvent) => {
+              e.preventDefault();
+              void handleSubmit();
+            },
+            style: busy ? { opacity: 0.6, pointerEvents: "none" } : undefined,
+          }}
+          error={{ style: error ? SHOWN : HIDDEN }}
+          errorContent={{ children: error ?? "" }}
+        />
+      </PageParamsProvider__>
+    </PlasmicQueryDataProvider>
   );
 }
-
-const primaryButtonStyle: React.CSSProperties = {
-  background: THEME.accent,
-  color: "#ffffff",
-  border: "none",
-  borderRadius: 10,
-  padding: "14px 20px",
-  fontSize: 16,
-  fontWeight: 700,
-  cursor: "pointer",
-  fontFamily: THEME.font,
-};
-
-const secondaryButtonStyle: React.CSSProperties = {
-  background: "transparent",
-  color: THEME.text,
-  border: `2px solid ${THEME.border}`,
-  borderRadius: 10,
-  padding: "14px 20px",
-  fontSize: 16,
-  fontWeight: 600,
-  cursor: "pointer",
-  fontFamily: THEME.font,
-};
 
 export default LogWaste;

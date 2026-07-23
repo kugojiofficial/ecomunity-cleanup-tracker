@@ -57,7 +57,8 @@ import {
   useGlobalActions
 } from "@plasmicapp/react-web/lib/host";
 
-import TextField from "../../TextField"; // plasmic-import: nhNi86WWHkJQ/component
+import Select from "../../Select"; // plasmic-import: LVXNSsX6u6_R/component
+import MenuItem from "../../MenuItem"; // plasmic-import: -PDYsBUwNZcp/component
 import { _useGlobalVariants } from "./plasmic"; // plasmic-import: 6FNNC7rfkE9HMPqXDPWwTm/projectModule
 import { _useStyleTokens } from "./PlasmicStyleTokensProvider"; // plasmic-import: 6FNNC7rfkE9HMPqXDPWwTm/styleTokensProvider
 
@@ -65,10 +66,7 @@ import "@plasmicapp/react-web/lib/plasmic.css";
 
 import sty from "./PlasmicLogWaste.module.css"; // plasmic-import: lLmZHWk7BVTv/css
 
-import MailIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Mail"; // plasmic-import: g0KBv68uO4-w/icon
-import CircleIcon from "./icons/PlasmicIcon__Circle"; // plasmic-import: 0qv-KGqIe6NJ/icon
-import LockIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Lock"; // plasmic-import: hwRGGXIppyrw/icon
-import Login2Icon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Login2"; // plasmic-import: csbhyrMqT37P/icon
+import SquareCheckIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__SquareCheck"; // plasmic-import: 6SDNahuMIAdO/icon
 
 const emptyProxy: any = new Proxy(() => "", {
   get(_, prop) {
@@ -128,15 +126,15 @@ export type PlasmicLogWaste__OverridesType = {
   flex?: Flex__<"div">;
   container?: Flex__<"div">;
   title?: Flex__<"h1">;
-  emailContainer?: Flex__<typeof TextField>;
-  passwordContainer?: Flex__<typeof TextField>;
-  forgotPasswordButton?: Flex__<"button">;
-  logInButton?: Flex__<"button">;
+  wasteTypeContainer?: Flex__<"div">;
+  wasteTypeColor?: Flex__<"div">;
+  wasteTypeSelector?: Flex__<typeof Select>;
+  menuItem?: Flex__<typeof MenuItem>;
+  cameraFeedContainer?: Flex__<"div">;
+  submitButton?: Flex__<"button">;
+  backButton?: Flex__<"button">;
   error?: Flex__<"div">;
   errorContent?: Flex__<"div">;
-  signUpRedirect?: Flex__<"div">;
-  h1?: Flex__<"h1">;
-  signUpRedirectButton?: Flex__<"button">;
 };
 
 export interface DefaultLogWasteProps {}
@@ -183,13 +181,13 @@ function PlasmicLogWaste__RenderFunc(props: {
   const stateSpecs: Parameters<typeof useDollarState>[0] = React.useMemo(
     () => [
       {
-        path: "emailContainer.value",
+        path: "wasteTypeSelector.isOpen",
         type: "private",
-        variableType: "text",
-        initFunc: ({ $props, $state, $queries, $q, $ctx }) => undefined
+        variableType: "boolean",
+        initFunc: ({ $props, $state, $queries, $q, $ctx }) => false
       },
       {
-        path: "passwordContainer.value",
+        path: "wasteTypeSelector.value",
         type: "private",
         variableType: "text",
         initFunc: ({ $props, $state, $queries, $q, $ctx }) => undefined
@@ -197,8 +195,6 @@ function PlasmicLogWaste__RenderFunc(props: {
     ],
     [$props, $ctx, $refs]
   );
-
-  const globalVariants = _useGlobalVariants();
 
   const $state = useDollarState(stateSpecs, {
     $props,
@@ -283,114 +279,118 @@ function PlasmicLogWaste__RenderFunc(props: {
               >
                 {"Log Waste"}
               </h1>
-              <TextField
-                data-plasmic-name={"emailContainer"}
-                data-plasmic-override={overrides.emailContainer}
-                autoComplete={["email"]}
-                autoFocus={true}
-                className={classNames("__wab_instance", sty.emailContainer)}
-                description={"ex. name@example.com"}
-                disabled={false}
-                iconStart={true}
-                inputMode={"email"}
-                label={
-                  <div
-                    className={classNames("all", "__wab_text", sty.text__oTdw)}
-                  >
-                    {"Email\n"}
-                  </div>
-                }
-                onChange={async (...eventArgs: any) => {
-                  generateStateOnChangeProp($state, [
-                    "emailContainer",
-                    "value"
-                  ]).apply(null, eventArgs);
+              <div
+                data-plasmic-name={"wasteTypeContainer"}
+                data-plasmic-override={overrides.wasteTypeContainer}
+                className={classNames("all", sty.wasteTypeContainer)}
+              >
+                <div
+                  data-plasmic-name={"wasteTypeColor"}
+                  data-plasmic-override={overrides.wasteTypeColor}
+                  className={classNames("all", sty.wasteTypeColor)}
+                />
 
-                  if (
-                    eventArgs.length > 1 &&
-                    eventArgs[1] &&
-                    eventArgs[1]._plasmic_state_init_
-                  ) {
-                    return;
+                <Select
+                  data-plasmic-name={"wasteTypeSelector"}
+                  data-plasmic-override={overrides.wasteTypeSelector}
+                  className={classNames(
+                    "__wab_instance",
+                    sty.wasteTypeSelector
+                  )}
+                  isOpen={generateStateValueProp($state, [
+                    "wasteTypeSelector",
+                    "isOpen"
+                  ])}
+                  items={
+                    <MenuItem
+                      data-plasmic-name={"menuItem"}
+                      data-plasmic-override={overrides.menuItem}
+                      label={"Waste Type"}
+                      value={""}
+                    />
                   }
-                }}
-                placeholder={"..."}
-                showDescription={false}
-                showLabel={true}
-                start={
-                  <MailIcon
-                    className={classNames("all", sty.svg__eZ18)}
-                    role={"img"}
-                  />
-                }
-                type={"email"}
-                value={generateStateValueProp($state, [
-                  "emailContainer",
-                  "value"
-                ])}
-              />
+                  onChange={async (...eventArgs: any) => {
+                    generateStateOnChangeProp($state, [
+                      "wasteTypeSelector",
+                      "value"
+                    ]).apply(null, eventArgs);
 
-              <TextField
-                data-plasmic-name={"passwordContainer"}
-                data-plasmic-override={overrides.passwordContainer}
-                autoComplete={["off"]}
-                className={classNames("__wab_instance", sty.passwordContainer)}
-                description={""}
-                disabled={false}
-                iconStart={true}
-                inputMode={"text"}
-                label={
-                  <div
-                    className={classNames("all", "__wab_text", sty.text__iB9E)}
-                  >
-                    {"Password"}
-                  </div>
-                }
-                onChange={async (...eventArgs: any) => {
-                  generateStateOnChangeProp($state, [
-                    "passwordContainer",
+                    if (
+                      eventArgs.length > 1 &&
+                      eventArgs[1] &&
+                      eventArgs[1]._plasmic_state_init_
+                    ) {
+                      return;
+                    }
+                  }}
+                  onOpenChange={async (...eventArgs: any) => {
+                    generateStateOnChangeProp($state, [
+                      "wasteTypeSelector",
+                      "isOpen"
+                    ]).apply(null, eventArgs);
+
+                    if (
+                      eventArgs.length > 1 &&
+                      eventArgs[1] &&
+                      eventArgs[1]._plasmic_state_init_
+                    ) {
+                      return;
+                    }
+                  }}
+                  placeholder={"Waste type..."}
+                  showDescription={false}
+                  showLabel={false}
+                  value={generateStateValueProp($state, [
+                    "wasteTypeSelector",
                     "value"
-                  ]).apply(null, eventArgs);
-
-                  if (
-                    eventArgs.length > 1 &&
-                    eventArgs[1] &&
-                    eventArgs[1]._plasmic_state_init_
-                  ) {
-                    return;
-                  }
-                }}
-                placeholder={"..."}
-                showDescription={false}
-                showLabel={true}
-                start={
-                  <LockIcon
-                    className={classNames("all", sty.svg__j7Uwq)}
-                    role={"img"}
-                  />
-                }
-                type={"password"}
-                value={generateStateValueProp($state, [
-                  "passwordContainer",
-                  "value"
-                ])}
+                  ])}
+                />
+              </div>
+              <div
+                data-plasmic-name={"cameraFeedContainer"}
+                data-plasmic-override={overrides.cameraFeedContainer}
+                className={classNames("all", sty.cameraFeedContainer)}
               />
 
               <button
-                data-plasmic-name={"forgotPasswordButton"}
-                data-plasmic-override={overrides.forgotPasswordButton}
+                data-plasmic-name={"submitButton"}
+                data-plasmic-override={overrides.submitButton}
                 className={classNames(
                   "all",
                   "button",
                   "button__6FNNC",
-                  sty.forgotPasswordButton
+                  sty.submitButton
+                )}
+                ref={ref => {
+                  $refs["submitButton"] = ref;
+                }}
+              >
+                <SquareCheckIcon
+                  className={classNames("all", sty.svg__oqsq2)}
+                  role={"img"}
+                />
+
+                <div
+                  className={classNames("all", "__wab_text", sty.text___0ElJk)}
+                >
+                  {"Submit"}
+                </div>
+              </button>
+              <button
+                data-plasmic-name={"backButton"}
+                data-plasmic-override={overrides.backButton}
+                className={classNames(
+                  "all",
+                  "button",
+                  "button__6FNNC",
+                  sty.backButton
                 )}
                 onClick={async event => {
                   const $steps = {};
 
-                  $steps["goToSignUp"] = true
+                  $steps["goToDashboard"] = true
                     ? (() => {
-                        const actionArgs = { destination: `/register` };
+                        const actionArgs = { destination: `/dashboard` };
                         return (({ destination }) => {
                           if (
                             typeof destination === "string" &&
@@ -406,129 +406,40 @@ function PlasmicLogWaste__RenderFunc(props: {
                       })()
                     : undefined;
                   if (
-                    $steps["goToSignUp"] != null &&
-                    typeof $steps["goToSignUp"] === "object" &&
-                    typeof $steps["goToSignUp"].then === "function"
+                    $steps["goToDashboard"] != null &&
+                    typeof $steps["goToDashboard"] === "object" &&
+                    typeof $steps["goToDashboard"].then === "function"
                   ) {
-                    $steps["goToSignUp"] = await $steps["goToSignUp"];
+                    $steps["goToDashboard"] = await $steps["goToDashboard"];
                   }
                 }}
                 ref={ref => {
-                  $refs["forgotPasswordButton"] = ref;
+                  $refs["backButton"] = ref;
                 }}
               >
-                <div
-                  className={classNames("all", "__wab_text", sty.text__tBVia)}
-                >
-                  {"Forgot password?"}
-                </div>
-              </button>
-              <button
-                data-plasmic-name={"logInButton"}
-                data-plasmic-override={overrides.logInButton}
-                className={classNames(
-                  "all",
-                  "button",
-                  "button__6FNNC",
-                  sty.logInButton
-                )}
-                ref={ref => {
-                  $refs["logInButton"] = ref;
-                }}
-              >
-                <Login2Icon
-                  className={classNames("all", sty.svg__oqsq2)}
+                <SquareCheckIcon
+                  className={classNames("all", sty.svg__k6Owj)}
                   role={"img"}
                 />
 
                 <div
-                  className={classNames("all", "__wab_text", sty.text___0ElJk)}
+                  className={classNames("all", "__wab_text", sty.text__fTzQd)}
                 >
-                  {"Continue"}
+                  {"Go Back"}
                 </div>
               </button>
+            </div>
+            <div
+              data-plasmic-name={"error"}
+              data-plasmic-override={overrides.error}
+              className={classNames("all", sty.error)}
+            >
               <div
-                data-plasmic-name={"error"}
-                data-plasmic-override={overrides.error}
-                className={classNames("all", sty.error)}
+                data-plasmic-name={"errorContent"}
+                data-plasmic-override={overrides.errorContent}
+                className={classNames("all", "__wab_text", sty.errorContent)}
               >
-                <div
-                  data-plasmic-name={"errorContent"}
-                  data-plasmic-override={overrides.errorContent}
-                  className={classNames("all", "__wab_text", sty.errorContent)}
-                >
-                  {"Password must be..."}
-                </div>
-              </div>
-              <div
-                data-plasmic-name={"signUpRedirect"}
-                data-plasmic-override={overrides.signUpRedirect}
-                className={classNames("all", sty.signUpRedirect)}
-              >
-                <h1
-                  data-plasmic-name={"h1"}
-                  data-plasmic-override={overrides.h1}
-                  className={classNames(
-                    "all",
-                    "h1",
-                    "h1__6FNNC",
-                    "__wab_text",
-                    sty.h1
-                  )}
-                >
-                  {"Don't have an account?"}
-                </h1>
-                <button
-                  data-plasmic-name={"signUpRedirectButton"}
-                  data-plasmic-override={overrides.signUpRedirectButton}
-                  className={classNames(
-                    "all",
-                    "button",
-                    "button__6FNNC",
-                    sty.signUpRedirectButton
-                  )}
-                  onClick={async event => {
-                    const $steps = {};
-
-                    $steps["goToSignUp"] = true
-                      ? (() => {
-                          const actionArgs = { destination: `/register` };
-                          return (({ destination }) => {
-                            if (
-                              typeof destination === "string" &&
-                              destination.startsWith("#")
-                            ) {
-                              document
-                                .getElementById(destination.substr(1))
-                                .scrollIntoView({ behavior: "smooth" });
-                            } else {
-                              __nextRouter?.push(destination);
-                            }
-                          })?.apply(null, [actionArgs]);
-                        })()
-                      : undefined;
-                    if (
-                      $steps["goToSignUp"] != null &&
-                      typeof $steps["goToSignUp"] === "object" &&
-                      typeof $steps["goToSignUp"].then === "function"
-                    ) {
-                      $steps["goToSignUp"] = await $steps["goToSignUp"];
-                    }
-                  }}
-                  ref={ref => {
-                    $refs["signUpRedirectButton"] = ref;
-                  }}
-                >
-                  <div
-                    className={classNames(
-                      "all",
-                      "__wab_text",
-                      sty.text___9LP8N
-                    )}
-                  >
-                    {"Sign up instead"}
-                  </div>
-                </button>
+                {"Error"}
               </div>
             </div>
           </div>
@@ -544,53 +455,56 @@ const PlasmicDescendants = {
     "flex",
     "container",
     "title",
-    "emailContainer",
-    "passwordContainer",
-    "forgotPasswordButton",
-    "logInButton",
+    "wasteTypeContainer",
+    "wasteTypeColor",
+    "wasteTypeSelector",
+    "menuItem",
+    "cameraFeedContainer",
+    "submitButton",
+    "backButton",
     "error",
-    "errorContent",
-    "signUpRedirect",
-    "h1",
-    "signUpRedirectButton"
+    "errorContent"
   ],
   flex: [
     "flex",
     "container",
     "title",
-    "emailContainer",
-    "passwordContainer",
-    "forgotPasswordButton",
-    "logInButton",
+    "wasteTypeContainer",
+    "wasteTypeColor",
+    "wasteTypeSelector",
+    "menuItem",
+    "cameraFeedContainer",
+    "submitButton",
+    "backButton",
     "error",
-    "errorContent",
-    "signUpRedirect",
-    "h1",
-    "signUpRedirectButton"
+    "errorContent"
   ],
   container: [
     "container",
     "title",
-    "emailContainer",
-    "passwordContainer",
-    "forgotPasswordButton",
-    "logInButton",
-    "error",
-    "errorContent",
-    "signUpRedirect",
-    "h1",
-    "signUpRedirectButton"
+    "wasteTypeContainer",
+    "wasteTypeColor",
+    "wasteTypeSelector",
+    "menuItem",
+    "cameraFeedContainer",
+    "submitButton",
+    "backButton"
   ],
   title: ["title"],
-  emailContainer: ["emailContainer"],
-  passwordContainer: ["passwordContainer"],
-  forgotPasswordButton: ["forgotPasswordButton"],
-  logInButton: ["logInButton"],
+  wasteTypeContainer: [
+    "wasteTypeContainer",
+    "wasteTypeColor",
+    "wasteTypeSelector",
+    "menuItem"
+  ],
+  wasteTypeColor: ["wasteTypeColor"],
+  wasteTypeSelector: ["wasteTypeSelector", "menuItem"],
+  menuItem: ["menuItem"],
+  cameraFeedContainer: ["cameraFeedContainer"],
+  submitButton: ["submitButton"],
+  backButton: ["backButton"],
   error: ["error", "errorContent"],
-  errorContent: ["errorContent"],
-  signUpRedirect: ["signUpRedirect", "h1", "signUpRedirectButton"],
-  h1: ["h1"],
-  signUpRedirectButton: ["signUpRedirectButton"]
+  errorContent: ["errorContent"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
@@ -600,15 +514,15 @@ type NodeDefaultElementType = {
   flex: "div";
   container: "div";
   title: "h1";
-  emailContainer: typeof TextField;
-  passwordContainer: typeof TextField;
-  forgotPasswordButton: "button";
-  logInButton: "button";
+  wasteTypeContainer: "div";
+  wasteTypeColor: "div";
+  wasteTypeSelector: typeof Select;
+  menuItem: typeof MenuItem;
+  cameraFeedContainer: "div";
+  submitButton: "button";
+  backButton: "button";
   error: "div";
   errorContent: "div";
-  signUpRedirect: "div";
-  h1: "h1";
-  signUpRedirectButton: "button";
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -676,15 +590,15 @@ export const PlasmicLogWaste = Object.assign(
     flex: makeNodeComponent("flex"),
     container: makeNodeComponent("container"),
     title: makeNodeComponent("title"),
-    emailContainer: makeNodeComponent("emailContainer"),
-    passwordContainer: makeNodeComponent("passwordContainer"),
-    forgotPasswordButton: makeNodeComponent("forgotPasswordButton"),
-    logInButton: makeNodeComponent("logInButton"),
+    wasteTypeContainer: makeNodeComponent("wasteTypeContainer"),
+    wasteTypeColor: makeNodeComponent("wasteTypeColor"),
+    wasteTypeSelector: makeNodeComponent("wasteTypeSelector"),
+    menuItem: makeNodeComponent("menuItem"),
+    cameraFeedContainer: makeNodeComponent("cameraFeedContainer"),
+    submitButton: makeNodeComponent("submitButton"),
+    backButton: makeNodeComponent("backButton"),
     error: makeNodeComponent("error"),
     errorContent: makeNodeComponent("errorContent"),
-    signUpRedirect: makeNodeComponent("signUpRedirect"),
-    h1: makeNodeComponent("h1"),
-    signUpRedirectButton: makeNodeComponent("signUpRedirectButton"),
 
     // Metadata about props expected for PlasmicLogWaste
     internalVariantProps: PlasmicLogWaste__VariantProps,

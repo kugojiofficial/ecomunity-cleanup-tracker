@@ -15,7 +15,7 @@
       calc(100% - var(--plsmc-viewport-gap) - var(--plsmc-viewport-gap))
     )
     minmax(0, var(--plsmc-wide-chunk)) 1fr var(--plsmc-viewport-gap);
-  padding: 20px 0px;
+  padding: 0px;
 }
 .changePasswordPage > * {
   grid-column: 4;
@@ -38,15 +38,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: auto;
   grid-column-start: 1 !important;
   grid-column-end: -1 !important;
-  padding: 0px;
+  padding: 20px;
 }
 .container {
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 40%;
+  width: 45%;
   height: auto;
   max-width: 100%;
   justify-content: center;
@@ -79,6 +80,7 @@
 @media (max-width: 800px) {
   .h1 {
     animation: none;
+    text-align: center;
   }
 }
 .error {
@@ -233,7 +235,7 @@
 .successContainer {
   flex-direction: column;
   position: relative;
-  width: 40%;
+  width: 45%;
   height: auto;
   max-width: 100%;
   justify-content: center;
@@ -257,10 +259,10 @@
   width: 100%;
   height: auto;
   max-width: 100%;
-  font-size: 28px;
+  font-size: 24px;
   color: #ffffffd9;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 0px;
   text-align: center;
   min-width: 0;

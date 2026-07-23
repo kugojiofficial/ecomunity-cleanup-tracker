@@ -1,0 +1,6 @@
+/* Force the Select trigger's text dark (the value inherits the page's white text
+   and vanishes on the white trigger). The popover list is portaled, so unaffected. */
+.selectText,
+.selectText * {
+  color: #111827 !important;
+}

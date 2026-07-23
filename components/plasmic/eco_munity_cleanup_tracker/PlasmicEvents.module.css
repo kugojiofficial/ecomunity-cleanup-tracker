@@ -120,7 +120,7 @@
 }
 .refreshButton {
   cursor: pointer;
-  background: var(--token-_ghsv35bfxZ2);
+  background: var(--token-ytzaa9i3sK9d);
   font-weight: 700;
   color: #ffffff;
   animation: none;
@@ -136,7 +136,7 @@
   width: auto;
   border-radius: 10px;
   padding: 5px 24px 5px 16px;
-  border: 3px solid var(--token--LLXgMeNdajs);
+  border: 3px solid var(--token-ytzaa9i3sK9d);
 }
 @media (max-width: 800px) {
   .refreshButton {
@@ -260,7 +260,7 @@
   padding: 0px;
 }
 .previousPageButton {
-  cursor: default;
+  cursor: pointer;
   background: var(--token-_ghsv35bfxZ2);
   font-weight: 700;
   color: #ffffff;
@@ -274,10 +274,13 @@
   flex-direction: row;
   column-gap: 10px;
   height: auto;
-  width: auto;
+  width: 200px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
   border-radius: 10px;
   padding: 5px 24px 5px 16px;
-  border: 3px solid var(--token--LLXgMeNdajs);
+  border: 3px solid var(--token-ytzaa9i3sK9d);
 }
 @media (max-width: 800px) {
   .previousPageButton {
@@ -287,8 +290,8 @@
     height: 100%;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    min-width: 0;
+    width: 100px;
+    flex-shrink: 0;
     min-height: 0;
     padding: 5px 16px;
   }
@@ -343,10 +346,12 @@
 @media (max-width: 800px) {
   .pageNumber {
     text-align: center;
+    width: 100%;
+    min-width: 0;
   }
 }
 .nextPageButton {
-  cursor: default;
+  cursor: pointer;
   background: var(--token-_ghsv35bfxZ2);
   font-weight: 700;
   color: #ffffff;
@@ -360,10 +365,13 @@
   flex-direction: row;
   column-gap: 10px;
   height: auto;
-  width: auto;
+  width: 200px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
   border-radius: 10px;
   padding: 5px 16px 5px 24px;
-  border: 3px solid var(--token--LLXgMeNdajs);
+  border: 3px solid var(--token-ytzaa9i3sK9d);
 }
 @media (max-width: 800px) {
   .nextPageButton {
@@ -371,10 +379,10 @@
     left: auto;
     top: auto;
     height: 100%;
-    justify-content: center;
+    width: 100px;
     align-items: center;
-    width: 100%;
-    min-width: 0;
+    justify-content: center;
+    flex-shrink: 0;
     min-height: 0;
     padding: 5px 16px;
   }
@@ -429,7 +437,6 @@
   height: auto;
   max-width: 100%;
   position: relative;
-  margin-bottom: 150px;
   align-content: stretch;
   align-items: stretch;
   justify-content: flex-start;
@@ -440,6 +447,7 @@
   grid-column-start: 3 !important;
   grid-column-end: -3 !important;
   padding: 8px 16px;
+  margin: -8px 0px 150px;
 }
 .collapseAllButton {
   cursor: pointer;
@@ -457,6 +465,7 @@
   column-gap: 10px;
   height: auto;
   width: auto;
+  margin-top: 0px;
   border-radius: 10px;
   padding: 5px 24px 5px 16px;
   border: 3px solid var(--token-ytzaa9i3sK9d);

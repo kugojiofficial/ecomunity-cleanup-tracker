@@ -73,6 +73,8 @@ function Dashboard() {
         query={router?.query}
       >
         <PlasmicDashboard
+          // The dashboard `logWasteButton` navigates to /log-waste — that click
+          // is wired in Plasmic Studio, so no onClick override is needed here.
           activeEventCardValue={{ children: cards.name }}
           participantsCardValue={{ children: cards.participants }}
           wasteCollectedCardValue={{ children: cards.collectedWaste }}

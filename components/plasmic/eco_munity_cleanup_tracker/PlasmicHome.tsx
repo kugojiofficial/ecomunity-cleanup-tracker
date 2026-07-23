@@ -263,7 +263,7 @@ function PlasmicHome__RenderFunc(props: {
                 sty.title
               )}
             >
-              {"EcoMunity IoT"}
+              {"EcoMunity"}
             </h2>
             <h2
               data-plasmic-name={"subtitle"}
@@ -283,7 +283,7 @@ function PlasmicHome__RenderFunc(props: {
                   }
                   style={{ color: "#40FF86" }}
                 >
-                  {"Hardware System Hub"}
+                  {"Cleanup Event Tracker"}
                 </span>
               </React.Fragment>
             </h2>

@@ -67,6 +67,7 @@
   text-align: center;
   text-transform: none;
   line-height: 1.4;
+  padding-top: 0px;
   margin: -25px 0px 0px;
 }
 .slogan {
@@ -78,6 +79,7 @@
   font-size: 28px;
   font-style: normal;
   color: var(--token-gzFc5nZfC4fg);
+  display: none;
   margin: 0px;
 }
 .actionButtonContainer {
@@ -149,13 +151,13 @@
   width: auto;
   max-width: 100%;
   align-self: center;
-  background: var(--token-_ghsv35bfxZ2);
+  background: var(--token-ytzaa9i3sK9d);
   column-gap: 12px;
   height: auto;
   cursor: pointer;
   border-radius: 8px;
   padding: 20px 28px;
-  border: 3px solid var(--token--LLXgMeNdajs);
+  border: 3px solid var(--token-ytzaa9i3sK9d);
 }
 @media (max-width: 800px) {
   .dashboardPageButton {
@@ -188,7 +190,7 @@
   width: auto;
   max-width: 100%;
   align-self: center;
-  background: none;
+  background: var(--token-_ghsv35bfxZ2);
   column-gap: 12px;
   height: auto;
   transition-property: all;
@@ -198,7 +200,7 @@
   -webkit-transition-duration: 1s;
   border-radius: 8px;
   padding: 20px 28px;
-  border: 3px solid var(--token-gzFc5nZfC4fg);
+  border: 3px solid var(--token-ytzaa9i3sK9d);
 }
 @media (max-width: 800px) {
   .eventsPageButton {

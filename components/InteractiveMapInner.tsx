@@ -14,7 +14,10 @@ export type InteractiveMapProps = {
 
 const DEFAULT_CENTER: [number, number] = [40.7128, -74.006];
 const DEFAULT_ZOOM = 13;
-const POINT_HALF_SPAN = 0.005; // ~500m half-box drawn around a single point
+const MAX_ZOOM = 22;
+const NATIVE_MAX_ZOOM = 19; // OSM tiles stop here; Leaflet upscales beyond it.
+const SINGLE_POINT_ZOOM = 18;
+const POINT_HALF_SPAN = 0.005;
 const MARKER_RADIUS = 6;
 
 function sameCalendarDay(a: string, b: string): boolean {
@@ -44,12 +47,12 @@ function MapController({ logs, eventId }: { logs: WasteLog[]; eventId?: string }
     try {
       map.invalidateSize();
       const scope = eventId ?? "__all__";
-      if (fittedFor.current === scope) return; // fit once per event, then free
+      if (fittedFor.current === scope) return;
       const bounds = boundsForLogs(logs);
-      if (!bounds) return; // no data yet
+      if (!bounds) return;
       fittedFor.current = scope;
       if (logs.length === 1) {
-        map.setView(bounds.getCenter(), 16);
+        map.setView(bounds.getCenter(), SINGLE_POINT_ZOOM);
       } else {
         map.fitBounds(bounds, { padding: [40, 40] });
       }
@@ -140,6 +143,7 @@ export default function InteractiveMapInner({ eventId, live, liveUntil }: Intera
       <MapContainer
         center={DEFAULT_CENTER}
         zoom={DEFAULT_ZOOM}
+        maxZoom={MAX_ZOOM}
         scrollWheelZoom={true}
         preferCanvas={true}
         style={{ width: "100%", height: "100%", borderRadius: "12px" }}
@@ -147,6 +151,8 @@ export default function InteractiveMapInner({ eventId, live, liveUntil }: Intera
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          maxNativeZoom={NATIVE_MAX_ZOOM}
+          maxZoom={MAX_ZOOM}
         />
         <MapController logs={logs} eventId={eventId} />
 
