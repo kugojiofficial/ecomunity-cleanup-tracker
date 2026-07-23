@@ -14,8 +14,6 @@ export default function Document() {
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-        {/* Plasmic design fonts. Moved here from the generated plasmic.css
-            (its @import broke Turbopack bundling — see that file's note). */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

@@ -57,5 +57,5 @@ docs
 # YOLO scratch model artifacts (the worker JS in public/yolo/ stays tracked)
 /public/yolo/*.pt
 /public/yolo/*.onnx
-/public/models/*.onnx
-!/public/models/model.onnx
+# Note: detection weights live directly in public/models/ and ARE committed
+# (they're served/deployed and selected via lib/yolo/config.ts).

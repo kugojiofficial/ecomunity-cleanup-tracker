@@ -13,34 +13,30 @@ export type Detection = {
 
 export type YoloStatus = "idle" | "loading" | "ready" | "error" | "unsupported";
 
-// A smoothed, persistent box. Detections arrive at targetFps in discrete jumps;
-// a track carries an animated (rendered) box that eases toward the latest
-// detection every frame, plus an opacity that fades in on birth / out on death.
 type Track = {
   id: number;
   classId: number;
   wt: string;
-  // rendered box (normalized), eased toward the target each frame
+
   x: number;
   y: number;
   w: number;
   h: number;
   score: number;
-  // latest matched detection
+
   tx: number;
   ty: number;
   tw: number;
   th: number;
   tScore: number;
-  opacity: number; // current, animated
-  targetOpacity: number; // 1 = alive, 0 = dying
+  opacity: number;
+  targetOpacity: number;
   matched: boolean;
 };
 
-// Time constants (seconds) for frame-rate-independent exponential easing.
-const POS_TAU = 0.07; // box position/size settle
-const OP_TAU = 0.11; // fade in/out
-const MATCH_IOU = 0.2; // min overlap to treat a detection as the same object
+const POS_TAU = 0.07;
+const OP_TAU = 0.11;
+const MATCH_IOU = 0.2;
 
 function iou(a: Track, dx: number, dy: number, dw: number, dh: number): number {
   const ax2 = a.tx + a.tw;
@@ -102,8 +98,6 @@ export function useYoloDetector({
     let frameId = 0;
     let nextTrackId = 1;
 
-    // Reconcile a fresh batch of detections with the live tracks: match by class
-    // and overlap, spawn tracks for new objects, and mark vanished ones dying.
     function ingest(dets: Detection[]) {
       const tracks = tracksRef.current;
       for (const t of tracks) t.matched = false;
@@ -259,7 +253,6 @@ export function useYoloDetector({
       const dt = Math.min((now - lastFrame) / 1000, 0.1);
       lastFrame = now;
 
-      // Frame-rate-independent easing toward each track's target.
       const posK = 1 - Math.exp(-dt / POS_TAU);
       const opK = 1 - Math.exp(-dt / OP_TAU);
       const tracks = tracksRef.current;
@@ -271,7 +264,7 @@ export function useYoloDetector({
         t.score += (t.tScore - t.score) * posK;
         t.opacity += (t.targetOpacity - t.opacity) * opK;
       }
-      // Retire tracks that have finished fading out.
+
       tracksRef.current = tracks.filter(
         (t) => !(t.targetOpacity === 0 && t.opacity < 0.02)
       );
@@ -291,7 +284,6 @@ export function useYoloDetector({
           ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
           ctx.clearRect(0, 0, cw, ch);
 
-          // Map normalized boxes onto the object-fit: cover video.
           const srcW = video.videoWidth;
           const srcH = video.videoHeight;
           const coverScale = Math.max(cw / srcW, ch / srcH);
@@ -313,7 +305,6 @@ export function useYoloDetector({
             const dw = t.w * dispW;
             const dh = t.h * dispH;
 
-            // Subtle pop: scale from center as the box fades in / out.
             const scale = 0.9 + 0.1 * alpha;
             ctx.save();
             ctx.globalAlpha = alpha;

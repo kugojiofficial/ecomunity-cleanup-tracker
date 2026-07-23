@@ -1,7 +1,3 @@
-// Copies the onnxruntime-web runtime (UMD loader + WASM backends) into
-// public/ort so the YOLO web worker can load it same-origin — no CDN, works
-// offline inside the Capacitor WebView. Runs on `npm install` (postinstall) and
-// is safe to re-run. Does nothing if onnxruntime-web isn't installed.
 import { existsSync, mkdirSync, readdirSync, copyFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -17,7 +13,6 @@ if (!existsSync(src)) {
 
 mkdirSync(dest, { recursive: true });
 
-// The wasm-only UMD loader (sets self.ort) + every wasm backend and its glue.
 const wanted = (f) =>
   f === "ort.wasm.min.js" || /^ort-wasm.*\.(wasm|mjs)$/.test(f);
 

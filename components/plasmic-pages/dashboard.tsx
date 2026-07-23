@@ -22,8 +22,7 @@ function Dashboard() {
   const [activeEventId, setActiveEventId] = useState<string | undefined>(undefined);
   const [endedAt, setEndedAt] = useState<string | null>(null);
   const [isActive, setIsActive] = useState(true);
-  // Gates the Log Waste button; starts false so it stays hidden until we confirm
-  // an event is actually running (and stays hidden when there's none / load fails).
+
   const [hasActiveEvent, setHasActiveEvent] = useState(false);
   const [cards, setCards] = useState<CardStats>({
     name: "N/A",
@@ -77,10 +76,7 @@ function Dashboard() {
         query={router?.query}
       >
         <PlasmicDashboard
-          // The dashboard `logWasteButton` navigates to /log-waste — that click
-          // is wired in Plasmic Studio, so no onClick override is needed here.
-          // Only shown while an event is actually running (you can't log to a
-          // non-active event; the server rejects it too).
+
           logWasteButton={{ style: hasActiveEvent ? undefined : { display: "none" } }}
           activeEventCardValue={{ children: cards.name }}
           participantsCardValue={{ children: cards.participants }}
@@ -91,8 +87,7 @@ function Dashboard() {
             liveUntil: endedAt,
             style: { height: 500 },
           }}
-          // Active -> default chevrons-right icon; recent -> check icon, with the
-          // title + heatmap text flipped to match.
+
           activeEventTitleIcon={isActive ? undefined : { as: CheckIcon }}
           mapTitle={{ children: isActive ? "Live Event Map" : "Recent Event Map" }}
           activeEventTitleContent={{ children: isActive ? "Active Event" : "Recent Event" }}

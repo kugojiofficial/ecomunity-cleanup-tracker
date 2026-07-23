@@ -21,7 +21,6 @@ function LogIn() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  // Forgot-password sub-flow.
   const [forgotEmail, setForgotEmail] = useState("");
   const [forgotError, setForgotError] = useState<string | null>(null);
   const [forgotSent, setForgotSent] = useState(false);
@@ -51,7 +50,6 @@ function LogIn() {
   }
 
   function openForgot() {
-    // Carry over whatever they already typed in the log-in email field.
     setForgotEmail(email);
     setForgotError(null);
     setForgotSent(false);
@@ -79,7 +77,7 @@ function LogIn() {
       setForgotError(error.message);
       return;
     }
-    // Supabase returns success even for unknown emails (anti-enumeration).
+
     setForgotSent(true);
   }
 
@@ -91,7 +89,7 @@ function LogIn() {
         query={router?.query}
       >
         <PlasmicLogIn
-          // Hide the whole log-in form group while in forgot mode.
+
           container={{ style: mode === "forgot" ? HIDDEN : undefined }}
           emailContainer={{
             value: email,
@@ -121,7 +119,7 @@ function LogIn() {
           }}
           signUpRedirect={{ style: showLoginForm ? undefined : HIDDEN }}
           signUpRedirectButton={{ onClick: () => router.push("/register") }}
-          // ---- Forgot-password container + fields ----
+
           forgotPassword={{ style: showForgotForm ? SHOWN : HIDDEN }}
           forgotPasswordEmailContainer={{
             value: forgotEmail,
@@ -130,7 +128,7 @@ function LogIn() {
               if (forgotError) setForgotError(null);
             },
           }}
-          // This error node ships display:flex, so it must be explicitly hidden.
+
           forgotPasswordError={{ style: showForgotForm && forgotError ? SHOWN : HIDDEN }}
           forgotPasswordErrorContent={{ children: forgotError ?? "" }}
           continueButton={{
@@ -145,7 +143,7 @@ function LogIn() {
               backToLogin();
             },
           }}
-          // "A recovery link has been sent to your email." (sibling of the form)
+
           emailNoticeContainer={{ style: showEmailNotice ? SHOWN : HIDDEN }}
           alreadyLoggedIn={{ style: loggedIn ? undefined : HIDDEN }}
           toDashboardButton={{ onClick: () => router.push("/dashboard") }}

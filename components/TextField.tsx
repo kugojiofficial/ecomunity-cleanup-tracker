@@ -6,7 +6,6 @@ import {
 } from "./plasmic/eco_munity_cleanup_tracker/PlasmicTextField";
 
 export interface TextFieldProps extends DefaultTextFieldProps {
-  // Fires once the user has typed in this field AND focus has genuinely left it.
   onBlur?: () => void;
 }
 
@@ -19,7 +18,6 @@ function TextField({ onBlur, ...props }: TextFieldProps) {
     onBlurRef.current = onBlur;
   }, [onBlur]);
 
-  // `input` and `focusout` both bubble, so listening on this stable wrapper keeps working even when react-aria re-creates the inner <input>
   useEffect(() => {
     const root = ref.current;
     if (!root) return;
@@ -46,7 +44,7 @@ function TextField({ onBlur, ...props }: TextFieldProps) {
       root.removeEventListener("focusout", handleFocusOut);
     };
   }, []);
-  
+
   return (
     <div ref={ref} style={{ display: "contents" }}>
       <PlasmicTextField {...props} />

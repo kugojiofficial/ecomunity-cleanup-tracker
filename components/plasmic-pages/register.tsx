@@ -34,7 +34,7 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  
+
   const [flagged, setFlagged] = useState<Flags>(NO_FLAGS);
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [generalError, setGeneralError] = useState<string | null>(null);
@@ -89,7 +89,6 @@ function SignUp() {
     const { data, error } = await signUp({ email, password, firstName, lastName });
     setBusy(false);
     if (error) {
-      // Duplicate when "Confirm email" is off (Supabase returns an error)
       setGeneralError(
         /already registered|already exists|already been registered/i.test(error.message)
           ? "An account with this email already exists."
@@ -98,7 +97,6 @@ function SignUp() {
       return;
     }
 
-    // Duplicate when "Confirm email" is on (Supabase hides it)
     if (data.user && data.user.identities && data.user.identities.length === 0) {
       setGeneralError("An account with this email already exists.");
       return;

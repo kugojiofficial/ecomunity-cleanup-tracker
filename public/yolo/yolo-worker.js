@@ -1,14 +1,3 @@
-/* eslint-disable */
-// YOLO inference worker. Loads onnxruntime-web from the same-origin /ort copy and
-// runs a pluggable ONNX model on frames from the main thread. Returns boxes
-// normalized (0..1) to the original frame.
-//
-// Supports two output formats, auto-detected in postprocess():
-//   1. Raw grid  [1, 4+nc, A] / [1, A, 4+nc]  (YOLOv8, and YOLO26 exported without
-//      nms) — needs sigmoid-free class decode + our own NMS.
-//   2. End-to-end [1, N, 6] = [x1,y1,x2,y2,score,class]  (YOLO26 / any nms=True
-//      export) — already filtered and NMS-free; we just un-letterbox it.
-
 importScripts("/ort/ort.wasm.min.js");
 
 ort.env.wasm.wasmPaths = "/ort/";
@@ -57,10 +46,6 @@ function toTensorData(rgba, size) {
   return out;
 }
 
-// Above this many detections a "6" dimension is treated as raw class channels
-// (4 box + 2 classes), not the end-to-end [N,6] layout. Raw anchor counts are
-// always far larger (>=2100 at 320px, 8400 at 640px), so this cleanly separates
-// the two formats for any realistic model.
 const MAX_E2E_DETECTIONS = 1024;
 
 function postprocess(tensor, cfg, meta) {
@@ -69,19 +54,15 @@ function postprocess(tensor, cfg, meta) {
   const d1 = dims[1];
   const d2 = dims[2];
 
-  // End-to-end / NMS-free: one axis is exactly 6 and the other is a small,
-  // fixed detection count. (Raw grids never have a small anchor axis.)
   if (d2 === 6 && d1 <= MAX_E2E_DETECTIONS) {
-    return decodeEndToEnd(tensor, cfg, meta, d1, /* rowMajor */ true);
+    return decodeEndToEnd(tensor, cfg, meta, d1, true);
   }
   if (d1 === 6 && d2 <= MAX_E2E_DETECTIONS) {
-    return decodeEndToEnd(tensor, cfg, meta, d2, /* rowMajor */ false);
+    return decodeEndToEnd(tensor, cfg, meta, d2, false);
   }
   return decodeRaw(tensor, cfg, meta);
 }
 
-// [1, N, 6] (rowMajor) or [1, 6, N]: each detection is [x1,y1,x2,y2,score,class]
-// in letterboxed input pixels. Already NMS'd, so no suppression step.
 function decodeEndToEnd(tensor, cfg, meta, count, rowMajor) {
   const data = tensor.data;
   const val = rowMajor ? (i, k) => data[i * 6 + k] : (i, k) => data[k * count + i];
@@ -106,8 +87,6 @@ function decodeEndToEnd(tensor, cfg, meta, count, rowMajor) {
   return boxes;
 }
 
-// [1, C, A] (channels-first) or [1, A, C]; C = 4 + numClasses. Boxes are
-// [cx,cy,w,h] in letterboxed input pixels; we threshold, un-letterbox, then NMS.
 function decodeRaw(tensor, cfg, meta) {
   const dims = tensor.dims;
   const data = tensor.data;

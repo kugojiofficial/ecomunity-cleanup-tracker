@@ -354,7 +354,7 @@
     padding-bottom: 0px;
   }
 }
-.editNameButton {
+.editProfileButton {
   cursor: pointer;
   background: var(--token-ytzaa9i3sK9d);
   font-weight: 700;
@@ -380,7 +380,7 @@
   border: 3px solid var(--token-ytzaa9i3sK9d);
 }
 @media (max-width: 800px) {
-  .editNameButton {
+  .editProfileButton {
     animation: none;
     left: auto;
     top: auto;

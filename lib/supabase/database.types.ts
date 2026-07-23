@@ -86,7 +86,7 @@ export type Database = {
           created_at: string
           event_id: string
           id: string
-          image_url: string | null
+          image_uri: string | null
           latitude: number
           longitude: number
           points: number
@@ -98,7 +98,7 @@ export type Database = {
           created_at?: string
           event_id: string
           id?: string
-          image_url?: string | null
+          image_uri?: string | null
           latitude: number
           longitude: number
           points?: number
@@ -110,7 +110,7 @@ export type Database = {
           created_at?: string
           event_id?: string
           id?: string
-          image_url?: string | null
+          image_uri?: string | null
           latitude?: number
           longitude?: number
           points?: number

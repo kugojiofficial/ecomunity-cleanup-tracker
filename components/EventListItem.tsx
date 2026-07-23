@@ -8,13 +8,9 @@ import sty from "./plasmic/eco_munity_cleanup_tracker/PlasmicEventListItem.modul
 import { getEventWasteLogs, type WasteLog } from "../lib/api";
 
 export interface EventListItemProps extends DefaultEventListItemProps {
-  /** Scopes the embedded map to this event's waste logs (per-event heatmap). */
   eventId?: string;
 }
 
-// Plasmic's numeric text binding renders a bare 0 as nothing, so stat values of
-// 0 vanish. Emit the value as text inside the node's own __wab_text wrapper,
-// which keeps the design's font size.
 function statValue(value: number | undefined, textClass: string) {
   return (
     <div className={classNames("all", "__wab_text", textClass)}>
@@ -85,10 +81,6 @@ function EventListItem_(
     }
   }
 
-  // `showingDetails` (the events page's mass expand/collapse signal) forwards
-  // through `props` to seed each row's native variant; the per-item details
-  // button toggles it after that. The events page re-keys rows on a mass toggle
-  // so every item re-seeds — a "unite all" that still allows individual toggles.
   return (
     <PlasmicEventListItem
       eventListItem={{ ref }}

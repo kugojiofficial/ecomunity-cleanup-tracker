@@ -1,30 +1,3 @@
-// Export logged waste photos + their labels into a training-ready dataset.
-//
-// Every /log-waste submission stores the camera frame in the private
-// `waste_log_images` bucket and the volunteer's chosen waste_type on the row.
-// That pairing (image -> material label) IS a labeled dataset drawn from your
-// exact deployment domain. This script downloads it into a classification layout
-// that Ultralytics/YOLO/PyTorch can read directly, plus a manifest carrying full
-// provenance (id, event, user, GPS, time, points) so you can later convert it to
-// a detection dataset by drawing boxes.
-//
-//   Output layout (default):
-//     training-data/
-//       plastic/<logId>.jpg
-//       glass/<logId>.jpg
-//       ...
-//       manifest.csv
-//       manifest.jsonl
-//
-// Usage:
-//   node scripts/export-training-data.mjs                 # export everything
-//   node scripts/export-training-data.mjs --dry-run       # report, download nothing
-//   node scripts/export-training-data.mjs --out ./ds      # custom output dir
-//   node scripts/export-training-data.mjs --limit 500     # cap number of images
-//   node scripts/export-training-data.mjs --since 2026-07-01   # only logs on/after this date
-//
-// Requires NEXT_PUBLIC_SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY in .env.local.
-
 import { mkdir, writeFile } from "node:fs/promises";
 import { Buffer } from "node:buffer";
 import path from "node:path";
@@ -59,8 +32,8 @@ function csvCell(value) {
 async function fetchRows() {
   let query = supabase
     .from("waste_logs")
-    .select("id, waste_type, event_id, user_id, latitude, longitude, points, created_at, image_url")
-    .not("image_url", "is", null)
+    .select("id, waste_type, event_id, user_id, latitude, longitude, points, created_at, image_uri")
+    .not("image_uri", "is", null)
     .order("created_at", { ascending: true });
 
   if (SINCE) query = query.gte("created_at", SINCE);
@@ -101,12 +74,12 @@ async function main() {
 
     if (!DRY_RUN) {
       try {
-        const bytes = await downloadImage(row.image_url);
+        const bytes = await downloadImage(row.image_uri);
         await mkdir(path.dirname(localAbs), { recursive: true });
         await writeFile(localAbs, bytes);
         ok++;
       } catch (err) {
-        console.warn(`  failed ${row.id} (${row.image_url}): ${err.message}`);
+        console.warn(`  failed ${row.id} (${row.image_uri}): ${err.message}`);
         failed++;
         continue;
       }
@@ -121,7 +94,7 @@ async function main() {
       longitude: row.longitude,
       points: row.points,
       created_at: row.created_at,
-      source_path: row.image_url,
+      source_path: row.image_uri,
       local_path: localRel.split(path.sep).join("/"),
     });
   }

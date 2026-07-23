@@ -1,8 +1,3 @@
-// Shared helpers for the local data scripts (export, storage migration).
-// Loads .env.local (Next.js does this for the app, but standalone node scripts
-// don't) and builds a service-role Supabase client that can read the private
-// bucket and every row. Never ship this in the app bundle — scripts only.
-
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -11,8 +6,6 @@ import { createClient } from "@supabase/supabase-js";
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(HERE, "..", "..");
 
-// Minimal .env parser: `KEY=value`, ignores blanks/comments, strips quotes,
-// and never overrides a variable already present in the real environment.
 function loadEnvFile(file) {
   let raw;
   try {
@@ -55,7 +48,6 @@ export function getAdminClient() {
   return createClient(url, serviceKey, { auth: { persistSession: false } });
 }
 
-// Tiny flag parser: `--out dir`, `--limit 50`, `--dry-run`. Returns { _: [...positional], flag: value|true }.
 export function parseArgs(argv) {
   const out = { _: [] };
   for (let i = 0; i < argv.length; i++) {

@@ -3,31 +3,47 @@ import "../components/plasmic/eco_munity_cleanup_tracker/plasmic.css";
 
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 
-// Match the html/body background (what shows during mobile overscroll) to the
-// current page's actual background, by walking down from the app root to the
-// first element with a solid background. Runs on every route change.
-function syncPageBackground() {
+function detectPageBackground(): string | null {
   let el: Element | null = document.getElementById("__next")?.firstElementChild ?? null;
   while (el) {
     const bg = getComputedStyle(el).backgroundColor;
-    if (bg && bg !== "transparent" && bg !== "rgba(0, 0, 0, 0)") {
-      document.documentElement.style.backgroundColor = bg;
-      document.body.style.backgroundColor = bg;
-      return;
-    }
+    if (bg && bg !== "transparent" && bg !== "rgba(0, 0, 0, 0)") return bg;
     el = el.firstElementChild;
   }
+  return null;
 }
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const lastBg = useRef<string | null>(null);
 
   useEffect(() => {
-    const id = requestAnimationFrame(syncPageBackground);
-    return () => cancelAnimationFrame(id);
+    const root = document.getElementById("__next");
+    if (!root) return;
+
+    let raf = 0;
+    const sync = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const bg = detectPageBackground();
+        if (!bg || bg === lastBg.current) return;
+        lastBg.current = bg;
+        document.documentElement.style.backgroundColor = bg;
+        document.body.style.backgroundColor = bg;
+      });
+    };
+
+    sync();
+    const observer = new MutationObserver(sync);
+    observer.observe(root, { childList: true, subtree: true });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      observer.disconnect();
+    };
   }, [router.asPath]);
 
   return <Component {...pageProps} />;

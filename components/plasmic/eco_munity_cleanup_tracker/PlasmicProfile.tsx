@@ -69,7 +69,7 @@ import UserCircleIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__UserC
 import StarFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__StarFilled"; // plasmic-import: hkZTt7XysTNC/icon
 import MovingTrashIcon from "./icons/PlasmicIcon__MovingTrash"; // plasmic-import: VWc3kj67KFnJ/icon
 import ClockIcon from "./icons/PlasmicIcon__Clock"; // plasmic-import: dqr28RDSI9p9/icon
-import EditIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Edit"; // plasmic-import: Q3Mz32feM0mm/icon
+import UserEditIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__UserEdit"; // plasmic-import: ml0No70rMVNC/icon
 import MailCogIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__MailCog"; // plasmic-import: j1LZIxt18t6C/icon
 import LockCogIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__LockCog"; // plasmic-import: Klyjx6vK9E97/icon
 import LogoutIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Logout"; // plasmic-import: UOnydwul0hWX/icon
@@ -152,7 +152,7 @@ export type PlasmicProfile__OverridesType = {
   totalHoursStatContainer?: Flex__<"div">;
   totalHoursStatValueLabel?: Flex__<"h1">;
   totalHoursStatLabel?: Flex__<"h1">;
-  editNameButton?: Flex__<"button">;
+  editProfileButton?: Flex__<"button">;
   changeEmailButton?: Flex__<"button">;
   changePasswordButton?: Flex__<"button">;
   logOutButton?: Flex__<"button">;
@@ -434,25 +434,53 @@ function PlasmicProfile__RenderFunc(props: {
             </div>
           </div>
           <button
-            data-plasmic-name={"editNameButton"}
-            data-plasmic-override={overrides.editNameButton}
+            data-plasmic-name={"editProfileButton"}
+            data-plasmic-override={overrides.editProfileButton}
             className={classNames(
               "all",
               "button",
               "button__6FNNC",
-              sty.editNameButton
+              sty.editProfileButton
             )}
+            onClick={async event => {
+              const $steps = {};
+
+              $steps["goToEditProfile"] = true
+                ? (() => {
+                    const actionArgs = { destination: `/edit-profile` };
+                    return (({ destination }) => {
+                      if (
+                        typeof destination === "string" &&
+                        destination.startsWith("#")
+                      ) {
+                        document
+                          .getElementById(destination.substr(1))
+                          .scrollIntoView({ behavior: "smooth" });
+                      } else {
+                        __nextRouter?.push(destination);
+                      }
+                    })?.apply(null, [actionArgs]);
+                  })()
+                : undefined;
+              if (
+                $steps["goToEditProfile"] != null &&
+                typeof $steps["goToEditProfile"] === "object" &&
+                typeof $steps["goToEditProfile"].then === "function"
+              ) {
+                $steps["goToEditProfile"] = await $steps["goToEditProfile"];
+              }
+            }}
             ref={ref => {
-              $refs["editNameButton"] = ref;
+              $refs["editProfileButton"] = ref;
             }}
           >
-            <EditIcon
+            <UserEditIcon
               className={classNames("all", sty.svg__yqfp8)}
               role={"img"}
             />
 
             <div className={classNames("all", "__wab_text", sty.text___7JQbS)}>
-              {"Edit Name"}
+              {"Edit Profile"}
             </div>
           </button>
           <button
@@ -464,6 +492,34 @@ function PlasmicProfile__RenderFunc(props: {
               "button__6FNNC",
               sty.changeEmailButton
             )}
+            onClick={async event => {
+              const $steps = {};
+
+              $steps["goToChangeEmail"] = true
+                ? (() => {
+                    const actionArgs = { destination: `/change-email` };
+                    return (({ destination }) => {
+                      if (
+                        typeof destination === "string" &&
+                        destination.startsWith("#")
+                      ) {
+                        document
+                          .getElementById(destination.substr(1))
+                          .scrollIntoView({ behavior: "smooth" });
+                      } else {
+                        __nextRouter?.push(destination);
+                      }
+                    })?.apply(null, [actionArgs]);
+                  })()
+                : undefined;
+              if (
+                $steps["goToChangeEmail"] != null &&
+                typeof $steps["goToChangeEmail"] === "object" &&
+                typeof $steps["goToChangeEmail"].then === "function"
+              ) {
+                $steps["goToChangeEmail"] = await $steps["goToChangeEmail"];
+              }
+            }}
             ref={ref => {
               $refs["changeEmailButton"] = ref;
             }}
@@ -486,6 +542,35 @@ function PlasmicProfile__RenderFunc(props: {
               "button__6FNNC",
               sty.changePasswordButton
             )}
+            onClick={async event => {
+              const $steps = {};
+
+              $steps["goToChangePassword"] = true
+                ? (() => {
+                    const actionArgs = { destination: `/change-password` };
+                    return (({ destination }) => {
+                      if (
+                        typeof destination === "string" &&
+                        destination.startsWith("#")
+                      ) {
+                        document
+                          .getElementById(destination.substr(1))
+                          .scrollIntoView({ behavior: "smooth" });
+                      } else {
+                        __nextRouter?.push(destination);
+                      }
+                    })?.apply(null, [actionArgs]);
+                  })()
+                : undefined;
+              if (
+                $steps["goToChangePassword"] != null &&
+                typeof $steps["goToChangePassword"] === "object" &&
+                typeof $steps["goToChangePassword"].then === "function"
+              ) {
+                $steps["goToChangePassword"] =
+                  await $steps["goToChangePassword"];
+              }
+            }}
             ref={ref => {
               $refs["changePasswordButton"] = ref;
             }}
@@ -508,6 +593,34 @@ function PlasmicProfile__RenderFunc(props: {
               "button__6FNNC",
               sty.logOutButton
             )}
+            onClick={async event => {
+              const $steps = {};
+
+              $steps["goToLogOut"] = true
+                ? (() => {
+                    const actionArgs = { destination: `/log-out` };
+                    return (({ destination }) => {
+                      if (
+                        typeof destination === "string" &&
+                        destination.startsWith("#")
+                      ) {
+                        document
+                          .getElementById(destination.substr(1))
+                          .scrollIntoView({ behavior: "smooth" });
+                      } else {
+                        __nextRouter?.push(destination);
+                      }
+                    })?.apply(null, [actionArgs]);
+                  })()
+                : undefined;
+              if (
+                $steps["goToLogOut"] != null &&
+                typeof $steps["goToLogOut"] === "object" &&
+                typeof $steps["goToLogOut"].then === "function"
+              ) {
+                $steps["goToLogOut"] = await $steps["goToLogOut"];
+              }
+            }}
             ref={ref => {
               $refs["logOutButton"] = ref;
             }}
@@ -660,7 +773,7 @@ const PlasmicDescendants = {
     "totalHoursStatContainer",
     "totalHoursStatValueLabel",
     "totalHoursStatLabel",
-    "editNameButton",
+    "editProfileButton",
     "changeEmailButton",
     "changePasswordButton",
     "logOutButton",
@@ -738,7 +851,7 @@ const PlasmicDescendants = {
   ],
   totalHoursStatValueLabel: ["totalHoursStatValueLabel"],
   totalHoursStatLabel: ["totalHoursStatLabel"],
-  editNameButton: ["editNameButton"],
+  editProfileButton: ["editProfileButton"],
   changeEmailButton: ["changeEmailButton"],
   changePasswordButton: ["changePasswordButton"],
   logOutButton: ["logOutButton"],
@@ -795,7 +908,7 @@ type NodeDefaultElementType = {
   totalHoursStatContainer: "div";
   totalHoursStatValueLabel: "h1";
   totalHoursStatLabel: "h1";
-  editNameButton: "button";
+  editProfileButton: "button";
   changeEmailButton: "button";
   changePasswordButton: "button";
   logOutButton: "button";
@@ -892,7 +1005,7 @@ export const PlasmicProfile = Object.assign(
     totalHoursStatContainer: makeNodeComponent("totalHoursStatContainer"),
     totalHoursStatValueLabel: makeNodeComponent("totalHoursStatValueLabel"),
     totalHoursStatLabel: makeNodeComponent("totalHoursStatLabel"),
-    editNameButton: makeNodeComponent("editNameButton"),
+    editProfileButton: makeNodeComponent("editProfileButton"),
     changeEmailButton: makeNodeComponent("changeEmailButton"),
     changePasswordButton: makeNodeComponent("changePasswordButton"),
     logOutButton: makeNodeComponent("logOutButton"),

@@ -6,7 +6,7 @@ export type LeaderboardEntry = {
   first_name: string | null;
   last_name: string | null;
   points: number | null;
-  created_at: string | null; // join date
+  created_at: string | null;
   rank: number | null;
 };
 

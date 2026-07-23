@@ -15,13 +15,11 @@ export type InteractiveMapProps = {
 const DEFAULT_CENTER: [number, number] = [40.7128, -74.006];
 const DEFAULT_ZOOM = 13;
 const MAX_ZOOM = 22;
-const NATIVE_MAX_ZOOM = 19; // OSM tiles stop here; Leaflet upscales beyond it.
+const NATIVE_MAX_ZOOM = 19;
 const SINGLE_POINT_ZOOM = 18;
 const POINT_HALF_SPAN = 0.005;
 const MARKER_RADIUS = 6;
 
-// Popup timestamp: show just the time for logs made today (local), but include
-// the full date once it's a later local calendar day than when it was logged.
 function formatLogTimestamp(createdAt: string): string {
   const logged = new Date(createdAt);
   return logged.toDateString() === new Date().toDateString()

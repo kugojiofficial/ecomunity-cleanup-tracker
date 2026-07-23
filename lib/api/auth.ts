@@ -13,8 +13,12 @@ export type SignUpInput = {
   lastName: string;
 };
 
-function siteOrigin(): string {
-  return typeof window !== "undefined" ? window.location.origin : "";
+const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://ecomunity-cleanup-tracker.vercel.app"
+).replace(/\/+$/, "");
+
+function siteUrl(): string {
+  return SITE_URL;
 }
 
 export async function signUp({ email, password, firstName, lastName }: SignUpInput) {
@@ -38,14 +42,12 @@ export async function signOut() {
   return getSupabaseBrowserClient().auth.signOut();
 }
 
-// Reset email → /change-password, where the recovery session fires PASSWORD_RECOVERY.
 export async function sendPasswordReset(email: string) {
   return getSupabaseBrowserClient().auth.resetPasswordForEmail(email.trim(), {
-    redirectTo: `${siteOrigin()}/change-password`,
+    redirectTo: `${siteUrl()}/change-password`,
   });
 }
 
-// Signed-in change: the server validates current_password (supabase-js >= 2.102).
 export async function changePassword(currentPassword: string, newPassword: string) {
   return getSupabaseBrowserClient().auth.updateUser({
     password: newPassword,
@@ -53,16 +55,14 @@ export async function changePassword(currentPassword: string, newPassword: strin
   });
 }
 
-// Recovery-session change (no current password needed).
 export async function completePasswordRecovery(newPassword: string) {
   return getSupabaseBrowserClient().auth.updateUser({ password: newPassword });
 }
 
-// Emails confirmation to both old and new address ("Secure email change").
 export async function changeEmail(email: string) {
   return getSupabaseBrowserClient().auth.updateUser(
     { email: email.trim() },
-    { emailRedirectTo: `${siteOrigin()}/profile` }
+    { emailRedirectTo: `${siteUrl()}/profile` }
   );
 }
 
@@ -81,8 +81,6 @@ export function validateEmail(email: string): string | null {
   return null;
 }
 
-// Mirrors the Supabase Auth dashboard policy (keep in sync). Allowed symbols are
-// Supabase's set; the leaked-password (HaveIBeenPwned) check is server-side only.
 const UNSUPPORTED_PASSWORD_CHAR = /[^A-Za-z0-9!@#$%^&*()_+\-=\[\]{};'\\:"|<>?,.\/`~]/;
 
 export function validatePassword(password: string): string | null {
@@ -134,7 +132,6 @@ export function useRequireAuth(): { user: User | null; loading: boolean } {
   return { user, loading };
 }
 
-// Reads the server-controlled role (never JWT metadata). Null if signed out.
 export async function getMyRole(): Promise<AppRole | null> {
   const supabase = getSupabaseBrowserClient();
   const {
@@ -152,7 +149,6 @@ export async function getMyRole(): Promise<AppRole | null> {
   return data.role;
 }
 
-// UX gate to Developers (real control is server-side requireDeveloper).
 export function useRequireDeveloper(): {
   user: User | null;
   role: AppRole | null;

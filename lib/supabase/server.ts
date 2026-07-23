@@ -101,7 +101,6 @@ export async function requireAdmin(
     .eq("id", authed.userId)
     .single();
 
-  // Developer is a strict superset of admin.
   const role = profile?.role;
   if (error || (role !== "admin" && role !== "developer")) {
     sendError(res, "Admin privileges required.", 403);

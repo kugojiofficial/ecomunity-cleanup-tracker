@@ -13,7 +13,7 @@ export default withSupabaseApi(async ({ req, res, supabaseAnon }) => {
 
   const { data, error } = await supabaseAnon
     .from("waste_logs")
-    .select("id, event_id, waste_type, image_url, user_id, latitude, longitude, accuracy_meters, created_at")
+    .select("id, event_id, waste_type, image_uri, user_id, latitude, longitude, accuracy_meters, created_at")
     .order(order, { ascending })
     .limit(limit);
 

@@ -19,14 +19,6 @@ registerComponent(InteractiveMap, {
   },
 });
 
-// Developers only. Admins and regular users are redirected. This is a UX gate,
-// not a security boundary (the host bundle is public) — the authoritative check
-// is server-side `requireDeveloper` in lib/supabase/server.ts.
-//
-// Plasmic Studio renders this page inside its canvas iframe to draw code
-// components; gating that would break the editor. So when we're inside an
-// iframe (the Studio canvas) we render the host unconditionally and skip the
-// gate — a plain admin browsing to /plasmic-host does so top-level and is caught.
 export default function PlasmicHost() {
   const router = useRouter();
   const [status, setStatus] = useState<"checking" | "allow">("checking");
@@ -41,7 +33,7 @@ export default function PlasmicHost() {
       try {
         inIframe = window.self !== window.top;
       } catch {
-        inIframe = true; // cross-origin access throws → we're framed (Studio)
+        inIframe = true;
       }
       if (inIframe) {
         setStatus("allow");

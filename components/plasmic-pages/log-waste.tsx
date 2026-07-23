@@ -46,7 +46,6 @@ function LogWaste() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  // Live rear camera; muted + playsInline for the iOS WebView.
   useEffect(() => {
     if (!user) return;
     let active = true;
@@ -82,7 +81,6 @@ function LogWaste() {
     };
   }, [user]);
 
-  // Active event to log to (the server rejects logs to a non-running event).
   useEffect(() => {
     if (!user) return;
     let active = true;
@@ -98,7 +96,7 @@ function LogWaste() {
       active = false;
     };
   }, [user]);
-  
+
   const { status: yoloStatus } = useYoloDetector({
     videoRef,
     overlayRef,
@@ -108,7 +106,6 @@ function LogWaste() {
     },
   });
 
-  // Detection is an optional assist; surface failures without blocking the feed.
   const yoloUnavailable = !cameraError && (yoloStatus === "error" || yoloStatus === "unsupported");
 
   function captureFrameBlob(): Promise<Blob | null> {
@@ -147,11 +144,8 @@ function LogWaste() {
       return;
     }
 
-    // Generate the log id up front so the photo can be named after it
-    // (<eventId>/<userId>/<logId>.jpg) and inserted under the same id.
     const logId = crypto.randomUUID();
 
-    // Best-effort photo: no camera → log without one; upload failure blocks the log.
     let imagePath: string | null = null;
     const blob = await captureFrameBlob();
     if (blob) {
@@ -171,7 +165,7 @@ function LogWaste() {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
       accuracy_meters: position.coords.accuracy ?? null,
-      image_url: imagePath,
+      image_uri: imagePath,
     });
     setBusy(false);
 

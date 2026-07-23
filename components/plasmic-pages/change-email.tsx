@@ -10,6 +10,16 @@ import { changeEmail, validateEmail, useRequireAuth } from "../../lib/api";
 const HIDDEN = { display: "none" } as const;
 const SHOWN = { display: "flex" } as const;
 
+function friendlyEmailError(message: string): string {
+  if (/already (been )?registered|already in use|already exists/i.test(message)) {
+    return "That email is already in use by another account.";
+  }
+  if (/rate limit|too many|for security purposes/i.test(message)) {
+    return "Too many attempts. Please wait a minute and try again.";
+  }
+  return message;
+}
+
 function ChangeEmail() {
   const router = useRouter();
   const { user } = useRequireAuth();
@@ -25,12 +35,16 @@ function ChangeEmail() {
       setError(v);
       return;
     }
+    if (newEmail.trim().toLowerCase() === (user?.email ?? "").toLowerCase()) {
+      setError("That's already your email address.");
+      return;
+    }
     setError(null);
     setBusy(true);
     const { error } = await changeEmail(newEmail);
     setBusy(false);
     if (error) {
-      setError(error.message);
+      setError(friendlyEmailError(error.message));
       return;
     }
     setDone(true);

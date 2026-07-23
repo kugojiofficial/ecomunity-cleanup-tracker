@@ -33,9 +33,7 @@ function Events() {
   const [refreshTick, setRefreshTick] = useState(0);
   const [events, setEvents] = useState<EventListEntry[]>([]);
   const [total, setTotal] = useState(0);
-  // Collapse-all: each click re-keys every row so it re-seeds to collapsed —
-  // even rows a user expanded individually. The per-item details buttons still
-  // control each row in between.
+
   const [collapseNonce, setCollapseNonce] = useState(0);
 
   useEffect(() => {

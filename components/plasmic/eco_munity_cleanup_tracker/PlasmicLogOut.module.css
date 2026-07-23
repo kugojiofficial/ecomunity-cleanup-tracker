@@ -1,0 +1,202 @@
+.logOutPage {
+  display: grid;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  align-content: flex-start;
+  justify-items: center;
+  background: #001606;
+  min-width: 0;
+  min-height: 0;
+  grid-template-columns:
+    var(--plsmc-viewport-gap) 1fr minmax(0, var(--plsmc-wide-chunk))
+    min(
+      var(--plsmc-standard-width),
+      calc(100% - var(--plsmc-viewport-gap) - var(--plsmc-viewport-gap))
+    )
+    minmax(0, var(--plsmc-wide-chunk)) 1fr var(--plsmc-viewport-gap);
+  padding: 0px;
+}
+.logOutPage > * {
+  grid-column: 4;
+}
+@media (max-width: 800px) {
+  .logOutPage > * {
+    grid-column: 4;
+  }
+}
+.flex {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  max-width: 100%;
+  justify-self: center;
+  left: auto;
+  top: auto;
+  z-index: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  grid-column-start: 1 !important;
+  grid-column-end: -1 !important;
+  padding: 50px 0px;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 45%;
+  height: auto;
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  background: var(--token-QvKZNdbDFRb8);
+  box-shadow: none;
+  row-gap: 30px;
+  border-radius: 16px;
+  padding: 32px 50px;
+  border: 3px solid var(--token-_ghsv35bfxZ2);
+}
+@media (max-width: 800px) {
+  .container {
+    width: 80%;
+    padding: 24px 20px;
+  }
+}
+.notice {
+  animation: none;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  font-size: 24px;
+  color: #ffffffd9;
+  font-style: normal;
+  font-weight: 500;
+  margin-bottom: 0px;
+  text-align: center;
+  padding-bottom: 0px;
+  min-width: 0;
+}
+@media (max-width: 800px) {
+  .notice {
+    animation: none;
+  }
+}
+.continueButton {
+  cursor: pointer;
+  background: var(--token-gTmQ4pFxL2-w);
+  font-weight: 700;
+  color: #ffffff;
+  animation: none;
+  transform: translate3d(0px, 0px, 0px);
+  z-index: 1;
+  left: auto;
+  top: auto;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  height: auto;
+  width: 100%;
+  margin-top: 0px;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+  border-radius: 10px;
+  padding: 10px 24px;
+  border: 3px solid var(--token-gTmQ4pFxL2-w);
+}
+@media (max-width: 800px) {
+  .continueButton {
+    animation: none;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+  }
+}
+.text__uKdid {
+  animation: none;
+  font-family: "Inter", sans-serif;
+  font-size: 24px;
+  text-align: left;
+  font-style: normal;
+  text-transform: capitalize;
+  line-height: 1;
+  letter-spacing: normal;
+  white-space: pre;
+  user-select: none;
+  text-decoration-line: none;
+  align-self: center;
+  font-weight: 600;
+  padding-top: 3px;
+  padding-bottom: 0px;
+}
+@media (max-width: 800px) {
+  .text__uKdid {
+    animation: none;
+    text-align: center;
+  }
+}
+.backButton {
+  cursor: pointer;
+  background: var(--token-_ghsv35bfxZ2);
+  font-weight: 700;
+  color: #ffffff;
+  animation: none;
+  transform: translate3d(0px, 0px, 0px);
+  z-index: 1;
+  left: auto;
+  top: auto;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  height: auto;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+  border-radius: 10px;
+  padding: 10px 24px;
+  margin: -20px 0px 0px;
+  border: 3px solid var(--token-ytzaa9i3sK9d);
+}
+@media (max-width: 800px) {
+  .backButton {
+    animation: none;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+  }
+}
+.text__dqETg {
+  animation: none;
+  font-family: "Inter", sans-serif;
+  font-size: 24px;
+  text-align: left;
+  font-style: normal;
+  text-transform: capitalize;
+  line-height: 1;
+  letter-spacing: normal;
+  white-space: pre;
+  user-select: none;
+  text-decoration-line: none;
+  align-self: center;
+  font-weight: 600;
+  padding-bottom: 0px;
+  padding-top: 3px;
+}
+@media (max-width: 800px) {
+  .text__dqETg {
+    animation: none;
+    text-align: center;
+  }
+}

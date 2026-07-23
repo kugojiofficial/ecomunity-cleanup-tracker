@@ -8,13 +8,11 @@ type InsertWasteLogBody = {
   latitude: number;
   longitude: number;
   accuracy_meters?: number | null;
-  image_url?: string | null;
+  image_uri?: string | null;
 };
 
 const WASTE_TYPES: readonly string[] = Constants.public.Enums.waste_type;
 
-// The client generates the row id up front so the uploaded image can be named
-// after it (<eventId>/<userId>/<logId>.jpg); a colliding/garbage id just errors.
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export default withSupabaseApi(async (ctx) => {
@@ -38,7 +36,7 @@ export default withSupabaseApi(async (ctx) => {
     latitude,
     longitude,
     accuracy_meters = null,
-    image_url = null,
+    image_uri = null,
   } = req.body as InsertWasteLogBody;
 
   if (id !== undefined && (typeof id !== "string" || !UUID_RE.test(id))) {
@@ -69,8 +67,8 @@ export default withSupabaseApi(async (ctx) => {
     return sendError(res, "Longitude is out of range.", 400);
   }
 
-  if (image_url !== null && typeof image_url !== "string") {
-    return sendError(res, "image_url must be a string when provided.", 400);
+  if (image_uri !== null && typeof image_uri !== "string") {
+    return sendError(res, "image_uri must be a string when provided.", 400);
   }
 
   const { data: event, error: eventError } = await supabaseAdmin
@@ -100,7 +98,7 @@ export default withSupabaseApi(async (ctx) => {
       latitude,
       longitude,
       accuracy_meters,
-      image_url,
+      image_uri,
       user_id: authed.userId,
     })
     .select()
@@ -108,7 +106,7 @@ export default withSupabaseApi(async (ctx) => {
 
   if (error) {
     console.error("Supabase insert error:", error);
-    // 23505 = unique_violation: the client-supplied id already exists.
+
     if (error.code === "23505") {
       return sendError(res, "A log with this id already exists.", 409);
     }

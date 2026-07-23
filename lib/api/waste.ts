@@ -2,7 +2,7 @@ export type WasteLog = {
   id: string;
   event_id: string;
   waste_type: string;
-  image_url: string | null;
+  image_uri: string | null;
   user_id: string | null;
   latitude: number;
   longitude: number;
@@ -18,7 +18,7 @@ export type InsertWasteLogInput = {
   latitude: number;
   longitude: number;
   accuracy_meters?: number | null;
-  image_url?: string | null;
+  image_uri?: string | null;
 };
 
 export type UpdateWasteLogInput = Partial<{
@@ -27,7 +27,7 @@ export type UpdateWasteLogInput = Partial<{
   latitude: number;
   longitude: number;
   accuracy_meters: number | null;
-  image_url: string | null;
+  image_uri: string | null;
   user_id: string | null;
 }>;
 
@@ -36,11 +36,6 @@ import { getSupabaseBrowserClient } from "../supabase/browser";
 
 const WASTE_IMAGES_BUCKET = "waste_log_images";
 
-// Uploads to <eventId>/<userId>/<logId>.jpg and returns the object path to store
-// in waste_logs.image_url. The path groups images by cleanup event then volunteer,
-// and the filename is the waste-log id so every image traces to exactly one row
-// (its label, GPS, time) for model training. Owner-scoped RLS keys off the userId
-// segment, so a user can only ever write their own images.
 export async function uploadWasteImage(
   eventId: string,
   userId: string,
@@ -56,7 +51,6 @@ export async function uploadWasteImage(
   return { success: true, data: path };
 }
 
-// Signed URL for a stored image path (the bucket is private).
 export async function getWasteImageUrl(path: string, expiresInSeconds = 3600): Promise<ApiResponse<string>> {
   const { data, error } = await getSupabaseBrowserClient()
     .storage.from(WASTE_IMAGES_BUCKET)
@@ -70,7 +64,7 @@ export async function getWasteLogs(limit = 100, ascending = false): Promise<ApiR
   const { data, error } = await getSupabaseBrowserClient()
     .from("waste_logs")
     .select(
-      "id, event_id, waste_type, image_url, user_id, latitude, longitude, accuracy_meters, points, created_at"
+      "id, event_id, waste_type, image_uri, user_id, latitude, longitude, accuracy_meters, points, created_at"
     )
     .order("created_at", { ascending })
     .limit(limit);
@@ -83,7 +77,7 @@ export async function getEventWasteLogs(eventId: string, limit = 2000): Promise<
   const { data, error } = await getSupabaseBrowserClient()
     .from("waste_logs")
     .select(
-      "id, event_id, waste_type, image_url, user_id, latitude, longitude, accuracy_meters, points, created_at"
+      "id, event_id, waste_type, image_uri, user_id, latitude, longitude, accuracy_meters, points, created_at"
     )
     .eq("event_id", eventId)
     .order("created_at", { ascending: false })

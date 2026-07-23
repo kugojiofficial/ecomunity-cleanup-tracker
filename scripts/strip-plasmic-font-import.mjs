@@ -1,6 +1,3 @@
-// Strips the Google Fonts `@import` from generated Plasmic CSS after each sync;
-// Turbopack rejects it once files are inlined, so the fonts load via a <link> in
-// pages/_document.tsx instead.
 import { readFileSync, writeFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 

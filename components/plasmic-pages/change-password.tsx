@@ -22,9 +22,6 @@ function ChangePassword() {
   const router = useRouter();
   const { user, loading } = useAuthUser();
 
-  // Recovery mode = the user arrived via a password-reset email. The browser
-  // client auto-exchanges the recovery code (detectSessionInUrl) and fires a
-  // PASSWORD_RECOVERY event; a URL check covers the very first paint.
   const [recovery, setRecovery] = useState(false);
   const [recoveryChecked, setRecoveryChecked] = useState(false);
 
@@ -61,8 +58,6 @@ function ChangePassword() {
     };
   }, []);
 
-  // Only a normal (non-recovery) visit requires an existing session. In recovery
-  // mode the session is being established from the link, so don't redirect.
   useEffect(() => {
     if (!recoveryChecked || loading) return;
     if (!recovery && !user) router.replace("/log-in");
@@ -137,7 +132,7 @@ function ChangePassword() {
         query={router?.query}
       >
         <PlasmicChangePassword
-          // ---- Regular change container ----
+
           changePasswordContainer={{ style: showRegularForm ? SHOWN : HIDDEN }}
           currentPasswordContainer={{
             value: currentPassword,
@@ -168,7 +163,7 @@ function ChangePassword() {
               void handleRegularChange();
             },
           }}
-          // ---- Account-recovery container (no current password) ----
+
           resetPasswordContainer={{ style: showRecoveryForm ? SHOWN : HIDDEN }}
           resetNewPasswordContainer={{
             value: newPassword,
@@ -192,7 +187,7 @@ function ChangePassword() {
               void handleRecoveryChange();
             },
           }}
-          // ---- Success states ----
+
           successContainer={{ style: showRegularSuccess ? SHOWN : HIDDEN }}
           toDashboardButton={{ onClick: () => router.push("/dashboard") }}
           resetSuccessContainer={{ style: showRecoverySuccess ? SHOWN : HIDDEN }}

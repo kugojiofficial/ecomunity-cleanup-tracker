@@ -10,7 +10,6 @@ import {
   getMyProfile,
   getLeaderboardPage,
   useRequireAuth,
-  signOut,
   type UserProfile,
   type LeaderboardEntry,
 } from "../../lib/api";
@@ -24,11 +23,11 @@ const DISABLED: React.CSSProperties = { opacity: 0.4, pointerEvents: "none" };
 function positionColorFor(rank: number): string {
   switch (rank) {
     case 1:
-      return "#FFD700"; // gold
+      return "#FFD700";
     case 2:
-      return "#C0C0C0"; // silver
+      return "#C0C0C0";
     case 3:
-      return "#CD7F32"; // bronze
+      return "#CD7F32";
     default:
       return "#FFFFFF";
   }
@@ -83,8 +82,6 @@ function Profile() {
     };
   }, [lbPage, refreshTick]);
 
-  // Almost-live refresh: any change to a user row (points/totals) refetches the
-  // profile + leaderboard. Debounced so a burst of updates triggers one reload.
   useEffect(() => {
     const supabase = getSupabaseBrowserClient();
     let timer: ReturnType<typeof setTimeout> | undefined;
@@ -105,11 +102,6 @@ function Profile() {
     };
   }, []);
 
-  async function handleLogOut() {
-    await signOut();
-    router.replace("/log-in");
-  }
-
   const totalPages = Math.max(1, Math.ceil(lbTotal / PAGE_SIZE));
   const hasPrev = lbPage > 0;
   const hasNext = lbPage < totalPages - 1;
@@ -124,14 +116,7 @@ function Profile() {
         query={router?.query}
       >
         <PlasmicProfile
-          logOutButton={{
-            onClick: (e: React.MouseEvent) => {
-              e.preventDefault();
-              void handleLogOut();
-            },
-          }}
-          changePasswordButton={{ onClick: () => router.push("/change-password") }}
-          changeEmailButton={{ onClick: () => router.push("/change-email") }}
+
           profileUserNameLabel={{ children: fullName(profile?.first_name, profile?.last_name) }}
           profileJoinDateLabel={{ children: formatJoinDate(profile?.created_at) }}
           pointsStatValueLabel={{ children: formatWithCommas(profile?.points ?? 0) }}

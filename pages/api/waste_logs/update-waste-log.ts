@@ -7,7 +7,7 @@ const ALLOWED_FIELDS = [
   "latitude",
   "longitude",
   "accuracy_meters",
-  "image_url",
+  "image_uri",
   "user_id",
 ] as const;
 
@@ -19,7 +19,7 @@ type UpdateWasteLogBody = {
   latitude?: number;
   longitude?: number;
   accuracy_meters?: number | null;
-  image_url?: string | null;
+  image_uri?: string | null;
   user_id?: string | null;
 };
 
@@ -57,8 +57,8 @@ export default withSupabaseApi(async (ctx) => {
     return sendError(res, `waste_type must be one of: ${WASTE_TYPES.join(", ")}.`, 400);
   }
 
-  if (body.image_url !== undefined && body.image_url !== null && typeof body.image_url !== "string") {
-    return sendError(res, "image_url must be a string when provided.", 400);
+  if (body.image_uri !== undefined && body.image_uri !== null && typeof body.image_uri !== "string") {
+    return sendError(res, "image_uri must be a string when provided.", 400);
   }
 
   if (body.user_id !== undefined && body.user_id !== null && typeof body.user_id !== "string") {
