@@ -99,7 +99,7 @@ function LogWaste() {
     };
   }, [user]);
   
-  useYoloDetector({
+  const { status: yoloStatus } = useYoloDetector({
     videoRef,
     overlayRef,
     enabled: !cameraError,
@@ -107,6 +107,9 @@ function LogWaste() {
       if (wt && !userPickedTypeRef.current) setWasteType(wt);
     },
   });
+
+  // Detection is an optional assist; surface failures without blocking the feed.
+  const yoloUnavailable = !cameraError && (yoloStatus === "error" || yoloStatus === "unsupported");
 
   function captureFrameBlob(): Promise<Blob | null> {
     const video = videoRef.current;
@@ -212,6 +215,23 @@ function LogWaste() {
                     pointerEvents: "none",
                   }}
                 />
+                {yoloUnavailable && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 8,
+                      left: 8,
+                      padding: "4px 8px",
+                      borderRadius: 6,
+                      fontSize: 12,
+                      color: "#fde68a",
+                      background: "rgba(0,0,0,0.55)",
+                      pointerEvents: "none",
+                    }}
+                  >
+                    Auto-detect unavailable
+                  </div>
+                )}
                 {cameraError && (
                   <div
                     style={{
