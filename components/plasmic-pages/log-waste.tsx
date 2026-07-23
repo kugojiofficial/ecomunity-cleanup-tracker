@@ -98,8 +98,7 @@ function LogWaste() {
       active = false;
     };
   }, [user]);
-
-  // Draws boxes + suggests a type (never submits); quiet if there's no model.
+  
   useYoloDetector({
     videoRef,
     overlayRef,
