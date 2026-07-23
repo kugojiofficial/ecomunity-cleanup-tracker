@@ -9,94 +9,52 @@ export const YOLO_CONFIG = {
   targetFps: 12, // inference cadence; drawing is every frame
 } as const;
 
-// Class names in the model's output order (index = class id). These are the 60
-// TACO (Trash Annotations in Context) categories, matching the class order in
-// jeremy-rico/litter-detection's TACO.yaml. Spelling/casing is intentionally
-// verbatim (incl. "Food Can", "Plastic glooves") because CLASS_TO_WASTE keys
-// must match these strings exactly. Replace this whole list if you swap models.
+// Class names in the model's output order (index = class id). These are the 80
+// COCO classes, matching the deployed yolo26n.onnx (stock Ultralytics YOLO26
+// nano). This is a stopgap COCO detector — it's robust and high-confidence, but
+// it detects common objects, not trash. Only the litter-relevant classes are
+// mapped in CLASS_TO_WASTE below; everything else (person, car, furniture…) is
+// detected by the model but dropped before drawing. Replace this whole list
+// when a proper trash-trained model lands.
 export const MODEL_LABELS: readonly string[] = [
-  "Aluminium foil", "Battery", "Aluminium blister pack", "Carded blister pack",
-  "Other plastic bottle", "Clear plastic bottle", "Glass bottle",
-  "Plastic bottle cap", "Metal bottle cap", "Broken glass", "Food Can",
-  "Aerosol", "Drink can", "Toilet tube", "Other carton", "Egg carton",
-  "Drink carton", "Corrugated carton", "Meal carton", "Pizza box", "Paper cup",
-  "Disposable plastic cup", "Foam cup", "Glass cup", "Other plastic cup",
-  "Food waste", "Glass jar", "Plastic lid", "Metal lid", "Other plastic",
-  "Magazine paper", "Tissues", "Wrapping paper", "Normal paper", "Paper bag",
-  "Plastified paper bag", "Plastic film", "Six pack rings", "Garbage bag",
-  "Other plastic wrapper", "Single-use carrier bag", "Polypropylene bag",
-  "Crisp packet", "Spread tub", "Tupperware", "Disposable food container",
-  "Foam food container", "Other plastic container", "Plastic glooves",
-  "Plastic utensils", "Pop tab", "Rope & strings", "Scrap metal", "Shoe",
-  "Squeezable tube", "Plastic straw", "Paper straw", "Styrofoam piece",
-  "Unlabeled litter", "Cigarette",
+  "person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck",
+  "boat", "traffic light", "fire hydrant", "stop sign", "parking meter", "bench",
+  "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra",
+  "giraffe", "backpack", "umbrella", "handbag", "tie", "suitcase", "frisbee",
+  "skis", "snowboard", "sports ball", "kite", "baseball bat", "baseball glove",
+  "skateboard", "surfboard", "tennis racket", "bottle", "wine glass", "cup",
+  "fork", "knife", "spoon", "bowl", "banana", "apple", "sandwich", "orange",
+  "broccoli", "carrot", "hot dog", "pizza", "donut", "cake", "chair", "couch",
+  "potted plant", "bed", "dining table", "toilet", "tv", "laptop", "mouse",
+  "remote", "keyboard", "cell phone", "microwave", "oven", "toaster", "sink",
+  "refrigerator", "book", "clock", "vase", "scissors", "teddy bear", "hair drier",
+  "toothbrush",
 ];
 
-// Class name → one of the 17 DB waste_type values (omit to ignore the class).
-// Mapping is by dominant material; genuinely composite items (blister packs,
-// plasticised paper) are "mixed". Foam/styrofoam is polystyrene → plastic. Edit
-// any line to taste — these are judgment calls, not ground truth.
+// Class name → one of the DB waste_type values. Only the COCO classes that are
+// plausibly litter are mapped; any class omitted here is dropped (never boxed),
+// which is how we hide people/cars/furniture. Mapping is by dominant material.
+// Edit to taste — to turn this into a "detect everything" demo, map more classes.
 export const CLASS_TO_WASTE: Readonly<Record<string, string>> = {
-  "Aluminium foil": "aluminum",
-  Battery: "batteries",
-  "Aluminium blister pack": "aluminum",
-  "Carded blister pack": "mixed",
-  "Other plastic bottle": "plastic",
-  "Clear plastic bottle": "plastic",
-  "Glass bottle": "glass",
-  "Plastic bottle cap": "plastic",
-  "Metal bottle cap": "metal",
-  "Broken glass": "glass",
-  "Food Can": "metal",
-  Aerosol: "metal",
-  "Drink can": "aluminum",
-  "Toilet tube": "cardboard",
-  "Other carton": "cardboard",
-  "Egg carton": "cardboard",
-  "Drink carton": "cardboard",
-  "Corrugated carton": "cardboard",
-  "Meal carton": "cardboard",
-  "Pizza box": "cardboard",
-  "Paper cup": "paper",
-  "Disposable plastic cup": "plastic",
-  "Foam cup": "plastic",
-  "Glass cup": "glass",
-  "Other plastic cup": "plastic",
-  "Food waste": "food",
-  "Glass jar": "glass",
-  "Plastic lid": "plastic",
-  "Metal lid": "metal",
-  "Other plastic": "plastic",
-  "Magazine paper": "paper",
-  Tissues: "paper",
-  "Wrapping paper": "paper",
-  "Normal paper": "paper",
-  "Paper bag": "paper",
-  "Plastified paper bag": "mixed",
-  "Plastic film": "plastic",
-  "Six pack rings": "plastic",
-  "Garbage bag": "plastic",
-  "Other plastic wrapper": "plastic",
-  "Single-use carrier bag": "plastic",
-  "Polypropylene bag": "plastic",
-  "Crisp packet": "plastic",
-  "Spread tub": "plastic",
-  Tupperware: "plastic",
-  "Disposable food container": "plastic",
-  "Foam food container": "plastic",
-  "Other plastic container": "plastic",
-  "Plastic glooves": "plastic",
-  "Plastic utensils": "plastic",
-  "Pop tab": "aluminum",
-  "Rope & strings": "textile",
-  "Scrap metal": "metal",
-  Shoe: "textile",
-  "Squeezable tube": "plastic",
-  "Plastic straw": "plastic",
-  "Paper straw": "paper",
-  "Styrofoam piece": "plastic",
-  "Unlabeled litter": "other",
-  Cigarette: "other",
+  bottle: "plastic",
+  "wine glass": "glass",
+  cup: "plastic",
+  fork: "metal",
+  knife: "metal",
+  spoon: "metal",
+  bowl: "plastic",
+  vase: "glass",
+  book: "paper",
+  banana: "food",
+  apple: "food",
+  sandwich: "food",
+  orange: "food",
+  broccoli: "food",
+  carrot: "food",
+  "hot dog": "food",
+  pizza: "food",
+  donut: "food",
+  cake: "food",
 };
 
 export function wasteTypeForClassId(classId: number): string | null {
