@@ -38,12 +38,12 @@
   z-index: 1;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   max-height: 100%;
   overflow: auto;
   grid-column-start: 1 !important;
   grid-column-end: -1 !important;
-  padding: 20px;
+  padding: 50px 0px;
   margin: 0px;
 }
 @media (max-width: 800px) {

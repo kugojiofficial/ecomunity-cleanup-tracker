@@ -70,6 +70,8 @@ import StarFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__StarF
 import MovingTrashIcon from "./icons/PlasmicIcon__MovingTrash"; // plasmic-import: VWc3kj67KFnJ/icon
 import ClockIcon from "./icons/PlasmicIcon__Clock"; // plasmic-import: dqr28RDSI9p9/icon
 import EditIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Edit"; // plasmic-import: Q3Mz32feM0mm/icon
+import MailCogIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__MailCog"; // plasmic-import: j1LZIxt18t6C/icon
+import LockCogIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__LockCog"; // plasmic-import: Klyjx6vK9E97/icon
 import LogoutIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__Logout"; // plasmic-import: UOnydwul0hWX/icon
 import PlusIcon from "./icons/PlasmicIcon__Plus"; // plasmic-import: vPBVvVS45CP9/icon
 import ArrowBigLeftFilledIcon from "../library_tabler_3_2_icons/icons/PlasmicIcon__ArrowBigLeftFilled"; // plasmic-import: l8ygS1BRem5y/icon
@@ -466,7 +468,7 @@ function PlasmicProfile__RenderFunc(props: {
               $refs["changeEmailButton"] = ref;
             }}
           >
-            <EditIcon
+            <MailCogIcon
               className={classNames("all", sty.svg__yvEnz)}
               role={"img"}
             />
@@ -488,7 +490,7 @@ function PlasmicProfile__RenderFunc(props: {
               $refs["changePasswordButton"] = ref;
             }}
           >
-            <EditIcon
+            <LockCogIcon
               className={classNames("all", sty.svg__eITqz)}
               role={"img"}
             />

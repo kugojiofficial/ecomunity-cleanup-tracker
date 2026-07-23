@@ -124,6 +124,8 @@ export const PlasmicLogWaste__ArgProps = new Array<ArgPropType>();
 export type PlasmicLogWaste__OverridesType = {
   logWastePage?: Flex__<"div">;
   flex?: Flex__<"div">;
+  error?: Flex__<"div">;
+  errorContent?: Flex__<"div">;
   container?: Flex__<"div">;
   title?: Flex__<"h1">;
   wasteTypeContainer?: Flex__<"div">;
@@ -133,8 +135,6 @@ export type PlasmicLogWaste__OverridesType = {
   cameraFeedContainer?: Flex__<"div">;
   submitButton?: Flex__<"button">;
   backButton?: Flex__<"button">;
-  error?: Flex__<"div">;
-  errorContent?: Flex__<"div">;
 };
 
 export interface DefaultLogWasteProps {}
@@ -261,6 +261,19 @@ function PlasmicLogWaste__RenderFunc(props: {
             data-plasmic-override={overrides.flex}
             className={classNames("all", sty.flex)}
           >
+            <div
+              data-plasmic-name={"error"}
+              data-plasmic-override={overrides.error}
+              className={classNames("all", sty.error)}
+            >
+              <div
+                data-plasmic-name={"errorContent"}
+                data-plasmic-override={overrides.errorContent}
+                className={classNames("all", "__wab_text", sty.errorContent)}
+              >
+                {"Error"}
+              </div>
+            </div>
             <div
               data-plasmic-name={"container"}
               data-plasmic-override={overrides.container}
@@ -429,19 +442,6 @@ function PlasmicLogWaste__RenderFunc(props: {
                 </div>
               </button>
             </div>
-            <div
-              data-plasmic-name={"error"}
-              data-plasmic-override={overrides.error}
-              className={classNames("all", sty.error)}
-            >
-              <div
-                data-plasmic-name={"errorContent"}
-                data-plasmic-override={overrides.errorContent}
-                className={classNames("all", "__wab_text", sty.errorContent)}
-              >
-                {"Error"}
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -453,6 +453,8 @@ const PlasmicDescendants = {
   logWastePage: [
     "logWastePage",
     "flex",
+    "error",
+    "errorContent",
     "container",
     "title",
     "wasteTypeContainer",
@@ -461,12 +463,12 @@ const PlasmicDescendants = {
     "menuItem",
     "cameraFeedContainer",
     "submitButton",
-    "backButton",
-    "error",
-    "errorContent"
+    "backButton"
   ],
   flex: [
     "flex",
+    "error",
+    "errorContent",
     "container",
     "title",
     "wasteTypeContainer",
@@ -475,10 +477,10 @@ const PlasmicDescendants = {
     "menuItem",
     "cameraFeedContainer",
     "submitButton",
-    "backButton",
-    "error",
-    "errorContent"
+    "backButton"
   ],
+  error: ["error", "errorContent"],
+  errorContent: ["errorContent"],
   container: [
     "container",
     "title",
@@ -502,9 +504,7 @@ const PlasmicDescendants = {
   menuItem: ["menuItem"],
   cameraFeedContainer: ["cameraFeedContainer"],
   submitButton: ["submitButton"],
-  backButton: ["backButton"],
-  error: ["error", "errorContent"],
-  errorContent: ["errorContent"]
+  backButton: ["backButton"]
 } as const;
 type NodeNameType = keyof typeof PlasmicDescendants;
 type DescendantsType<T extends NodeNameType> =
@@ -512,6 +512,8 @@ type DescendantsType<T extends NodeNameType> =
 type NodeDefaultElementType = {
   logWastePage: "div";
   flex: "div";
+  error: "div";
+  errorContent: "div";
   container: "div";
   title: "h1";
   wasteTypeContainer: "div";
@@ -521,8 +523,6 @@ type NodeDefaultElementType = {
   cameraFeedContainer: "div";
   submitButton: "button";
   backButton: "button";
-  error: "div";
-  errorContent: "div";
 };
 
 type ReservedPropsType = "variants" | "args" | "overrides";
@@ -588,6 +588,8 @@ export const PlasmicLogWaste = Object.assign(
   {
     // Helper components rendering sub-elements
     flex: makeNodeComponent("flex"),
+    error: makeNodeComponent("error"),
+    errorContent: makeNodeComponent("errorContent"),
     container: makeNodeComponent("container"),
     title: makeNodeComponent("title"),
     wasteTypeContainer: makeNodeComponent("wasteTypeContainer"),
@@ -597,8 +599,6 @@ export const PlasmicLogWaste = Object.assign(
     cameraFeedContainer: makeNodeComponent("cameraFeedContainer"),
     submitButton: makeNodeComponent("submitButton"),
     backButton: makeNodeComponent("backButton"),
-    error: makeNodeComponent("error"),
-    errorContent: makeNodeComponent("errorContent"),
 
     // Metadata about props expected for PlasmicLogWaste
     internalVariantProps: PlasmicLogWaste__VariantProps,

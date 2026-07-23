@@ -132,6 +132,7 @@ export type PlasmicChangePassword__OverridesType = {
   passwordError?: Flex__<"div">;
   passwordErrorContent?: Flex__<"div">;
   continueButton?: Flex__<"button">;
+  backButton?: Flex__<"button">;
   resetPasswordContainer?: Flex__<"div">;
   resetNewPasswordContainer?: Flex__<typeof TextField>;
   resetConfirmNewPasswordContainer?: Flex__<typeof TextField>;
@@ -483,6 +484,51 @@ function PlasmicChangePassword__RenderFunc(props: {
                 {"Continue"}
               </div>
             </button>
+            <button
+              data-plasmic-name={"backButton"}
+              data-plasmic-override={overrides.backButton}
+              className={classNames(
+                "all",
+                "button",
+                "button__6FNNC",
+                sty.backButton
+              )}
+              onClick={async event => {
+                const $steps = {};
+
+                $steps["goToProfile"] = true
+                  ? (() => {
+                      const actionArgs = { destination: `/profile` };
+                      return (({ destination }) => {
+                        if (
+                          typeof destination === "string" &&
+                          destination.startsWith("#")
+                        ) {
+                          document
+                            .getElementById(destination.substr(1))
+                            .scrollIntoView({ behavior: "smooth" });
+                        } else {
+                          __nextRouter?.push(destination);
+                        }
+                      })?.apply(null, [actionArgs]);
+                    })()
+                  : undefined;
+                if (
+                  $steps["goToProfile"] != null &&
+                  typeof $steps["goToProfile"] === "object" &&
+                  typeof $steps["goToProfile"].then === "function"
+                ) {
+                  $steps["goToProfile"] = await $steps["goToProfile"];
+                }
+              }}
+              ref={ref => {
+                $refs["backButton"] = ref;
+              }}
+            >
+              <div className={classNames("all", "__wab_text", sty.text__fjhvR)}>
+                {"Go Back"}
+              </div>
+            </button>
           </div>
           <div
             data-plasmic-name={"resetPasswordContainer"}
@@ -804,6 +850,7 @@ const PlasmicDescendants = {
     "passwordError",
     "passwordErrorContent",
     "continueButton",
+    "backButton",
     "resetPasswordContainer",
     "resetNewPasswordContainer",
     "resetConfirmNewPasswordContainer",
@@ -826,6 +873,7 @@ const PlasmicDescendants = {
     "passwordError",
     "passwordErrorContent",
     "continueButton",
+    "backButton",
     "resetPasswordContainer",
     "resetNewPasswordContainer",
     "resetConfirmNewPasswordContainer",
@@ -846,7 +894,8 @@ const PlasmicDescendants = {
     "confirmNewPasswordContainer",
     "passwordError",
     "passwordErrorContent",
-    "continueButton"
+    "continueButton",
+    "backButton"
   ],
   currentPasswordContainer: ["currentPasswordContainer"],
   newPasswordContainer: ["newPasswordContainer"],
@@ -854,6 +903,7 @@ const PlasmicDescendants = {
   passwordError: ["passwordError", "passwordErrorContent"],
   passwordErrorContent: ["passwordErrorContent"],
   continueButton: ["continueButton"],
+  backButton: ["backButton"],
   resetPasswordContainer: [
     "resetPasswordContainer",
     "resetNewPasswordContainer",
@@ -891,6 +941,7 @@ type NodeDefaultElementType = {
   passwordError: "div";
   passwordErrorContent: "div";
   continueButton: "button";
+  backButton: "button";
   resetPasswordContainer: "div";
   resetNewPasswordContainer: typeof TextField;
   resetConfirmNewPasswordContainer: typeof TextField;
@@ -977,6 +1028,7 @@ export const PlasmicChangePassword = Object.assign(
     passwordError: makeNodeComponent("passwordError"),
     passwordErrorContent: makeNodeComponent("passwordErrorContent"),
     continueButton: makeNodeComponent("continueButton"),
+    backButton: makeNodeComponent("backButton"),
     resetPasswordContainer: makeNodeComponent("resetPasswordContainer"),
     resetNewPasswordContainer: makeNodeComponent("resetNewPasswordContainer"),
     resetConfirmNewPasswordContainer: makeNodeComponent(

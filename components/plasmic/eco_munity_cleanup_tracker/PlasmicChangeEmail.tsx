@@ -131,6 +131,7 @@ export type PlasmicChangeEmail__OverridesType = {
   newEmailContainer?: Flex__<typeof TextField>;
   svg?: Flex__<"svg">;
   continueButton?: Flex__<"button">;
+  backButton?: Flex__<"button">;
   successContainer?: Flex__<"div">;
   notice?: Flex__<"h1">;
   toDashboardButton?: Flex__<"button">;
@@ -359,6 +360,53 @@ function PlasmicChangeEmail__RenderFunc(props: {
                   {"Continue"}
                 </div>
               </button>
+              <button
+                data-plasmic-name={"backButton"}
+                data-plasmic-override={overrides.backButton}
+                className={classNames(
+                  "all",
+                  "button",
+                  "button__6FNNC",
+                  sty.backButton
+                )}
+                onClick={async event => {
+                  const $steps = {};
+
+                  $steps["goToProfile"] = true
+                    ? (() => {
+                        const actionArgs = { destination: `/profile` };
+                        return (({ destination }) => {
+                          if (
+                            typeof destination === "string" &&
+                            destination.startsWith("#")
+                          ) {
+                            document
+                              .getElementById(destination.substr(1))
+                              .scrollIntoView({ behavior: "smooth" });
+                          } else {
+                            __nextRouter?.push(destination);
+                          }
+                        })?.apply(null, [actionArgs]);
+                      })()
+                    : undefined;
+                  if (
+                    $steps["goToProfile"] != null &&
+                    typeof $steps["goToProfile"] === "object" &&
+                    typeof $steps["goToProfile"].then === "function"
+                  ) {
+                    $steps["goToProfile"] = await $steps["goToProfile"];
+                  }
+                }}
+                ref={ref => {
+                  $refs["backButton"] = ref;
+                }}
+              >
+                <div
+                  className={classNames("all", "__wab_text", sty.text__ow4V2)}
+                >
+                  {"Go Back"}
+                </div>
+              </button>
             </div>
             <div
               data-plasmic-name={"successContainer"}
@@ -456,6 +504,7 @@ const PlasmicDescendants = {
     "newEmailContainer",
     "svg",
     "continueButton",
+    "backButton",
     "successContainer",
     "notice",
     "toDashboardButton"
@@ -469,6 +518,7 @@ const PlasmicDescendants = {
     "newEmailContainer",
     "svg",
     "continueButton",
+    "backButton",
     "successContainer",
     "notice",
     "toDashboardButton"
@@ -480,7 +530,8 @@ const PlasmicDescendants = {
     "passwordErrorContent",
     "newEmailContainer",
     "svg",
-    "continueButton"
+    "continueButton",
+    "backButton"
   ],
   h1: ["h1"],
   error: ["error", "passwordErrorContent"],
@@ -488,6 +539,7 @@ const PlasmicDescendants = {
   newEmailContainer: ["newEmailContainer", "svg"],
   svg: ["svg"],
   continueButton: ["continueButton"],
+  backButton: ["backButton"],
   successContainer: ["successContainer", "notice", "toDashboardButton"],
   notice: ["notice"],
   toDashboardButton: ["toDashboardButton"]
@@ -505,6 +557,7 @@ type NodeDefaultElementType = {
   newEmailContainer: typeof TextField;
   svg: "svg";
   continueButton: "button";
+  backButton: "button";
   successContainer: "div";
   notice: "h1";
   toDashboardButton: "button";
@@ -580,6 +633,7 @@ export const PlasmicChangeEmail = Object.assign(
     newEmailContainer: makeNodeComponent("newEmailContainer"),
     svg: makeNodeComponent("svg"),
     continueButton: makeNodeComponent("continueButton"),
+    backButton: makeNodeComponent("backButton"),
     successContainer: makeNodeComponent("successContainer"),
     notice: makeNodeComponent("notice"),
     toDashboardButton: makeNodeComponent("toDashboardButton"),
